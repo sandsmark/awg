@@ -10,7 +10,7 @@ public class Map {
 	public int [][] map;
 	public BufferedImage[] sprite;
 	
-	public Map (int width, int height) {
+	public Map (int width, int height) throws IOException {
 		sprite = new BufferedImage[3];
 		map = new int[width][height];
 		try {
