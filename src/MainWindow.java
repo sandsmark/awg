@@ -4,6 +4,7 @@
 import javax.swing.*;
 
 import java.awt.event.*;
+import java.io.IOException;
 
 public class MainWindow implements ActionListener {
 	JFrame frame;
@@ -11,7 +12,7 @@ public class MainWindow implements ActionListener {
 	Canvas canvas;
 	JButton close, draw, left, right;
 	
-	MainWindow(){
+	MainWindow() throws IOException{
 		outer = new JPanel();
 		canvas = new Canvas(new Map(100,100));
 		menu = new JPanel();
@@ -48,7 +49,12 @@ public class MainWindow implements ActionListener {
 	}
 
 	public static void main (String args[]) {
-		new MainWindow();
+		try {
+			new MainWindow();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
