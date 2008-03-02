@@ -1,0 +1,42 @@
+
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class Map {
+	public int [][] map;
+	public BufferedImage[] sprite;
+	
+	public Map (int width, int height) {
+		sprite = new BufferedImage[3];
+		map = new int[width][height];
+		try {
+		    sprite[0] = ImageIO.read(new File("/home/sandsmark/grass.png"));
+		    sprite[1] = ImageIO.read(new File("/home/sandsmark/water.png"));
+		    sprite[2] = ImageIO.read(new File("/home/sandsmark/trees.png"));
+		} catch (IOException e) {
+			System.err.println("Could not load sprite!");
+		}
+		
+		for (int x=0; x<width; x++){
+			for (int y=0; y<height; y++){
+				map[x][y] = (int)(Math.random() * 2);
+			}
+		}
+	}
+	
+	public int getHeight () {
+		return map.length;
+	}
+	
+	public int getLength () {
+		return map[0].length;
+	}
+	
+	public int getNode(int x, int y){
+		return map[x][y];
+	}
+}
