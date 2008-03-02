@@ -14,9 +14,9 @@ public class Map {
 		sprite = new BufferedImage[3];
 		map = new int[width][height];
 		try {
-		    sprite[0] = ImageIO.read(new File("/home/sandsmark/grass.png"));
-		    sprite[1] = ImageIO.read(new File("/home/sandsmark/water.png"));
-		    sprite[2] = ImageIO.read(new File("/home/sandsmark/trees.png"));
+		    sprite[0] = ImageIO.read(new File("resources/grass.png"));
+		    sprite[1] = ImageIO.read(new File("resources/water.png"));
+		    sprite[2] = ImageIO.read(new File("resources/trees.png"));
 		} catch (IOException e) {
 			System.err.println("Could not load sprite!");
 		}
