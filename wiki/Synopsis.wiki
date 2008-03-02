@@ -1,5 +1,5 @@
 #labels Featured,Phase-Design,Phase-Implementation
-#Current synopsis of the game, in norwegian.
+*Current synopsis of the game, in norwegian.*
 
 = Dragvoll vs Gløshaugen =
 
