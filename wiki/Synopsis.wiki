@@ -1,0 +1,25 @@
+#labels Featured,Phase-Design,Phase-Implementation
+#Current synopsis of the game, in norwegian.
+
+= Dragvoll vs Gløshaugen =
+
+Dragvoll har magi og gammel teknologi,
+Gløshaugen har moderne teknologi.
+
+Fakultetene er bygninger,
+evt. linjeforeningene.
+
+Eksempler på units:
+Religionsvitenskap blir clerics,
+Idrettskunnskap eller lignende blir workers.
+
+Emil-folk blir verdiløse :-D
+
+Bruke en int[][] som intern representasjon for kart.
+
+Bruke pixelart
+http://sdb.drshnaps.com/SpritesGBA.htm
+har en fin db med masse rart.
+
+= TODO =
+Bestemme units og hvilket sprites.
