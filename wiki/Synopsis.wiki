@@ -22,4 +22,4 @@ http://sdb.drshnaps.com/SpritesGBA.htm
 har en fin db med masse rart.
 
 = TODO =
-Bestemme units og hvilket sprites.
+Bestemme units og hvilke sprites.
