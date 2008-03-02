@@ -1,2 +1,2 @@
 #summary WarGame is a real time strategy game involving war.
-=WarGames are Awesome, and therefore this game is called Awesome WarGame.
+WarGames are Awesome, and therefore this game is called Awesome WarGame.
