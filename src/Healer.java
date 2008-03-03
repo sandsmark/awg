@@ -14,7 +14,7 @@ public class Healer extends Unit {
 		currentAction = 0;
 		damage = 10;
 		if(faction == 1) setSprite(sprite); //Gløshaugen
-		else(faction ==2)setSprite(sprite); //Dragvoll
+		else if(faction ==2)setSprite(sprite); //Dragvoll
 		
 	}
 	
