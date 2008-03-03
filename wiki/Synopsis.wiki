@@ -9,13 +9,7 @@ Gløshaugen har moderne teknologi.
 Fakultetene er bygninger,
 evt. linjeforeningene.
 
-Eksempler på units:
-Religionsvitenskap blir clerics,
-
-Bevegelses- og idrettsvitenskap
-blir workers for Dragvoll
-
-Emil-folk blir verdiløse :-D
+Penger blir samlet fra pengetrær
 
 Bruke en int[][] som intern representasjon for kart.
 
