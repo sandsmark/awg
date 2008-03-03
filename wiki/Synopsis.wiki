@@ -11,7 +11,9 @@ evt. linjeforeningene.
 
 Eksempler på units:
 Religionsvitenskap blir clerics,
-Idrettskunnskap eller lignende blir workers.
+
+Bevegelses- og idrettsvitenskap
+blir workers for Dragvoll
 
 Emil-folk blir verdiløse :-D
 
