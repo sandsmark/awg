@@ -1,0 +1,7 @@
+= Units =
+
+== Worker ==
+
+Workers:
+  *Gløshaugen: Bygg- og miljøteknikk
+  *Dragvoll: Bevegelses- og idrettsvitenskap
