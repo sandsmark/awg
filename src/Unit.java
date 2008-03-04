@@ -1,33 +1,21 @@
 
 
 import java.awt.Image;
+import java.awt.geom.Point2D;
 
 public class Unit {
-	public int xCoord; //The unit's
-	public int yCoord; //coordinates
-	public int maxHealth; //The unit's max health
-	public int CurrentHealth; //The unit's current HP
-	public int damage; //The damage the unit deals
-	public int range; //The unit's attackrange
-	public int currentAction; //0=stand still, 1 = move to target, 2 = attack target 
-	public int [] currentPathX; // Path to current target
-	public int [] currentPathY;
+	private Point2D position;
+	private int maxHealth; //The unit's max health
+	private int CurrentHealth; //The unit's current HP
+	private int damage; //The damage the unit deals
+	private int range; //The unit's attackrange
+	private int currentAction; //0=stand still, 1 = move to target, 2 = attack target 
+	private int [] currentPathX; // Path to current target
+	private int [] currentPathY;
 	Unit targetUnit; //This unit's target unit.
-	public Image sprite; // Sprite to be drawn. The picture of the unit
+	private Image sprite; // Sprite to be drawn. The picture of the unit
 	
 	
-	public int getXCoord() {
-		return xCoord;
-	}
-	public void setXCoord(int coord) {
-		xCoord = coord;
-	}
-	public int getYCoord() {
-		return yCoord;
-	}
-	public void setYCoord(int coord) {
-		yCoord = coord;
-	}
 	public int getMaxHealth() {
 		return maxHealth;
 	}
@@ -81,6 +69,12 @@ public class Unit {
 	}
 	public void setSprite(Image sprite) {
 		this.sprite = sprite;
+	}
+	public Point2D getPosition() {
+		return position;
+	}
+	public void setPosition(Point2D position) {
+		this.position = position;
 	}
 	
 }
