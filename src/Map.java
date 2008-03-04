@@ -32,7 +32,7 @@ public class Map {
 		return map.length;
 	}
 	
-	public int getLength () {
+	public int getWidth () {
 		return map[0].length;
 	}
 	
