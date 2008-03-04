@@ -23,7 +23,7 @@ public class Map {
 		
 		for (int x=0; x<width; x++){
 			for (int y=0; y<height; y++){
-				map[x][y] = (int)(Math.random() * 2);
+				map[x][y] = (int)(Math.random() * 3);
 			}
 		}
 	}
