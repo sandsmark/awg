@@ -13,9 +13,11 @@ Penger blir samlet fra pengetrær
 
 Bruke en int[][] som intern representasjon for kart.
 
-Bruke pixelart
+
+= Sprite sites =
+http://www.molotov.nu/?page=graphics
 http://sdb.drshnaps.com/SpritesGBA.htm
-har en fin db med masse rart.
+http://fenrir.finalfantasyq.com/
 
 = TODO =
 Bestemme units og hvilke sprites.
