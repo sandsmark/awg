@@ -29,14 +29,22 @@ public class Map {
 	}
 	
 	public int getHeight () {
-		return map.length;
-	}
-	
-	public int getWidth () {
 		return map[0].length;
 	}
 	
+	public int getWidth () {
+		return map.length;
+	}
+	
 	public int getNode(int x, int y){
+		if (x<0||x > getWidth()) {
+			System.err.println(x);
+			return 0;
+		}
+		if (y<0||y > getHeight()) {
+			System.err.println(y);
+			return 0;
+		}
 		return map[x][y];
 	}
 }
