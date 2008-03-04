@@ -15,9 +15,9 @@ Bruke en int[][] som intern representasjon for kart.
 
 
 = Sprite sites =
-http://www.molotov.nu/?page=graphics
-http://sdb.drshnaps.com/SpritesGBA.htm
-http://fenrir.finalfantasyq.com/
+  * http://www.molotov.nu/?page=graphics
+  * http://sdb.drshnaps.com/SpritesGBA.htm
+  * http://fenrir.finalfantasyq.com/
 
 = TODO =
 Bestemme units og hvilke sprites.
