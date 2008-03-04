@@ -3,14 +3,16 @@
 
 import javax.swing.*;
 
+import java.awt.MouseInfo;
 import java.awt.event.*;
 import java.io.IOException;
 
-public class MainWindow implements ActionListener {
+public class MainWindow implements ActionListener, MouseMotionListener {
 	JFrame frame;
 	JPanel outer, menu;
 	Canvas canvas;
 	JButton close, draw, left, right;
+	boolean isMoving = false;
 	
 	MainWindow() throws IOException{
 		outer = new JPanel();
@@ -32,7 +34,7 @@ public class MainWindow implements ActionListener {
 		right = new JButton(">");
 		right.addActionListener(this);
 		menu.add(right);
-
+		canvas.addMouseMotionListener(this);
 
 		outer.add(canvas);
 		outer.add(menu);
@@ -74,5 +76,35 @@ public class MainWindow implements ActionListener {
 		System.out.println("EPIC WIN!");
 		frame.dispose();
 		System.exit(0); 
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		if (isMoving) return; 
+		isMoving = true;
+		try {
+			System.out.println("epic");
+			while (MouseInfo.getPointerInfo().getLocation().x>450){
+				canvas.screenRight();
+				canvas.repaint();
+//				Thread.sleep(1);
+			}
+			
+			while (MouseInfo.getPointerInfo().getLocation().x<50){
+				canvas.screenLeft();
+				canvas.repaint();
+//				Thread.sleep(1);
+			}
+
+		} finally {
+			isMoving = false;
+		}
+		
 	}
 }
