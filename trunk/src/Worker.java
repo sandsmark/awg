@@ -1,5 +1,8 @@
+import java.io.File;
 import java.io.IOException;
 import java.awt.geom.Point2D;
+
+import javax.imageio.ImageIO;
 
 public class Worker extends Unit {
 //	Bevegelses- og idrettsvitenskap for Dragvoll
@@ -15,7 +18,7 @@ public class Worker extends Unit {
 		setCurrentAction(0);
 		setPosition(mainBuilding +25); //FIXX martin :P
 		
-		if(faction == 1) setSprite(TheSpriteThatWillRepresentTheUnit); //Gløshaugen
+		if(faction == 1) setSprite(ImageIO.read(new File("resources/gløs-worker.gif"))); //Gløshaugen
 		else if(faction ==2)setSprite(TheSpriteThatWillRepresentTheUnit); //Dragvoll
 	}
 	
