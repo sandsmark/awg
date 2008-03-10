@@ -2,6 +2,7 @@
 
 import java.awt.Image;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 public class Unit {
 	private Point2D position;
@@ -13,7 +14,7 @@ public class Unit {
 	private int [] currentPathX; // Path to current target
 	private int [] currentPathY;
 	Unit targetUnit; //This unit's target unit.
-	private Image sprite; // Sprite to be drawn. The picture of the unit
+	private BufferedImage sprite; // Sprite to be drawn. The picture of the unit
 	
 	
 	public int getMaxHealth() {
@@ -64,10 +65,10 @@ public class Unit {
 	public void setTargetUnit(Unit targetUnit) {
 		this.targetUnit = targetUnit;
 	}
-	public Image getSprite() {
+	public BufferedImage getSprite() {
 		return sprite;
 	}
-	public void setSprite(Image sprite) {
+	public void setSprite(BufferedImage sprite) {
 		this.sprite = sprite;
 	}
 	public Point2D getPosition() {

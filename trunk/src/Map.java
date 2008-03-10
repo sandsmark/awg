@@ -3,16 +3,20 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 public class Map {
 	public int [][] map;
 	public BufferedImage[] sprite;
+	ArrayList<Unit> units;
 	
 	public Map (int width, int height) throws IOException {
 		sprite = new BufferedImage[3];
 		map = new int[width][height];
+		units = new ArrayList<Unit>();
+		
 		try {
 		    sprite[0] = ImageIO.read(new File("resources/grass.png"));
 		    sprite[1] = ImageIO.read(new File("resources/water.png"));
@@ -46,5 +50,21 @@ public class Map {
 			return 0;
 		}
 		return map[x][y];
+	}
+	
+	public void addUnit(Unit unit) {
+		units.add(unit);
+	}
+	
+	public void removeUnit(Unit unit) {
+		units.remove(unit);
+	}
+	
+	public Unit getUnit(int i){
+		return units.get(i);
+	}
+	
+	public int getUnitNum(){
+		return units.size();
 	}
 }

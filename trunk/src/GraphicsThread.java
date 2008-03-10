@@ -16,6 +16,7 @@ public class GraphicsThread extends Thread{
 		this.running=true;
 		this.curdir=Moveable.Direction.NONE;
 	}
+	
 	public void stopThread(){
 		this.running=false;
 	}

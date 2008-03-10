@@ -6,13 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MainWindow implements ActionListener, MouseMotionListener {
+public class MainWindow implements ActionListener, MouseMotionListener, MouseListener {
 	JFrame frame;
 	JPanel outer, menu;
 	Canvas canvas;
@@ -30,7 +31,8 @@ public class MainWindow implements ActionListener, MouseMotionListener {
 		menu.add(close);
 
 		canvas.addMouseMotionListener(this);
-
+		canvas.addMouseListener(this);
+		
 		outer.add(canvas);
 		outer.add(menu);
 
@@ -88,6 +90,33 @@ public class MainWindow implements ActionListener, MouseMotionListener {
 	}
 
 	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		System.out.println("x:"+ x +"y:"+y);
+		
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
