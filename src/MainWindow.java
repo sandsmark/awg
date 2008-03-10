@@ -1,18 +1,24 @@
 
 
 
-import javax.swing.*;
-
 import java.awt.MouseInfo;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class MainWindow implements ActionListener, MouseMotionListener {
 	JFrame frame;
 	JPanel outer, menu;
 	Canvas canvas;
-	JButton close, draw, left, right;
+	JButton close;
 	boolean isMoving = false;
+	GraphicsThread gThread;
 	
 	MainWindow() throws IOException{
 		outer = new JPanel();
@@ -23,17 +29,6 @@ public class MainWindow implements ActionListener, MouseMotionListener {
 		close.addActionListener(this);
 		menu.add(close);
 
-		draw = new JButton("Draw");
-		draw.addActionListener(this);
-		menu.add(draw);
-		
-		left = new JButton("<");
-		left.addActionListener(this);
-		menu.add(left);
-		
-		right = new JButton(">");
-		right.addActionListener(this);
-		menu.add(right);
 		canvas.addMouseMotionListener(this);
 
 		outer.add(canvas);
@@ -48,6 +43,9 @@ public class MainWindow implements ActionListener, MouseMotionListener {
 		canvas.repaint();
 		canvas.repaint();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		gThread = new GraphicsThread(canvas, 50);
+		gThread.start();
 	}
 
 	public static void main (String args[]) {
@@ -63,12 +61,6 @@ public class MainWindow implements ActionListener, MouseMotionListener {
 		canvas.repaint();
 		if (e.getSource() == close){
 			exit();
-		} else if (e.getSource() == draw){
-			canvas.repaint();
-		} else if (e.getSource() == left){
-			canvas.screenLeft();
-		} else if (e.getSource() == right){
-			canvas.screenRight();
 		}
 	}
 
@@ -78,39 +70,25 @@ public class MainWindow implements ActionListener, MouseMotionListener {
 		System.exit(0); 
 	}
 
-	@Override
+	public void mouseMoved(MouseEvent e) {
+		int x = MouseInfo.getPointerInfo().getLocation().x;
+		int y = MouseInfo.getPointerInfo().getLocation().y;
+		if (x>canvas.getWidth() - 50) {
+			gThread.setDirection(Moveable.Direction.RIGHT);
+		} else if (x<50) {
+			gThread.setDirection(Moveable.Direction.LEFT);
+		} else if (y>canvas.getHeight() - 50) {
+			gThread.setDirection(Moveable.Direction.DOWN);
+		} else if (y<50) {
+			gThread.setDirection(Moveable.Direction.UP);
+		} else{
+			if(gThread.getDirection()!=Moveable.Direction.NONE)
+				gThread.setDirection(Moveable.Direction.NONE);
+		}
+	}
+
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		if (isMoving) return; 
-		isMoving = true;
-		try {
-			System.out.println("epic");
-			while (MouseInfo.getPointerInfo().getLocation().x>450){
-				canvas.screenRight();
-				canvas.repaint();
-//				Thread.sleep(1);
-			}
-			
-			while (MouseInfo.getPointerInfo().getLocation().x<50){
-				canvas.screenLeft();
-				canvas.repaint();
-//				Thread.sleep(1);
-			}
-
-		} finally {
-			isMoving = false;
-		}
-	}
-	
-	public void moveLeft(MouseInfo m) {
-		if (isMoving) return; 
-		isMoving = true;
-		
-		isMoving = false;
 	}
 }

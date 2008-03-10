@@ -8,12 +8,17 @@ public class GraphicsThread extends Thread{
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition updated = lock.newCondition();
 	protected long sleeptime=0;
+	
+
 	GraphicsThread (Moveable m,long s) {
 		this.m=m;
 		this.sleeptime=s;
+		this.running=true;
+		this.curdir=Moveable.Direction.NONE;
 	}
-	
-	
+	public void stopThread(){
+		this.running=false;
+	}
 	
 	public void run () {
 		while(running){
@@ -40,8 +45,16 @@ public class GraphicsThread extends Thread{
 	public void setDirection(Moveable.Direction dir) {
 		lock.lock();
 		curdir=dir;
-		updated.notifyAll();
+		updated.signal();
 		lock.unlock();
 		
+	}
+	public Moveable.Direction getDirection(){
+		try{
+			lock.lock();
+			return curdir;
+		}finally{
+			lock.unlock();
+		}
 	}
 }

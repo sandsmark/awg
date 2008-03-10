@@ -25,6 +25,7 @@ public class Canvas extends JPanel implements Moveable {
 	int dHeight = 500;
 	int tileX=25;
 	int tileY=25;
+	int step=5;
 	BufferedImage internalMap;
 	
 	public Canvas (Map newMap){
@@ -37,6 +38,7 @@ public class Canvas extends JPanel implements Moveable {
 
 	@Override
 	public void paintComponent(Graphics g) {
+		System.out.println("PC");
 		Graphics g2 = (Graphics2D) g; 
 		g2.drawImage(internalMap, 0, 0, dWidth, dHeight, offsetX, offsetY, offsetX + dWidth, offsetY + dHeight, null);
 	}
@@ -59,36 +61,42 @@ public class Canvas extends JPanel implements Moveable {
 		return new Dimension(dWidth, dHeight);
 	}
 	
-	void screenRight() {
-		if (dWidth+offsetX < width) {
-			offsetX++;
-		}
+	public int getWidth() {
+		return dWidth;
 	}
 	
-	void screenLeft() {
-		if (offsetX > 0) {
-			offsetX--;
-		}
-	}
-	
-	void screenDown() {
-		if (dHeight + offsetY < height) {
-			offsetY++;
-		}
-	}
-	
-	void screenUp() {
-
+	public int getHeight() {
+		return dHeight;
 	}
 	
 	public void move(Direction dir){
-		switch (dir.ordinal()) {
-			case Direction.UP.ordinal():
+		switch (dir) {
+			case UP:
 				if (offsetY > 0) {
-					offsetY--;
+					offsetY-=step;
 				}
 				break;
-				
+			case DOWN:
+				if (dHeight + offsetY < height) {
+					offsetY+=step;
+				}
+				break;
+			case LEFT:
+				if (offsetX > 0) {
+					offsetX-=step;
+				}
+				break;
+			case RIGHT:
+				if (dWidth+offsetX < width) {
+					offsetX+=step;
+				}
+				break;
+		}
+		
+		if (dir != Direction.NONE){
+			System.out.println("RPT"+dir);
+			paintComponent(this.getGraphics());
+			//repaint();
 		}
 	}
 }
