@@ -105,6 +105,12 @@ public class MainWindow implements ActionListener, MouseMotionListener {
 		} finally {
 			isMoving = false;
 		}
+	}
+	
+	public void moveLeft(MouseInfo m) {
+		if (isMoving) return; 
+		isMoving = true;
 		
+		isMoving = false;
 	}
 }
