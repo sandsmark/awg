@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 //TODO: Create entire map on BufferedImage, and clip it to view FOR EPIC SPEED
 
 
-public class Canvas extends JPanel {
+public class Canvas extends JPanel implements Moveable {
 	/**
 	 * 
 	 */
@@ -78,8 +78,17 @@ public class Canvas extends JPanel {
 	}
 	
 	void screenUp() {
-		if (offsetY > 0) {
-			offsetY--;
+
+	}
+	
+	public void move(Direction dir){
+		switch (dir.ordinal()) {
+			case Direction.UP.ordinal():
+				if (offsetY > 0) {
+					offsetY--;
+				}
+				break;
+				
 		}
 	}
 }
