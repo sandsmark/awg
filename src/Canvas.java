@@ -25,8 +25,10 @@ public class Canvas extends JPanel implements Moveable {
 	int dHeight = 500;
 	int tileX=25;
 	int tileY=25;
-	int step=5;
+	int step=20;
 	BufferedImage internalMap;
+	BufferedImage base;
+	Unit[] units;
 	
 	public Canvas (Map newMap){
 		map = newMap;
@@ -38,7 +40,6 @@ public class Canvas extends JPanel implements Moveable {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		System.out.println("PC");
 		Graphics g2 = (Graphics2D) g; 
 		g2.drawImage(internalMap, 0, 0, dWidth, dHeight, offsetX, offsetY, offsetX + dWidth, offsetY + dHeight, null);
 	}
@@ -46,9 +47,14 @@ public class Canvas extends JPanel implements Moveable {
 	public void updateInternal() {		
 		Graphics2D g2 = internalMap.createGraphics();
 		for (int x=0; x < map.getWidth();x++){
-			for (int y=0; y < map.getHeight();y++){
+			for (int y=0; y < map.getHeight();y++) {
 				g2.drawImage(map.sprite[map.getNode(x,y)], null, x*tileX, y*tileY);
 			}
+		}
+		Unit unit;
+		for (int i=0;i<map.units.size();i++){
+			unit = map.getUnit(i);
+			g2.drawImage(unit.getSprite(), null, (int)unit.getPosition().getX()*tileX, (int)unit.getPosition().getY()*tileY);
 		}
 	}
 	
@@ -94,9 +100,7 @@ public class Canvas extends JPanel implements Moveable {
 		}
 		
 		if (dir != Direction.NONE){
-			System.out.println("RPT"+dir);
-			paintComponent(this.getGraphics());
-			//repaint();
+			repaint();
 		}
 	}
 }
