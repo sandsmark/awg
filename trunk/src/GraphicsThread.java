@@ -54,6 +54,9 @@ public class GraphicsThread extends Thread{
 		try{
 			lock.lock();
 			return curdir;
+		} catch (Exception e){
+			System.err.println("exception while getting direction");
+			return Moveable.Direction.NONE;
 		}finally{
 			lock.unlock();
 		}

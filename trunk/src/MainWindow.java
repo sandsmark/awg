@@ -23,7 +23,7 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	
 	MainWindow() throws IOException{
 		outer = new JPanel();
-		canvas = new Canvas(new Map(100,100));
+		canvas = new Canvas(new Map(1000,1000));
 		menu = new JPanel();
 		 
 		close = new JButton("Close");
@@ -67,14 +67,13 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	}
 
 	public void exit() {
-		System.out.println("EPIC WIN!");
 		frame.dispose();
 		System.exit(0); 
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		int x = MouseInfo.getPointerInfo().getLocation().x;
-		int y = MouseInfo.getPointerInfo().getLocation().y;
+		int x = e.getX();
+		int y = e.getY();
 		if (x>canvas.getWidth() - 50) {
 			gThread.setDirection(Moveable.Direction.RIGHT);
 		} else if (x<50) {
