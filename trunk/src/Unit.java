@@ -1,11 +1,7 @@
-
-
-import java.awt.Image;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 public class Unit {
-	private Point2D position;
+	private int x,y;
 	private int maxHealth; //The unit's max health
 	private int CurrentHealth; //The unit's current HP
 	private int damage; //The damage the unit deals
@@ -71,11 +67,17 @@ public class Unit {
 	public void setSprite(BufferedImage sprite) {
 		this.sprite = sprite;
 	}
-	public Point2D getPosition() {
-		return position;
+	public int getX() {
+		return x;
 	}
-	public void setPosition(Point2D position) {
-		this.position = position;
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void setPosition(int nx, int ny) {
+		y = ny;
+		x = nx;
 	}
 	
 }

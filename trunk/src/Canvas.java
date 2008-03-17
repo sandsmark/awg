@@ -62,7 +62,7 @@ public class Canvas extends JPanel implements Moveable {
 		
 		for (int i=0;i<map.getUnitNum();i++){
 			unit = map.getUnit(i);
-			ig2.drawImage(unit.getSprite(), null, (int)unit.getPosition().getX(), (int)unit.getPosition().getY());
+			ig2.drawImage(unit.getSprite(), null, (int)unit.getX(), (int)unit.getY());
 		}
 		
 		for (int i=0;i<map.getResourceNum();i++){
@@ -116,5 +116,14 @@ public class Canvas extends JPanel implements Moveable {
 		if (dir != Direction.NONE){
 			repaint();
 		}
+	}
+
+	public Map getMap(){
+		return map;
+	}
+	
+	
+	public void drawSelectBox(int startX, int startY, double x, double y) {
+		//TODO: Make me!
 	}
 }

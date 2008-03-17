@@ -13,7 +13,10 @@ public class Map {
 	public int width;
 	public int height;
 	public BufferedImage[] sprite;
+	int uWidth=25; // Unit width in pixels
+	int uHeight=25;
 	ArrayList<Unit> units;
+	ArrayList<Unit> selectedUnits;
 	Resource[] resources;
 	Polygon waterShape;
 	
@@ -96,5 +99,28 @@ public class Map {
 	
 	public int getResourceNum(){
 		return resources.length;
+	}
+	
+	public void selectUnit(Unit u){
+		selectedUnits.add(u);
+	}
+	
+	public void deselectUnit(Unit u){
+		selectedUnits.remove(u);
+	}
+	
+	public void selectUnits(int x1, int y1, int x2, int y2){
+		// TODO: Loop through all units, and add those inside the selected to selected list
+	}
+	
+	public void selectUnit(int x, int y) {
+		for (int i=0; i<getUnitNum(); i++){
+			int x1 = getUnit(i).getX()+(uHeight/2);
+			int y1 = getUnit(i).getY()+(uHeight/2);
+			int x2 = getUnit(i).getX()+(uHeight/2);
+			int y2 = getUnit(i).getY()+(uHeight/2);
+			if ((y1<y)&&(y2>y)&&(x1<x)&&(x2>x))
+				selectUnit(getUnit(i));
+		}
 	}
 }

@@ -20,6 +20,7 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	JButton close;
 	boolean isMoving = false;
 	GraphicsThread gThread;
+	SelectThread sThread;
 	
 	MainWindow() throws IOException{
 		outer = new JPanel();
@@ -48,6 +49,9 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		
 		gThread = new GraphicsThread(canvas, 50);
 		gThread.start();
+		
+		sThread = new SelectThread(canvas);
+		sThread.start();
 	}
 
 	public static void main (String args[]) {
@@ -110,13 +114,12 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		
 	}
 
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mousePressed(MouseEvent m) {
+		sThread.start(m);
 		
 	}
 
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void mouseReleased(MouseEvent m) {
+		sThread.start(m);
 	}
 }
