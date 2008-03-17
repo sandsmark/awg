@@ -1,19 +1,18 @@
-
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPanel;
-
-//TODO: Create entire map on BufferedImage, and clip it to view FOR EPIC SPEED
 
 
 public class Canvas extends JPanel implements Moveable {
 	/**
-	 * 
+	 * Epic and great canvas
+	 * Copyright 2008 Martin Sandsmark, Frederik M. J. Vestre
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	Map map;
@@ -23,38 +22,52 @@ public class Canvas extends JPanel implements Moveable {
 	int height;
 	int dWidth = 500;
 	int dHeight = 500;
-	int tileX=25;
-	int tileY=25;
 	int step=20;
 	BufferedImage internalMap;
-	BufferedImage base;
+	BufferedImage baseMap;
 	Unit[] units;
 	
 	public Canvas (Map newMap){
 		map = newMap;
-		height = map.getHeight() * tileY;
-		width = map.getWidth() * tileX;
+		height = map.getHeight();
+		width = map.getWidth();
+		baseMap = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
+		
+		Graphics2D bg2 = baseMap.createGraphics();
+		
+		bg2.setColor(Color.green);
+		bg2.fill(new Rectangle(0,0, width, height));
+		bg2.setColor(Color.blue);
+		bg2.draw(map.getWater());
+		bg2.fill(map.getWater());
+		
 		internalMap = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D ig2 = internalMap.createGraphics();
 		updateInternal();
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		Graphics g2 = (Graphics2D) g; 
+		Graphics g2 = (Graphics2D) g;
+		dWidth = getSize().width;
+		dHeight = getSize().height;
 		g2.drawImage(internalMap, 0, 0, dWidth, dHeight, offsetX, offsetY, offsetX + dWidth, offsetY + dHeight, null);
 	}
 	
 	public void updateInternal() {		
-		Graphics2D g2 = internalMap.createGraphics();
-		for (int x=0; x < map.getWidth();x++){
-			for (int y=0; y < map.getHeight();y++) {
-				g2.drawImage(map.sprite[map.getNode(x,y)], null, x*tileX, y*tileY);
-			}
-		}
+		Graphics2D ig2 = internalMap.createGraphics();
+		ig2.drawImage(baseMap, null, 0, 0);
 		Unit unit;
-		for (int i=0;i<map.units.size();i++){
+		Resource res;
+		
+		for (int i=0;i<map.getUnitNum();i++){
 			unit = map.getUnit(i);
-			g2.drawImage(unit.getSprite(), null, (int)unit.getPosition().getX()*tileX, (int)unit.getPosition().getY()*tileY);
+			ig2.drawImage(unit.getSprite(), null, (int)unit.getPosition().getX(), (int)unit.getPosition().getY());
+		}
+		
+		for (int i=0;i<map.getResourceNum();i++){
+			res = map.getResource(i);
+			ig2.drawImage(res.getSprite(), null, res.getX(), res.getY());
 		}
 	}
 	
@@ -74,6 +87,7 @@ public class Canvas extends JPanel implements Moveable {
 	public int getHeight() {
 		return dHeight;
 	}
+	
 	
 	public void move(Direction dir){
 		switch (dir) {
