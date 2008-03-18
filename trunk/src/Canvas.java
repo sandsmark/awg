@@ -4,6 +4,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
 import javax.swing.JPanel;
 
 
@@ -27,6 +31,8 @@ public class Canvas extends JPanel implements Moveable {
 	BufferedImage baseMap;
 	int bx, by, bw, bh = 0 ;
 	boolean showBox = false;
+	ReentrantLock lock = new ReentrantLock();
+	Condition updated = lock.newCondition();
 	
 	public Canvas (Map newMap){
 		map = newMap;
@@ -48,33 +54,43 @@ public class Canvas extends JPanel implements Moveable {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		Graphics g2 = (Graphics2D) g;
-		dWidth = getSize().width;
-		dHeight = getSize().height;
-		g2.drawImage(internalMap, 0, 0, dWidth, dHeight, offsetX, offsetY, offsetX + dWidth, offsetY + dHeight, null);
-		if (showBox) g2.drawRect(bx, by, bw, bh);
+		try {
+			if (!lock.tryLock(500, TimeUnit.MILLISECONDS)) return;
+			Graphics g2 = (Graphics2D) g;
+			dWidth = getSize().width;
+			dHeight = getSize().height;
+			g2.drawImage(internalMap, 0, 0, dWidth, dHeight, offsetX, offsetY, offsetX + dWidth, offsetY + dHeight, null);
+			if (showBox) g2.drawRect(bx, by, bw, bh);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			lock.unlock();
+		}
+
 	}
 	
-	public void updateInternal() {		
+	public void updateInternal() {
+		lock.lock();
 		Graphics2D ig2 = internalMap.createGraphics();
 		ig2.drawImage(baseMap, null, 0, 0);
 		Unit unit;
 		Resource res;
-		
+
 		for (int i=0;i<map.getUnitNum();i++){
-			unit = map.getUnit(i);
-			ig2.drawImage(unit.getSprite(), null, (int)unit.getX(), (int)unit.getY());
+			unit = map.getUnit(i);	
+			ig2.drawImage(unit.getSprite(), null, unit.getX(), unit.getY());
 		}
 		
 		for (int i=0;i<map.getResourceNum();i++){
 			res = map.getResource(i);
 			ig2.drawImage(res.getSprite(), null, res.getX(), res.getY());
 		}
+		lock.unlock();
 	}
 	
 	@Override
 	public Dimension getMinimumSize(){
-		return new Dimension(dWidth, dHeight);
+		return new Dimension(500, 500);
 	}
 	
 	public Dimension getPreferredSize(){
@@ -91,6 +107,7 @@ public class Canvas extends JPanel implements Moveable {
 	
 	
 	public void move(Direction dir){
+		lock.lock();
 		switch (dir) {
 			case UP:
 				if (offsetY > 0) {
@@ -113,7 +130,7 @@ public class Canvas extends JPanel implements Moveable {
 				}
 				break;
 		}
-		
+		lock.unlock();
 		if (dir != Direction.NONE){
 			repaint();
 		}
@@ -132,10 +149,16 @@ public class Canvas extends JPanel implements Moveable {
 	}
 	
 	public void drawSelectBox(int x1, int y1, int x2, int y2) {
-		bx = x1;
-		by = y1;
-		bw = x2 - x1;
-		bh = y2 - y1;
+		if (x1 < x2) 
+			bx = x1;
+		else
+			bx = x2;
+		if (y1 < y2)
+			by = y1;
+		else
+			by = y2;
+		bw = Math.abs(x2 - x1);
+		bh = Math.abs(y2 - y1);
 		showBox = true;
 		repaint();
 	}

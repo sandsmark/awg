@@ -4,6 +4,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 
 public class SelectThread extends Thread {
+	/*
+	 * Thread for selecting.
+	 * Copyright 2008 Martin T. Sandsmark m.fl.
+	 */
 	protected long startT=0;
 	protected int startX, startY, endX, endY;
 	protected boolean started;
@@ -35,19 +39,24 @@ public class SelectThread extends Thread {
 	
 	public void stop(MouseEvent m){
 		lock.lock();
-		if (startT - System.currentTimeMillis() >  10){
+		endX = m.getX();
+		endY = m.getY();
+		System.out.println("x1:"+startX + "x2:"+endX);
+		if (startX != endX && startY != endY){
+			System.out.println("large");
 			map.selectUnits(startX, startY, m.getX(), m.getY());
-		}
-		if (startT != 0)
+		} else if (startT != 0) {
+			System.out.println("klik");
 			map.selectUnit(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
+		}
 		moved.signal();
+		startX = startY = endX = endY = 0;
 		started = false;
 		lock.unlock();
 	}
 	
 	public void moved(MouseEvent m){
-		if (!started)
-			return;
+		if (!started) return;
 		lock.lock();
 		endX = m.getX();
 		endY = m.getY();

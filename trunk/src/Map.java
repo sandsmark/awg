@@ -15,8 +15,8 @@ public class Map {
 	public BufferedImage[] sprite;
 	int uWidth=25; // Unit width in pixels
 	int uHeight=25;
-	ArrayList<Unit> units;
-	ArrayList<Unit> selectedUnits;
+	ArrayList<Unit> units = new ArrayList<Unit>();
+	ArrayList<Unit> selectedUnits = new ArrayList<Unit>();
 	Resource[] resources;
 	Polygon waterShape;
 	
@@ -78,6 +78,7 @@ public class Map {
 	}
 	
 	public void addUnit(Unit unit) {
+		System.out.println(unit);
 		units.add(unit);
 	}
 	
@@ -109,6 +110,14 @@ public class Map {
 		selectedUnits.remove(u);
 	}
 	
+	public Unit getSelectedUnit(int num){
+		return selectedUnits.get(num);
+	}
+	
+	public int getSelectedUnitNum() {
+		return selectedUnits.size();
+	}
+	
 	public void selectUnits(int x1, int y1, int x2, int y2){
 		int x,y;
 		for (int i=0; i<getUnitNum(); i++){
@@ -120,13 +129,16 @@ public class Map {
 	}
 	
 	public void selectUnit(int x, int y) {
+		System.out.println("o hai, finding!");
 		for (int i=0; i<getUnitNum(); i++){
 			int x1 = getUnit(i).getX()+(uHeight/2);
 			int y1 = getUnit(i).getY()+(uHeight/2);
 			int x2 = getUnit(i).getX()+(uHeight/2);
 			int y2 = getUnit(i).getY()+(uHeight/2);
-			if ((y1<y)&&(y2>y)&&(x1<x)&&(x2>x))
+			if ((y1<y)&&(y2>y)&&(x1<x)&&(x2>x)){
+				System.out.println("o hai");
 				selectUnit(getUnit(i));
+			}
 		}
 	}
 }
