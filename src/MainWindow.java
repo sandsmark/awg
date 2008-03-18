@@ -19,14 +19,18 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	Canvas canvas;
 	JButton close;
 	boolean isMoving = false;
+	
 	GraphicsThread gThread;
 	SelectThread sThread;
+	AIThread aiThread;
+	
+	Map map;
 	
 	MainWindow() throws IOException{
+		map = new Map(1000,1000);
 		outer = new JPanel();
-		canvas = new Canvas(new Map(1000,1000));
+		canvas = new Canvas(map);
 		menu = new JPanel();
-		 
 		close = new JButton("Close");
 		close.addActionListener(this);
 		menu.add(close);
@@ -52,6 +56,11 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		
 		sThread = new SelectThread(canvas);
 		sThread.start();
+		
+		aiThread = new AIThread(canvas);
+		aiThread.start();
+		
+		map.addUnit(new Worker(0,10,10));
 	}
 
 	public static void main (String args[]) {
@@ -104,7 +113,6 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	}
 
 	public void mouseExited(MouseEvent m) {
-		sThread.stop(m);
 	}
 
 	public void mousePressed(MouseEvent m) {

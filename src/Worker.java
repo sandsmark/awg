@@ -6,29 +6,30 @@ import javax.imageio.ImageIO;
 
 public class Worker extends Unit {
 //	Bevegelses- og idrettsvitenskap for Dragvoll
-//	Bygg og miljøteknikk for Dragvoll
+//	Bygg og miljï¿½teknikk for Dragvoll
 	
 	private int carrying; //How much resources the worker is carrying, when == 10, go home or something
 
-	public Worker(int faction, Point2D mainBuilding){
+	public Worker(int faction, int x, int y) throws IOException{
 		setMaxHealth(50);
 		setCurrentHealth(getMaxHealth());
 		setDamage(5);
 		setRange(25);
 		setCurrentAction(0);
-		setPosition(mainBuilding +25); //FIXX martin :P
+		setPosition(x+2, y+2); //FIXX martin :P
 		
-		if(faction == 1) setSprite(ImageIO.read(new File("resources/gløs-worker.gif"))); //Gløshaugen
-		else if(faction ==2)setSprite(TheSpriteThatWillRepresentTheUnit); //Dragvoll
+//		if(faction == 1) 
+		setSprite(ImageIO.read(new File("resources/gls-worker.gif"))); //Glï¿½shaugen
+//		else if(faction ==2)setSprite(TheSpriteThatWillRepresentTheUnit); //Dragvoll
 	}
 	
 	public void deliverResource(){
 		//GOTO mainhouse
-		if(getPosition().getX() == mainhouse coord +- 25 || getPosition().getY() == mainhousecoord +-25){
-			int delivered = getCarrying();
-			//increase resource counter with delivered
-			setCarrying(0);
-		}
+//		if(getX() == mainhouse coord +- 25 || getPosition().getY() == mainhousecoord +-25){
+//			int delivered = getCarrying();
+//			//increase resource counter with delivered
+//			setCarrying(0);
+//		}
 	}
 
 	public int getCarrying() {
