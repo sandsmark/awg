@@ -25,7 +25,8 @@ public class Canvas extends JPanel implements Moveable {
 	int step=20;
 	BufferedImage internalMap;
 	BufferedImage baseMap;
-	Unit[] units;
+	int bx, by, bw, bh = 0 ;
+	boolean showBox = false;
 	
 	public Canvas (Map newMap){
 		map = newMap;
@@ -42,7 +43,6 @@ public class Canvas extends JPanel implements Moveable {
 		bg2.fill(map.getWater());
 		
 		internalMap = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D ig2 = internalMap.createGraphics();
 		updateInternal();
 	}
 
@@ -52,6 +52,7 @@ public class Canvas extends JPanel implements Moveable {
 		dWidth = getSize().width;
 		dHeight = getSize().height;
 		g2.drawImage(internalMap, 0, 0, dWidth, dHeight, offsetX, offsetY, offsetX + dWidth, offsetY + dHeight, null);
+		if (showBox) g2.drawRect(bx, by, bw, bh);
 	}
 	
 	public void updateInternal() {		
@@ -77,7 +78,7 @@ public class Canvas extends JPanel implements Moveable {
 	}
 	
 	public Dimension getPreferredSize(){
-		return new Dimension(dWidth, dHeight);
+		return new Dimension(500, 500);
 	}
 	
 	public int getWidth() {
@@ -122,8 +123,25 @@ public class Canvas extends JPanel implements Moveable {
 		return map;
 	}
 	
+	public int getOffsetX() {
+		return offsetX;
+	}
 	
-	public void drawSelectBox(int startX, int startY, double x, double y) {
-		//TODO: Make me!
+	public int getOffsetY() {
+		return offsetY;
+	}
+	
+	public void drawSelectBox(int x1, int y1, int x2, int y2) {
+		bx = x1;
+		by = y1;
+		bw = x2 - x1;
+		bh = y2 - y1;
+		showBox = true;
+		repaint();
+	}
+	
+	public void hideSelectBox() {
+		showBox = false;
+		repaint();
 	}
 }

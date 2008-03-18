@@ -110,7 +110,13 @@ public class Map {
 	}
 	
 	public void selectUnits(int x1, int y1, int x2, int y2){
-		// TODO: Loop through all units, and add those inside the selected to selected list
+		int x,y;
+		for (int i=0; i<getUnitNum(); i++){
+			x = getUnit(i).getX();
+			y = getUnit(i).getY();
+			if ((y1<y)&&(y2>y)&&(x1<x)&&(x2>x))
+				selectUnit(getUnit(i));
+		}
 	}
 	
 	public void selectUnit(int x, int y) {

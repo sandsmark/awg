@@ -1,4 +1,3 @@
-import java.awt.MouseInfo;
 import java.awt.event.MouseEvent;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -6,19 +5,22 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class SelectThread extends Thread {
 	protected long startT=0;
-	protected int startX;
-	protected int startY;
+	protected int startX, startY, endX, endY;
 	protected boolean started;
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition moved = lock.newCondition();
 	protected boolean running;
 	protected Map map;
-	protected MouseEvent mouse;
 	protected Canvas canvas;
 	
 	public SelectThread (Canvas newCanvas) {
 		map = newCanvas.getMap();
 		canvas = newCanvas;
+		running = true;
+	}
+	
+	public void stopThread(){
+		running = false;
 	}
 	
 	public void start(MouseEvent m){
@@ -37,8 +39,9 @@ public class SelectThread extends Thread {
 			map.selectUnits(startX, startY, m.getX(), m.getY());
 		}
 		if (startT != 0)
-			map.selectUnit(m.getX(), m.getY());
+			map.selectUnit(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
 		moved.signal();
+		started = false;
 		lock.unlock();
 	}
 	
@@ -46,26 +49,26 @@ public class SelectThread extends Thread {
 		if (!started)
 			return;
 		lock.lock();
+		endX = m.getX();
+		endY = m.getY();
 		moved.signal();
-		mouse = m;
 		lock.unlock();
 	}
 	
 	public void run() {
 		while (running){
-			// TODO: Hide box
+			lock.lock();
 			if (started) {
-				lock.lock();
-				// TODO: Draw box
-				canvas.drawSelectBox(startX, startY, mouse.getX(), mouse.getY());
-				lock.unlock();
-			}
+				canvas.drawSelectBox(startX, startY, endX, endY);
+			} else {
+				canvas.hideSelectBox();
+			}	
 			try {
 				moved.await();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			lock.unlock();
 		}
 	}
 }
