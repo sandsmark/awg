@@ -93,33 +93,25 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		sThread.moved(e);
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
-		System.out.println("x:"+ x +"y:"+y);
 		
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void mouseExited(MouseEvent m) {
+		sThread.stop(m);
 	}
 
 	public void mousePressed(MouseEvent m) {
 		sThread.start(m);
-		
 	}
 
 	public void mouseReleased(MouseEvent m) {
-		sThread.start(m);
+		sThread.stop(m);
 	}
 }
