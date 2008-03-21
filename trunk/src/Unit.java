@@ -7,8 +7,10 @@ public class Unit {
 	private int damage; //The damage the unit deals
 	private int range; //The unit's attackrange
 	private int currentAction; //0=stand still, 1 = move to target, 2 = attack target 
-	private int [] currentPathX; // Path to current target
-	private int [] currentPathY;
+//	private int [] currentPathX; // Path to current target
+//	private int [] currentPathY; // Will have to wait for someone to implement proper pathfinding
+	private int currentTargetX = -1;
+	private int currentTargetY = -1;
 	Unit targetUnit; //This unit's target unit.
 	private BufferedImage sprite; // Sprite to be drawn. The picture of the unit
 	
@@ -43,18 +45,20 @@ public class Unit {
 	public void setCurrentAction(int currentAction) {
 		this.currentAction = currentAction;
 	}
-	public int[] getCurrentPathX() {
-		return currentPathX;
-	}
-	public void setCurrentPathX(int[] currentPathX) {
-		this.currentPathX = currentPathX;
-	}
-	public int[] getCurrentPathY() {
-		return currentPathY;
-	}
-	public void setCurrentPathY(int[] currentPathY) {
-		this.currentPathY = currentPathY;
-	}
+	
+//	public int[] getCurrentPathX() {
+//		return currentPathX;
+//	}
+//	public void setCurrentPathX(int[] currentPathX) {
+//		this.currentPathX = currentPathX;
+//	}
+//	public int[] getCurrentPathY() {
+//		return currentPathY;
+//	}
+//	public void setCurrentPathY(int[] currentPathY) {
+//		this.currentPathY = currentPathY;
+//	}
+	
 	public Unit getTargetUnit() {
 		return targetUnit;
 	}
@@ -75,9 +79,28 @@ public class Unit {
 		return y;
 	}
 	
+	public void setX(int nx){
+		x = nx;
+	}
+	
+	public void setY(int ny){
+		y = ny;
+	}
+	
 	public void setPosition(int nx, int ny) {
 		y = ny;
 		x = nx;
 	}
-	
+	public int getCurrentTargetX() {
+		return currentTargetX;
+	}
+	public void setCurrentTargetX(int currentTargetX) {
+		this.currentTargetX = currentTargetX;
+	}
+	public int getCurrentTargetY() {
+		return currentTargetY;
+	}
+	public void setCurrentTargetY(int currentTargetY) {
+		this.currentTargetY = currentTargetY;
+	}
 }
