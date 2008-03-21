@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,7 +17,9 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	JPanel outer, menu;
 	Canvas canvas;
 	JButton close;
-	JLabel curUnit;
+	JLabel curUnitText;
+	JLabel curUnitIcon;
+	
 	
 	GraphicsThread gThread;
 	SelectThread sThread;
@@ -35,8 +38,10 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		close.addActionListener(this);
 		menu.add(close);
 
-		curUnit = new JLabel("[]");
-		menu.add(curUnit);
+		curUnitText = new JLabel("[]");
+		curUnitIcon = new JLabel();
+		menu.add(curUnitText);
+		menu.add(curUnitIcon);
 		
 //		menu.setLayout(new GridLayout());
 		outer.setLayout(new GridLayout());
@@ -95,6 +100,11 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	public void exit() {
 		frame.dispose();
 		System.exit(0); 
+	}
+	
+	public void setSeletectedUnit(Unit u){
+		curUnitText.setText(u.toString());
+		curUnitIcon.setIcon(new ImageIcon(u.getSprite()));
 	}
 
 	public void mouseMoved(MouseEvent e) {
