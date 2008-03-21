@@ -41,13 +41,12 @@ public class SelectThread extends Thread {
 		lock.lock();
 		endX = m.getX();
 		endY = m.getY();
-		System.out.println("x1:"+startX + "x2:"+endX);
 		if (startX != endX && startY != endY){
-			System.out.println("large");
 			map.selectUnits(startX, startY, m.getX(), m.getY());
+			canvas.updateInternal();
 		} else if (startT != 0) {
-			System.out.println("klik");
 			map.selectUnit(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
+			canvas.updateInternal();
 		}
 		moved.signal();
 		startX = startY = endX = endY = 0;
@@ -67,7 +66,7 @@ public class SelectThread extends Thread {
 	public void run() {
 		while (running){
 			lock.lock();
-			if (started) {
+			if (started && (System.currentTimeMillis() - startT > 100)) {
 				canvas.drawSelectBox(startX, startY, endX, endY);
 			} else {
 				canvas.hideSelectBox();
