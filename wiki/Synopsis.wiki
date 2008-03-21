@@ -11,7 +11,7 @@ evt. linjeforeningene.
 
 Penger blir samlet fra pengetrær
 
-Bruke en int[][] som intern representasjon for kart.
+Kartet blir ikke representert som en enhet, men heller alle enheter og objekter på kartet har et sett med koordinater.
 
 
 = Sprite sites =
