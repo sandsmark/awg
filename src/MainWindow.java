@@ -1,3 +1,5 @@
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,17 +37,18 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		canvas = new Canvas(map);
 		menu = new JPanel();
 		
+		curUnitIcon = new JLabel();
+		menu.add(curUnitIcon);
+
+		curUnitText = new JLabel("[]");
+		menu.add(curUnitText);
+		
 		close = new JButton("Close");
 		close.addActionListener(this);
 		menu.add(close);
 
-		curUnitText = new JLabel("[]");
-		curUnitIcon = new JLabel();
-		menu.add(curUnitText);
-		menu.add(curUnitIcon);
-		
-//		menu.setLayout(new GridLayout());
-		outer.setLayout(new GridLayout());
+		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
+		outer.setLayout(new BoxLayout(outer,BoxLayout.X_AXIS));
 		
 		canvas.addMouseMotionListener(this);
 		canvas.addMouseListener(this);
