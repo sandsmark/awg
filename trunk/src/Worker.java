@@ -19,7 +19,7 @@ public class Worker extends Unit {
 		setPosition(nx+2, ny+2); //FIXX martin :P
 		
 //		if(faction == 1) 
-		setSprite(ImageIO.read(new File("resources/gls-worker.gif"))); //Gl�shaugen
+		setSprite(ImageIO.read(new File("resources/dragvoll-noe.gif"))); //Gl�shaugen
 //		else if(faction ==2)setSprite(TheSpriteThatWillRepresentTheUnit); //Dragvoll
 	}
 	

@@ -139,6 +139,7 @@ public class Map {
 	}
 	
 	public void selectUnit(int x, int y) {
+		//TODO: Fix this mess, look at how nice his cousin is (selectUnit(int, int, int, int)) kthxbye
 		selectedUnits.clear();
 		int x1 = x - uHeight;
 		int y1 = y - uHeight;
@@ -154,4 +155,12 @@ public class Map {
 			}
 		}
 	}
+	
+	public void moveSelectedTo(int x, int y){
+		for (int i=0;i<getSelectedUnitNum(); i++){
+			getSelectedUnit(i).setCurrentTargetX(x);
+			getSelectedUnit(i).setCurrentTargetY(y);
+		}
+	}
+	
 }

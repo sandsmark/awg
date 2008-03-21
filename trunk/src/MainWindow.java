@@ -28,6 +28,7 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	SelectThread sThread;
 	AIThread aiThread;
 	WindowThread wThread;
+	MovementThread mThread;
 	
 	Map map;
 	
@@ -63,7 +64,6 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		frame.setVisible(true);
 		
 		canvas.repaint();
-		canvas.repaint();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
@@ -79,6 +79,9 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		
 		wThread = new WindowThread(this);
 		wThread.start();
+		
+		mThread = new MovementThread(canvas);
+		mThread.start();
 		
 		//Add testing unit
 		map.addUnit(new Worker(0,10,10));
@@ -104,6 +107,11 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	public void exit() {
 		frame.dispose();
 		System.exit(0); 
+	}
+	
+	public void delSeletectedUnit(){
+		curUnitText.setText(".");
+		curUnitIcon.setIcon(new ImageIcon());
 	}
 	
 	public void setSeletectedUnit(Unit u){
@@ -143,8 +151,13 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	}
 
 	public void mousePressed(MouseEvent m) {
-		// TODO: Check which mousebutton was pressed 
+		if (m.getButton() == m.BUTTON3){
+			map.moveSelectedTo(m.getX(), m.getY());
+			System.out.println("moooving");
+			return;
+		}
 		sThread.start(m);
+		
 	}
 
 	public void mouseReleased(MouseEvent m) {
