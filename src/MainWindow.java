@@ -143,6 +143,7 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	}
 
 	public void mousePressed(MouseEvent m) {
+		// TODO: Check which mousebutton was pressed 
 		sThread.start(m);
 	}
 

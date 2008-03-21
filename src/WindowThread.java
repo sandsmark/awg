@@ -22,18 +22,14 @@ public class WindowThread extends Thread {
 	}
 
 	public void run(){
-		String curText;
 		try {				
 			while (running){
-				curText = "[";
 				for (int i=0; i<map.getSelectedUnitNum(); i++)
 					window.setSeletectedUnit(map.getSelectedUnit(i));
-				
 				Thread.sleep(500);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-
 }
