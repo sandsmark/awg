@@ -10,13 +10,13 @@ public class Worker extends Unit {
 	
 	private int carrying; //How much resources the worker is carrying, when == 10, go home or something
 
-	public Worker(int faction, int x, int y) throws IOException{
+	public Worker(int faction, int nx, int ny) throws IOException{
 		setMaxHealth(50);
 		setCurrentHealth(getMaxHealth());
 		setDamage(5);
 		setRange(25);
 		setCurrentAction(0);
-		setPosition(x+2, y+2); //FIXX martin :P
+		setPosition(nx+2, ny+2); //FIXX martin :P
 		
 //		if(faction == 1) 
 		setSprite(ImageIO.read(new File("resources/gls-worker.gif"))); //Gl�shaugen
@@ -38,5 +38,9 @@ public class Worker extends Unit {
 
 	public void setCarrying(int carrying) {
 		this.carrying = carrying;
+	}
+	
+	public String toString(){
+		return "Worker(x:"+getX()+",y"+getY()+ ")";
 	}
 }

@@ -27,8 +27,8 @@ public class WindowThread extends Thread {
 			while (running){
 				curText = "[";
 				for (int i=0; i<map.getSelectedUnitNum(); i++)
-					curText += map.getSelectedUnit(i).toString();
-				window.curUnit.setText(curText+"]");
+					window.setSeletectedUnit(map.getSelectedUnit(i));
+				
 				Thread.sleep(500);
 			}
 		} catch (InterruptedException e) {
