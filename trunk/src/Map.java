@@ -78,12 +78,14 @@ public class Map {
 	}
 	
 	public void addUnit(Unit unit) {
-		System.out.println(unit);
+		if (units.contains(unit)) return;
 		units.add(unit);
 	}
 	
 	public void removeUnit(Unit unit) {
+		if (!units.contains(unit)) return;
 		units.remove(unit);
+		
 	}
 	
 	public Unit getUnit(int i){
@@ -103,10 +105,12 @@ public class Map {
 	}
 	
 	public void selectUnit(Unit u){
+		if (selectedUnits.contains(u)) return;
 		selectedUnits.add(u);
 	}
 	
 	public void deselectUnit(Unit u){
+		if (!selectedUnits.contains(u)) return;
 		selectedUnits.remove(u);
 	}
 	
@@ -119,6 +123,8 @@ public class Map {
 	}
 	
 	public void selectUnits(int x1, int y1, int x2, int y2){
+		if (x1>x2) x1=(x1^=x2)^(x2^=x1); // swap x1 and x2, ^=xor
+		if (y1>y2) y1=(y1^=y2)^(y2^=y1);
 		int x,y;
 		for (int i=0; i<getUnitNum(); i++){
 			x = getUnit(i).getX();
@@ -128,15 +134,22 @@ public class Map {
 		}
 	}
 	
+	public boolean hasSelectedUnit(Unit u){
+		return selectedUnits.contains(u);
+	}
+	
 	public void selectUnit(int x, int y) {
-		System.out.println("o hai, finding!");
+		selectedUnits.clear();
+		int x1 = x - uHeight;
+		int y1 = y - uHeight;
+		int x2 = x1 + uHeight;
+		int y2 = y1 + uHeight;
+//		System.out.println("x1:" + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
 		for (int i=0; i<getUnitNum(); i++){
-			int x1 = getUnit(i).getX()+(uHeight/2);
-			int y1 = getUnit(i).getY()+(uHeight/2);
-			int x2 = getUnit(i).getX()+(uHeight/2);
-			int y2 = getUnit(i).getY()+(uHeight/2);
-			if ((y1<y)&&(y2>y)&&(x1<x)&&(x2>x)){
-				System.out.println("o hai");
+//			System.out.println("unit :: x:" + getUnit(i).getX() + " y:" + getUnit(i).getY());
+			if ((y1 < getUnit(i).getY()) && (y2 > getUnit(i).getY()) && 
+					(x1 < getUnit(i).getX()) && (x2 > getUnit(i).getX())){
+//				System.out.println("o hai");
 				selectUnit(getUnit(i));
 			}
 		}

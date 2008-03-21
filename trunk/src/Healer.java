@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
@@ -6,15 +7,15 @@ public class Healer extends Unit {
 	private int mana;
 
 	public Healer(int faction, int buildingXcoord, int buildingYcoord){
-		xCoord = buildingXcoord +5;
-		yCoord = buildingYcoord +5;
+		int xCoord = buildingXcoord +5;
+		int yCoord = buildingYcoord +5;
 		setMana(100);
 		setMaxHealth(75);
 		setCurrentHealth(getMaxHealth());
 		setCurrentAction(0);
 		setDamage(10);
-		if(faction == 1) setSprite(sprite); //Gløshaugen
-		else if(faction ==2)setSprite(sprite); //Dragvoll
+		if(faction == 1) setSprite(new BufferedImage(0, 0, 0)); //Glï¿½shaugen
+		else if(faction ==2)setSprite(new BufferedImage(0, 0, 0)); //Dragvoll
 		
 	}
 	

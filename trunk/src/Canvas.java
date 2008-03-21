@@ -79,6 +79,9 @@ public class Canvas extends JPanel implements Moveable {
 		for (int i=0;i<map.getUnitNum();i++){
 			unit = map.getUnit(i);	
 			ig2.drawImage(unit.getSprite(), null, unit.getX(), unit.getY());
+			ig2.setColor(Color.BLUE);
+			if (map.hasSelectedUnit(unit))
+				ig2.drawOval(unit.getX(), unit.getY(), 20, 20);
 		}
 		
 		for (int i=0;i<map.getResourceNum();i++){

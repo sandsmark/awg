@@ -2,29 +2,34 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-public class AIThread extends Thread {
+public class WindowThread extends Thread {
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition update = lock.newCondition();
 	protected Canvas canvas;
 	protected Map map;
+	protected MainWindow window;
 	protected boolean running = false;
-	protected Unit[] units; // units that this AI owns
-
-	public AIThread (Canvas ncanvas){
-		canvas = ncanvas;
+	
+	public WindowThread (MainWindow newWin){
+		window = newWin;
+		canvas = window.getCanvas();
 		map = canvas.getMap();
 		running = true;
 	}
-	
+
 	public void stopThread() {
 		running = false;
 	}
 
 	public void run(){
+		String curText;
 		try {				
 			while (running){
-				
-				sleep(2000);
+				curText = "[";
+				for (int i=0; i<map.getSelectedUnitNum(); i++)
+					curText += map.getSelectedUnit(i).toString();
+				window.curUnit.setText(curText+"]");
+				Thread.sleep(500);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

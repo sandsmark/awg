@@ -1,7 +1,4 @@
-
-
-
-import java.awt.MouseInfo;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -11,6 +8,7 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainWindow implements ActionListener, MouseMotionListener, MouseListener {
@@ -18,11 +16,12 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 	JPanel outer, menu;
 	Canvas canvas;
 	JButton close;
-	boolean isMoving = false;
+	JLabel curUnit;
 	
 	GraphicsThread gThread;
 	SelectThread sThread;
 	AIThread aiThread;
+	WindowThread wThread;
 	
 	Map map;
 	
@@ -31,10 +30,17 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		outer = new JPanel();
 		canvas = new Canvas(map);
 		menu = new JPanel();
+		
 		close = new JButton("Close");
 		close.addActionListener(this);
 		menu.add(close);
 
+		curUnit = new JLabel("[]");
+		menu.add(curUnit);
+		
+//		menu.setLayout(new GridLayout());
+		outer.setLayout(new GridLayout());
+		
 		canvas.addMouseMotionListener(this);
 		canvas.addMouseListener(this);
 		
@@ -51,6 +57,8 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		canvas.repaint();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
+		// Start threads
 		gThread = new GraphicsThread(canvas, 50);
 		gThread.start();
 		
@@ -60,7 +68,12 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		aiThread = new AIThread(canvas);
 		aiThread.start();
 		
+		wThread = new WindowThread(this);
+		wThread.start();
+		
+		//Add testing unit
 		map.addUnit(new Worker(0,10,10));
+		canvas.updateInternal(); // Should be called whenever the map updates 
 	}
 
 	public static void main (String args[]) {
@@ -121,5 +134,9 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 
 	public void mouseReleased(MouseEvent m) {
 		sThread.stop(m);
+	}
+	
+	public Canvas getCanvas() {
+		return canvas;
 	}
 }
