@@ -8,6 +8,8 @@ public class MovementThread extends Thread {
 	protected Map map;
 	protected Canvas canvas;
 	protected boolean running = false;
+	protected double speed = 2.5;
+	protected double last = System.currentTimeMillis();
 	
 	public MovementThread (Canvas newCanvas){
 		map = newCanvas.getMap();
@@ -21,6 +23,7 @@ public class MovementThread extends Thread {
 
 	public void run(){
 		int tarX, tarY, curX, curY;
+		int dMove;
 		try {				
 			while (running){
 				sleep(50);
@@ -28,13 +31,14 @@ public class MovementThread extends Thread {
 					tarX = map.getUnit(i).getCurrentTargetX();
 					tarY = map.getUnit(i).getCurrentTargetY();
 					if ((tarX!=-1)&&(tarY!=-1)){
-						System.out.println(tarY);
+						dMove = (int)((System.currentTimeMillis() - last) / 100 * speed); 
+						last = System.currentTimeMillis();
 						curX = map.getUnit(i).getX();
 						curY = map.getUnit(i).getY();
-						if (tarX > curX) map.getUnit(i).setX(curX+1);
-						if (tarY > curY) map.getUnit(i).setY(curY+1);
-						if (tarX < curX) map.getUnit(i).setX(curX-1);
-						if (tarY < curY) map.getUnit(i).setY(curY-1);
+						if (tarX > curX) map.getUnit(i).setX(curX+dMove);
+						if (tarY > curY) map.getUnit(i).setY(curY+dMove);
+						if (tarX < curX) map.getUnit(i).setX(curX-dMove);
+						if (tarY < curY) map.getUnit(i).setY(curY-dMove);
 						canvas.updateInternal();
 						canvas.repaint();
 					}
