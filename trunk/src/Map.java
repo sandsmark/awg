@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Map {
-	public int [][] map;
+	public int [][] pathMap;
 	public int width;
 	public int height;
 	public BufferedImage[] sprite;
@@ -25,6 +25,8 @@ public class Map {
 		height = nHeight;
 		width = nWidth; 
 		units = new ArrayList<Unit>();
+		pathMap = new int[width][height];
+		//TODO: Fill pathmap
 		
 		try {
 		    sprite[0] = ImageIO.read(new File("resources/grass.png"));
@@ -61,16 +63,8 @@ public class Map {
 		return width;
 	}
 	
-	public int getNode(int x, int y){
-		if (x<0||x > getWidth()) {
-			System.err.println(x);
-			return 0;
-		}
-		if (y<0||y > getHeight()) {
-			System.err.println(y);
-			return 0;
-		}
-		return map[x][y];
+	public int [][] getPathMap (){
+		return pathMap;
 	}
 	
 	public Shape getWater(){
