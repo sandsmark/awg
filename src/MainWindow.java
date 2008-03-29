@@ -92,7 +92,6 @@ public class MainWindow implements ActionListener, MouseMotionListener, MouseLis
 		try {
 			new MainWindow();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
