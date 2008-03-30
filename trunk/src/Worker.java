@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 
 import javax.imageio.ImageIO;
@@ -16,11 +17,11 @@ public class Worker extends Unit {
 		setDamage(5);
 		setRange(25);
 		setCurrentAction(0);
-		setPosition(nx+2, ny+2); //FIXX martin :P
+		setPosition(new Point(nx+2, ny+2)); //FIXX martin :P
+		setFaction(1);
 		
-//		if(faction == 1) 
-		setSprite(ImageIO.read(new File("resources/dragvoll-noe.gif"))); //Gl�shaugen
-//		else if(faction ==2)setSprite(TheSpriteThatWillRepresentTheUnit); //Dragvoll
+		if(getFaction() == 0) setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); //Gl�shaugen
+		else setSprite(ImageIO.read(new File("resources/gls-worker.png"))); //Dragvoll
 	}
 	
 	public void deliverResource(){
@@ -41,6 +42,6 @@ public class Worker extends Unit {
 	}
 	
 	public String toString(){
-		return "Worker(x:"+getX()+",y"+getY()+ ")";
+		return "Worker(x:" + getPosition().x + ",y" + getPosition().y + ")";
 	}
 }

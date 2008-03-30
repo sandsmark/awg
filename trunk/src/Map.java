@@ -1,7 +1,9 @@
 
 
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +27,9 @@ public class Map {
 		height = nHeight;
 		width = nWidth; 
 		units = new ArrayList<Unit>();
-		pathMap = new int[width][height];
-		//TODO: Fill pathmap
+		pathMap = new int[width/10][height/10];
+		int x,y;
+		for (x=0; x<pathMap.length; x++) for (y=0; y<pathMap[0].length; y++) pathMap[x][y] = 0;
 		
 		try {
 		    sprite[0] = ImageIO.read(new File("resources/grass.png"));
@@ -39,11 +42,20 @@ public class Map {
 		System.out.println(width + "."+height);
 		// Add water to the map
 		waterShape = new Polygon();
-		int x,y;
+		
 		for (long i=0;i<6.28;i++) {
 			x = (int)(Math.cos(i)*width/4)+width/2;
 			y = (int)(Math.sin(i)*height/4)+height/2;
 			waterShape.addPoint(x,y);
+		}
+		
+		for (x=0; x<pathMap.length; x++) {
+			for (y=0; y<pathMap[0].length; y++){
+				if (waterShape.contains(new Point(x,y))) pathMap[x][y] = -1;
+				if (waterShape.contains(new Point(x+10,y))) pathMap[x][y] = -1;
+				if (waterShape.contains(new Point(x,y+10))) pathMap[x][y] = -1;
+				if (waterShape.contains(new Point(x+10,y+10))) pathMap[x][y] = -1;
+			}
 		}
 		
 		// Add resources to the map
@@ -121,8 +133,8 @@ public class Map {
 		if (y1>y2) y1=(y1^=y2)^(y2^=y1);
 		int x,y;
 		for (int i=0; i<getUnitNum(); i++){
-			x = getUnit(i).getX();
-			y = getUnit(i).getY();
+			x = getUnit(i).getPosition().x;
+			y = getUnit(i).getPosition().y;
 			if ((y1<y)&&(y2>y)&&(x1<x)&&(x2>x))
 				selectUnit(getUnit(i));
 		}
@@ -142,18 +154,19 @@ public class Map {
 //		System.out.println("x1:" + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
 		for (int i=0; i<getUnitNum(); i++){
 //			System.out.println("unit :: x:" + getUnit(i).getX() + " y:" + getUnit(i).getY());
-			if ((y1 < getUnit(i).getY()) && (y2 > getUnit(i).getY()) && 
-					(x1 < getUnit(i).getX()) && (x2 > getUnit(i).getX())){
+			if ((y1 < getUnit(i).getPosition().y) && (y2 > getUnit(i).getPosition().y) && 
+					(x1 < getUnit(i).getPosition().x) && (x2 > getUnit(i).getPosition().x)){
 //				System.out.println("o hai");
 				selectUnit(getUnit(i));
 			}
 		}
 	}
 	
-	public void moveSelectedTo(int x, int y){
+	public void moveSelectedTo(int tarX, int tarY){
+		Path path;
 		for (int i=0;i<getSelectedUnitNum(); i++){
-			getSelectedUnit(i).setCurrentTargetX(x);
-			getSelectedUnit(i).setCurrentTargetY(y);
+			path = new Path(this, getSelectedUnit(i).getPosition().x, getSelectedUnit(i).getPosition().y, tarX, tarY);
+			getSelectedUnit(i).setPath(path);
 		}
 	}
 	

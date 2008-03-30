@@ -31,6 +31,7 @@ public class Canvas extends JPanel implements Moveable {
 	BufferedImage baseMap;
 	int bx, by, bw, bh = 0 ;
 	boolean showBox = false;
+	boolean dirty = false;
 	ReentrantLock lock = new ReentrantLock();
 	Condition updated = lock.newCondition();
 	
@@ -56,6 +57,10 @@ public class Canvas extends JPanel implements Moveable {
 	public void paintComponent(Graphics g) {
 		try {
 			if (!lock.tryLock(500, TimeUnit.MILLISECONDS)) return;
+			if (dirty) {
+				updateInternal();
+				dirty = false;
+			}
 			Graphics g2 = (Graphics2D) g;
 			dWidth = getSize().width;
 			dHeight = getSize().height;
@@ -78,10 +83,10 @@ public class Canvas extends JPanel implements Moveable {
 
 		for (int i=0;i<map.getUnitNum();i++){
 			unit = map.getUnit(i);	
-			ig2.drawImage(unit.getSprite(), null, unit.getX(), unit.getY());
+			ig2.drawImage(unit.getSprite(), null, unit.getPosition().x, unit.getPosition().y);
 			ig2.setColor(Color.BLUE);
 			if (map.hasSelectedUnit(unit))
-				ig2.drawOval(unit.getX(), unit.getY(), 20, 20);
+				ig2.drawOval(unit.getPosition().x, unit.getPosition().y, 20, 20);
 		}
 		
 		for (int i=0;i<map.getResourceNum();i++){
@@ -169,5 +174,9 @@ public class Canvas extends JPanel implements Moveable {
 	public void hideSelectBox() {
 		showBox = false;
 		repaint();
+	}
+	
+	public void setDirty() {
+		dirty = true;
 	}
 }

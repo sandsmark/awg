@@ -1,20 +1,27 @@
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Unit {
-	private int x,y;
+	private Point position;
 	private int maxHealth; //The unit's max health
 	private int CurrentHealth; //The unit's current HP
 	private int damage; //The damage the unit deals
-	private int range; //The unit's attackrange
+	private int range; //The unit's attack range
 	private int currentAction; //0=stand still, 1 = move to target, 2 = attack target 
-//	private int [] currentPathX; // Path to current target
-//	private int [] currentPathY; // Will have to wait for someone to implement proper pathfinding
+	private Path path;
 	private int currentTargetX = -1;
 	private int currentTargetY = -1;
 	Unit targetUnit; //This unit's target unit.
+	Resource targetResource;
 	private BufferedImage sprite; // Sprite to be drawn. The picture of the unit
+	private int faction;
 	
-	
+	public int getFaction() {
+		return faction;
+	}
+	public void setFaction(int faction) {
+		this.faction = faction;
+	}
 	public int getMaxHealth() {
 		return maxHealth;
 	}
@@ -46,19 +53,12 @@ public class Unit {
 		this.currentAction = currentAction;
 	}
 	
-//	public int[] getCurrentPathX() {
-//		return currentPathX;
-//	}
-//	public void setCurrentPathX(int[] currentPathX) {
-//		this.currentPathX = currentPathX;
-//	}
-//	public int[] getCurrentPathY() {
-//		return currentPathY;
-//	}
-//	public void setCurrentPathY(int[] currentPathY) {
-//		this.currentPathY = currentPathY;
-//	}
-	
+	public Path getPath() {
+		return path;
+	}
+	public void setPath(Path path) {
+		this.path = path;
+	}
 	public Unit getTargetUnit() {
 		return targetUnit;
 	}
@@ -71,26 +71,15 @@ public class Unit {
 	public void setSprite(BufferedImage sprite) {
 		this.sprite = sprite;
 	}
-	public int getX() {
-		return x;
+
+
+	public Point getPosition () {
+		return position;
+	}
+	public void setPosition (Point p) {
+		position = p;
 	}
 	
-	public int getY() {
-		return y;
-	}
-	
-	public void setX(int nx){
-		x = nx;
-	}
-	
-	public void setY(int ny){
-		y = ny;
-	}
-	
-	public void setPosition(int nx, int ny) {
-		y = ny;
-		x = nx;
-	}
 	public int getCurrentTargetX() {
 		return currentTargetX;
 	}
