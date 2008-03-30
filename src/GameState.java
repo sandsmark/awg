@@ -1,7 +1,10 @@
 
 public class GameState {
-	private Map map;
+	
 	private Canvas canvas;
+	private Config config = new Config();
+	private SelectedUnits selectedUnits = new SelectedUnits();
+	private Map map = new Map(1000,1000);
 	
 	private GameState() {}
 
@@ -21,5 +24,11 @@ public class GameState {
 		return GameStateHolder.state.canvas;
 	}
 	
+	public static Config getConfig() {
+		return GameStateHolder.state.config;
+	}
 	
+	public static SelectedUnits getSelectedUnits() {
+		return GameStateHolder.state.selectedUnits;
+	}
 }
