@@ -1,6 +1,4 @@
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeSet;
 
@@ -8,6 +6,8 @@ import java.util.TreeSet;
 public class Path implements Comparable<Path> {
 	Stack<WeightedNode> path;
 	int cur;
+	int tarX, tarY; //For a-star to work correctly, we need to know the distance to the target node
+	
 	public Path (Map map, int curX, int curY, int tarX, int tarY) {
 		curX /= 10; // Divide by ten, hairy, but works
 		curY /= 10;
@@ -21,41 +21,39 @@ public class Path implements Comparable<Path> {
 			for (int y=0; y<pmap[0].length; y++) 
 				nmap[x][y] = new WeightedNode(x,y,pmap[x][y]);
 		
-		
-		Path fpath;
 		ArrayList<WeightedNode> closed = new ArrayList<WeightedNode>();// Closed
 		TreeSet<Path> queue = new TreeSet<Path>();			 //Queue of paths
-		queue.add(new Path(curX, curY, pmap[curX][curY]));	// Add path with only starting point
+		queue.add(new Path(curX, curY, pmap[curX][curY], tarX, tarY));	// Add path with only starting point
 		
-		Path curP;
+		Path p;
 		WeightedNode point;
 		while (!queue.isEmpty()) {
-			queue.remove(curP = queue.last()); // The last is the one with the lowest weight.
-			point = curP.getEnd();
+			queue.remove(p = queue.last()); // The last is the one with the lowest weight.
+			point = p.getEnd();
 			if (closed.contains(point)) continue;
 			if (point.x == tarX && point.y == tarY) {
-				path = curP.getPath();
+				path = p.getPath();
 				return;
 			}
 			closed.add(point);
 			if (point.x < pmap.length - 1) {
-				queue.add(new Path(curP, nmap[point.x+1][point.y]));
+				queue.add(new Path(p, nmap[point.x+1][point.y]));
 				if (point.y > 0)
-					queue.add(new Path(curP, nmap[point.x+1][point.y-1]));
+					queue.add(new Path(p, nmap[point.x+1][point.y-1]));
 				if (point.y < pmap[0].length - 1)
-					queue.add(new Path(curP, nmap[point.x+1][point.y+1]));
+					queue.add(new Path(p, nmap[point.x+1][point.y+1]));
 			}
-			if (point.y < pmap[0].length - 1) queue.add(new Path(curP, nmap[point.x][point.y+1]));
+			if (point.y < pmap[0].length - 1) queue.add(new Path(p, nmap[point.x][point.y+1]));
 			if (point.x > 0) {
-				queue.add(new Path(curP, nmap[point.x-1][point.y]));
+				queue.add(new Path(p, nmap[point.x-1][point.y]));
 				if (point.y > 0)
-					queue.add(new Path(curP, nmap[point.x-1][point.y-1]));
+					queue.add(new Path(p, nmap[point.x-1][point.y-1]));
 				if (point.y < pmap[0].length - 1)
-					queue.add(new Path(curP, nmap[point.x-1][point.y+1]));
+					queue.add(new Path(p, nmap[point.x-1][point.y+1]));
 			}
-			if (point.y > 0) queue.add(new Path(curP, nmap[point.x][point.y - 1]));
+			if (point.y > 0) queue.add(new Path(p, nmap[point.x][point.y - 1]));
 		}
-		path = new Path(curX, curY, pmap[curX][curY]).getPath(); // Gief aus, close to an empty path
+		path = new Path(curX, curY, pmap[curX][curY], tarX, tarY).getPath(); // Gief aus, close to an empty path
 		return;
 	}
 	
@@ -63,7 +61,9 @@ public class Path implements Comparable<Path> {
 		return path.pop();
 	}
 	
-	public Path(int x, int y, int weight) { // Create a path with only one node/point.
+	public Path(int x, int y, int weight, int tarX, int tarY) { // Create a path with only one node/point.
+		this.tarX = tarX;
+		this.tarY = tarY;
 		path = new Stack<WeightedNode>();
 		path.add(new WeightedNode(x, y, weight));
 	}
@@ -95,10 +95,11 @@ public class Path implements Comparable<Path> {
 		for (int i=0; i<path.size(); i++) {
 			sum += path.get(i).weight;
 		}
+		sum += Math.sqrt(Math.pow(tarX - path.lastElement().x, 2) + Math.pow(tarY - path.lastElement().y, 2)); // Pythagoras
+		// ^ Square root ((Target x - current x)² + (Target y - current y)²)   
 		return sum;
 	}
 
-	@Override
 	public int compareTo(Path p) {
 		int oWeight = p.getWeight();
 		int tWeight = this.getWeight();
