@@ -6,29 +6,29 @@ import java.util.TreeSet;
 
 
 public class Path implements Comparable<Path> {
-	Stack<NodePoint> path;
+	Stack<WeightedNode> path;
 	int cur;
 	public Path (Map map, int curX, int curY, int tarX, int tarY) {
 		curX /= 10; // Divide by ten, hairy, but works
 		curY /= 10;
 		tarX /= 10;
 		tarY /= 10;
-		path = new Stack<NodePoint>();
+		path = new Stack<WeightedNode>();
 		int [][] pmap = map.getPathMap();
-		NodePoint[][] nmap = new NodePoint[pmap.length][pmap[0].length];
+		WeightedNode[][] nmap = new WeightedNode[pmap.length][pmap[0].length];
 		
 		for (int x=0; x<pmap.length; x++)
 			for (int y=0; y<pmap[0].length; y++) 
-				nmap[x][y] = new NodePoint(x,y,pmap[x][y]);
+				nmap[x][y] = new WeightedNode(x,y,pmap[x][y]);
 		
 		
 		Path fpath;
-		ArrayList<NodePoint> closed = new ArrayList<NodePoint>();// Closed
+		ArrayList<WeightedNode> closed = new ArrayList<WeightedNode>();// Closed
 		TreeSet<Path> queue = new TreeSet<Path>();			 //Queue of paths
 		queue.add(new Path(curX, curY, pmap[curX][curY]));	// Add path with only starting point
 		
 		Path curP;
-		NodePoint point;
+		WeightedNode point;
 		while (!queue.isEmpty()) {
 			queue.remove(curP = queue.last()); // The last is the one with the lowest weight.
 			point = curP.getEnd();
@@ -59,34 +59,34 @@ public class Path implements Comparable<Path> {
 		return;
 	}
 	
-	public NodePoint pop() {
+	public WeightedNode pop() {
 		return path.pop();
 	}
 	
 	public Path(int x, int y, int weight) { // Create a path with only one node/point.
-		path = new Stack<NodePoint>();
-		path.add(new NodePoint(x, y, weight));
+		path = new Stack<WeightedNode>();
+		path.add(new WeightedNode(x, y, weight));
 	}
 	
-	public Path (Path old, NodePoint endPoint) { // Create new path based on old path and a new endpoint
-		path = new Stack<NodePoint>();
+	public Path (Path old, WeightedNode endPoint) { // Create new path based on old path and a new endpoint
+		path = new Stack<WeightedNode>();
 		path.addAll(old.getPath());
 		path.add(endPoint);
 	}
 	
 	public Path(){
-		path = new Stack<NodePoint>();
+		path = new Stack<WeightedNode>();
 	}
 	
-	public Stack<NodePoint> getPath() {
+	public Stack<WeightedNode> getPath() {
 		return path;
 	}
 	
-	public void addPoint(NodePoint p) {
+	public void addPoint(WeightedNode p) {
 		path.add(p);
 	}
 	
-	public NodePoint getEnd() {
+	public WeightedNode getEnd() {
 		return path.lastElement();
 	}
 	
