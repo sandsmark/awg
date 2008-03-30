@@ -1,30 +1,30 @@
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class GraphicsThread extends Thread{
+public class GraphicsThread extends Thread {
 	protected Moveable m;
 	protected Moveable.Direction curdir;
 	protected boolean running;
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition updated = lock.newCondition();
-	protected long sleeptime=0;
-	
+	protected long sleeptime = 0;
 
-	GraphicsThread (Moveable m,long s) {
-		this.m=m;
-		this.sleeptime=s;
-		this.running=true;
-		this.curdir=Moveable.Direction.NONE;
+	GraphicsThread(Moveable m, long s) {
+		this.m = m;
+		this.sleeptime = s;
+		this.running = true;
+		this.curdir = Moveable.Direction.NONE;
 	}
-	
-	public void stopThread(){
-		this.running=false;
+
+	public void stopThread() {
+		this.running = false;
 	}
-	
-	public void run () {
-		while(running){
+
+	@Override
+	public void run() {
+		while (running) {
 			lock.lock();
-			if(curdir!=Moveable.Direction.NONE){
+			if (curdir != Moveable.Direction.NONE) {
 				m.move(curdir);
 				lock.unlock();
 				try {
@@ -32,7 +32,7 @@ public class GraphicsThread extends Thread{
 				} catch (InterruptedException e) {
 					System.err.println("Interrupted sleep");
 				}
-			}else{
+			} else {
 				try {
 					updated.await();
 				} catch (InterruptedException e) {
@@ -42,22 +42,23 @@ public class GraphicsThread extends Thread{
 			}
 		}
 	}
-	
+
 	public void setDirection(Moveable.Direction dir) {
 		lock.lock();
-		curdir=dir;
+		curdir = dir;
 		updated.signal();
 		lock.unlock();
-		
+
 	}
-	public Moveable.Direction getDirection(){
-		try{
+
+	public Moveable.Direction getDirection() {
+		try {
 			lock.lock();
 			return curdir;
-		} catch (Exception e){
+		} catch (Exception e) {
 			System.err.println("exception while getting direction");
 			return Moveable.Direction.NONE;
-		}finally{
+		} finally {
 			lock.unlock();
 		}
 	}

@@ -1,36 +1,38 @@
 import java.io.File;
 import java.io.IOException;
 import java.awt.Point;
-import java.awt.geom.Point2D;
-
 import javax.imageio.ImageIO;
 
 public class Worker extends Unit {
-//	Bevegelses- og idrettsvitenskap for Dragvoll
-//	Bygg og milj�teknikk for Dragvoll
-	
-	private int carrying; //How much resources the worker is carrying, when == 10, go home or something
+	// Bevegelses- og idrettsvitenskap for Dragvoll
+	// Bygg og milj�teknikk for Dragvoll
 
-	public Worker(int faction, int nx, int ny) throws IOException{
+	private int carrying; // How much resources the worker is carrying, when
+							// == 10, go home or something
+
+	public Worker(int faction, int nx, int ny) throws IOException {
 		setMaxHealth(50);
 		setCurrentHealth(getMaxHealth());
 		setDamage(5);
 		setRange(25);
 		setCurrentAction(0);
-		setPosition(new Point(nx+2, ny+2)); //FIXX martin :P
+		setPosition(new Point(nx + 2, ny + 2)); // FIXX martin :P
 		setFaction(1);
-		
-		if(getFaction() == 0) setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); //Gl�shaugen
-		else setSprite(ImageIO.read(new File("resources/gls-worker.png"))); //Dragvoll
+
+		if (getFaction() == 0)
+			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); // Gl�shaugen
+		else
+			setSprite(ImageIO.read(new File("resources/gls-worker.png"))); // Dragvoll
 	}
-	
-	public void deliverResource(){
-		//GOTO mainhouse
-//		if(getX() == mainhouse coord +- 25 || getPosition().getY() == mainhousecoord +-25){
-//			int delivered = getCarrying();
-//			//increase resource counter with delivered
-//			setCarrying(0);
-//		}
+
+	public void deliverResource() {
+		// GOTO mainhouse
+		// if(getX() == mainhouse coord +- 25 || getPosition().getY() ==
+		// mainhousecoord +-25){
+		// int delivered = getCarrying();
+		// //increase resource counter with delivered
+		// setCarrying(0);
+		// }
 	}
 
 	public int getCarrying() {
@@ -40,8 +42,9 @@ public class Worker extends Unit {
 	public void setCarrying(int carrying) {
 		this.carrying = carrying;
 	}
-	
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Worker(x:" + getPosition().x + ",y" + getPosition().y + ")";
 	}
 }

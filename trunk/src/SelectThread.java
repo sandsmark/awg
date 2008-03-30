@@ -2,13 +2,11 @@ import java.awt.event.MouseEvent;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-
 public class SelectThread extends Thread {
 	/*
-	 * Thread for selecting.
-	 * Copyright 2008 Martin T. Sandsmark m.fl.
+	 * Thread for selecting. Copyright 2008 Martin T. Sandsmark m.fl.
 	 */
-	protected long startT=0;
+	protected long startT = 0;
 	protected int startX, startY, endX, endY;
 	protected boolean started;
 	protected ReentrantLock lock = new ReentrantLock();
@@ -16,18 +14,18 @@ public class SelectThread extends Thread {
 	protected boolean running;
 	protected Map map;
 	protected Canvas canvas;
-	
-	public SelectThread (Canvas newCanvas) {
+
+	public SelectThread(Canvas newCanvas) {
 		map = newCanvas.getMap();
 		canvas = newCanvas;
 		running = true;
 	}
-	
-	public void stopThread(){
+
+	public void stopThread() {
 		running = false;
 	}
-	
-	public void start(MouseEvent m){
+
+	public void start(MouseEvent m) {
 		lock.lock();
 		startT = System.currentTimeMillis();
 		startX = m.getX();
@@ -36,16 +34,17 @@ public class SelectThread extends Thread {
 		moved.signal();
 		lock.unlock();
 	}
-	
-	public void stop(MouseEvent m){
+
+	public void stop(MouseEvent m) {
 		lock.lock();
 		endX = m.getX();
 		endY = m.getY();
-		if (startX != endX && startY != endY){
+		if (startX != endX && startY != endY) {
 			map.selectUnits(startX, startY, m.getX(), m.getY());
 			canvas.updateInternal();
 		} else if (startT != 0) {
-			map.selectUnit(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
+			map.selectUnit(m.getX() + canvas.getOffsetX(), m.getY()
+					+ canvas.getOffsetY());
 			canvas.updateInternal();
 		}
 		moved.signal();
@@ -53,24 +52,26 @@ public class SelectThread extends Thread {
 		started = false;
 		lock.unlock();
 	}
-	
-	public void moved(MouseEvent m){
-		if (!started) return;
+
+	public void moved(MouseEvent m) {
+		if (!started)
+			return;
 		lock.lock();
 		endX = m.getX();
 		endY = m.getY();
 		moved.signal();
 		lock.unlock();
 	}
-	
+
+	@Override
 	public void run() {
-		while (running){
+		while (running) {
 			lock.lock();
 			if (started && (System.currentTimeMillis() - startT > 100)) {
 				canvas.drawSelectBox(startX, startY, endX, endY);
 			} else {
 				canvas.hideSelectBox();
-			}	
+			}
 			try {
 				moved.await();
 			} catch (InterruptedException e) {
