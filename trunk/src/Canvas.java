@@ -78,6 +78,7 @@ public class Canvas extends JPanel implements Moveable {
 	}
 
 	public void updateInternal() {
+		SelectedUnits selectedUnits = GameState.getSelectedUnits();
 		lock.lock();
 		Graphics2D ig2 = internalMap.createGraphics();
 		ig2.drawImage(baseMap, null, 0, 0);
@@ -89,7 +90,7 @@ public class Canvas extends JPanel implements Moveable {
 			ig2.drawImage(unit.getSprite(), null, unit.getPosition().x, unit
 					.getPosition().y);
 			ig2.setColor(Color.BLUE);
-			if (map.hasSelectedUnit(unit))
+			if (selectedUnits.contains(unit))
 				ig2
 						.drawOval(unit.getPosition().x, unit.getPosition().y,
 								20, 20);

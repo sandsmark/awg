@@ -36,14 +36,15 @@ public class SelectThread extends Thread {
 	}
 
 	public void stop(MouseEvent m) {
+		SelectedUnits selectedUnits = GameState.getSelectedUnits();
 		lock.lock();
 		endX = m.getX();
 		endY = m.getY();
 		if (startX != endX && startY != endY) {
-			map.selectUnits(startX, startY, m.getX(), m.getY());
+			selectedUnits.select(startX, startY, m.getX(), m.getY());
 			canvas.updateInternal();
 		} else if (startT != 0) {
-			map.selectUnit(m.getX() + canvas.getOffsetX(), m.getY()
+			selectedUnits.select(m.getX() + canvas.getOffsetX(), m.getY()
 					+ canvas.getOffsetY());
 			canvas.updateInternal();
 		}

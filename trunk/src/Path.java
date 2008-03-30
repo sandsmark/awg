@@ -44,7 +44,7 @@ public class Path implements Comparable<Path> {
 				path = p.getPath();
 				return;
 			}
-			System.out.println(p);
+//			System.out.println(p);
 			closed.add(point);
 			if (point.x < pmap.length - 1) {
 				queue.add(new Path(p, nmap[point.x + 1][point.y]));

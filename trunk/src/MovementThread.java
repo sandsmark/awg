@@ -25,12 +25,13 @@ public class MovementThread extends Thread {
 	public void run() {
 		try {
 			while (running) {
-				sleep(150);
+				sleep(1000);
 				for (int i = 0; i < map.getUnitNum(); i++) {
+					System.out.println(i);
 					if (map.getUnit(i).move() != 0)
 						canvas.setDirty();
-					canvas.repaint();
 				}
+				canvas.repaint();
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

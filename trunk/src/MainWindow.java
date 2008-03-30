@@ -30,7 +30,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	Map map;
 
 	MainWindow() throws IOException {
-		map = new Map(1000, 1000);
+		map = GameState.getMap();
 		outer = new JPanel();
 		canvas = new Canvas(map);
 		menu = new JPanel();
@@ -147,8 +147,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	public void mousePressed(MouseEvent m) {
 		if (m.getButton() == MouseEvent.BUTTON3) {
-			map.moveSelectedTo(m.getX(), m.getY());
-			System.out.println("moooving");
+			GameState.getSelectedUnits().moveSelectedTo(m.getX(), m.getY());
 			return;
 		}
 		sThread.start(m);
