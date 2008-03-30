@@ -9,6 +9,7 @@ public class Path implements Comparable<Path> {
 	int tarX, tarY; //For a-star to work correctly, we need to know the distance to the target node
 	
 	public Path (Map map, int curX, int curY, int tarX, int tarY) {
+		System.out.println("generating path...");
 		curX /= 10; // Divide by ten, hairy, but works
 		curY /= 10;
 		tarX /= 10;
@@ -32,9 +33,11 @@ public class Path implements Comparable<Path> {
 			point = p.getEnd();
 			if (closed.contains(point)) continue;
 			if (point.x == tarX && point.y == tarY) {
+				System.out.println(p.getPath());
 				path = p.getPath();
 				return;
 			}
+			System.out.println(p);
 			closed.add(point);
 			if (point.x < pmap.length - 1) {
 				queue.add(new Path(p, nmap[point.x+1][point.y]));
@@ -53,8 +56,8 @@ public class Path implements Comparable<Path> {
 			}
 			if (point.y > 0) queue.add(new Path(p, nmap[point.x][point.y - 1]));
 		}
-		path = new Path(curX, curY, pmap[curX][curY], tarX, tarY).getPath(); // Gief aus, close to an empty path
-		return;
+		System.out.println("did not find a path, quitting");
+		path = null;
 	}
 	
 	public WeightedNode pop() {
@@ -106,5 +109,9 @@ public class Path implements Comparable<Path> {
 		if (oWeight > tWeight) return -1;
 		else if (oWeight < tWeight) return 1;
 		else return 0;
+	}
+	
+	public int getLength() {
+		return path.size();
 	}
 }

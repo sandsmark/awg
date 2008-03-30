@@ -9,12 +9,13 @@ public class Unit {
 	private int range; //The unit's attack range
 	private int currentAction; //0=stand still, 1 = move to target, 2 = attack target 
 	private Path path;
-	private int currentTargetX = -1;
-	private int currentTargetY = -1;
+	private Point currentTarget;
 	Unit targetUnit; //This unit's target unit.
 	Resource targetResource;
 	private BufferedImage sprite; // Sprite to be drawn. The picture of the unit
 	private int faction;
+	private double speed = 2.5;
+	private double lastMove = 0;
 	
 	public int getFaction() {
 		return faction;
@@ -57,6 +58,7 @@ public class Unit {
 		return path;
 	}
 	public void setPath(Path path) {
+		lastMove = System.currentTimeMillis();
 		this.path = path;
 	}
 	public Unit getTargetUnit() {
@@ -80,16 +82,32 @@ public class Unit {
 		position = p;
 	}
 	
-	public int getCurrentTargetX() {
-		return currentTargetX;
-	}
-	public void setCurrentTargetX(int currentTargetX) {
-		this.currentTargetX = currentTargetX;
-	}
-	public int getCurrentTargetY() {
-		return currentTargetY;
-	}
-	public void setCurrentTargetY(int currentTargetY) {
-		this.currentTargetY = currentTargetY;
+	
+	public int move () {
+		if (path == null ||path.getPath() == null) return 0; // Return codes: 0 = Not moved, do not repaint, 1 = repaint
+		int dMove = (int)((System.currentTimeMillis() - lastMove) / 100 * speed);
+		lastMove = System.currentTimeMillis();
+		if (currentTarget == null) currentTarget = path.pop();
+		if (currentTarget.distance(position) < 5) {
+			if (path.getLength() > 0)
+				currentTarget = path.pop();
+			else {
+				path = null;
+				return 0;
+			}
+		}
+		
+		int newX = position.x;
+		int newY = position.y;
+		
+		if (currentTarget.x * 10 > position.x) newX = position.x + dMove;
+		if (currentTarget.x * 10 < position.x) newX = position.x - dMove;
+		if (currentTarget.y * 10 > position.y) newY = position.y + dMove;
+		if (currentTarget.y * 10 < position.y) newY = position.y - dMove;
+		System.out.println("moving unit::::::");
+		
+		setPosition (new Point(newX, newY));
+		if (newX != position.x || newY != position.y) return 1;
+		else return 0;
 	}
 }
