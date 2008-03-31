@@ -80,12 +80,14 @@ public class Music implements Runnable{
 	int frameSizeInBytes;
 	int bufferLengthInBytes;
 
-	boolean playonstartup=false;
-
+	boolean playing = false;
+	
 	public void start(){
 		play_sound(); 
 	}
 
+	
+	
 	void init_jorbis(){
 		oy=new SyncState();
 		os=new StreamState();
@@ -103,6 +105,17 @@ public class Music implements Runnable{
 		oy.init();
 	}
 
+	public Music(String filename) {
+		try {
+			bitStream= new FileInputStream(filename);
+			System.out.println(bitStream.available());
+			playing = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+	}
+	
 	SourceDataLine getOutputLine(int channels, int rate){
 		if(outputLine==null || this.rate!=rate || this.channels!=channels){
 			if(outputLine!=null){
@@ -160,13 +173,7 @@ public class Music implements Runnable{
 
 	public void run() {
 		Thread me = Thread.currentThread();
-		while(true){
-			try {
-				bitStream= new FileInputStream(filename);
-			} catch (Exception e) {
-				e.printStackTrace();
-				break;
-			}
+		while(playing){
 			if(bitStream!=null){
 				play_stream(me);
 			}
@@ -179,8 +186,6 @@ public class Music implements Runnable{
 	}
 
 	private void play_stream(Thread me) {
-		int last_channels=-1;
-		int last_rate=-1;
 
 		boolean chained=false;
 
@@ -201,16 +206,16 @@ public class Music implements Runnable{
 				}
 				oy.wrote(bytes);
 
-				if(chained){    //
-					chained=false; //   
-				}               //
-				else{           //
+				if(chained){
+					chained=false;   
+				}
+				else{
 					if(oy.pageout(og)!=1){
 						if(bytes<BUFSIZE)break;
 						System.err.println("Input does not appear to be an Ogg bitstream.");
 						return;
 					}
-				}               //
+				}
 				os.init(og.serialno());
 				os.reset();
 
