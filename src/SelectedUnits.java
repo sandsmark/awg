@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 public class SelectedUnits {
 	ArrayList<Unit> selectedUnits = new ArrayList<Unit>();
+//	Player owner;
+	
+	public SelectedUnits(){
+//		owner = player;
+	}
+	
+	
+	
 	public void selectUnit(Unit u) {
 		if (selectedUnits.contains(u))
 			return;
@@ -25,18 +33,18 @@ public class SelectedUnits {
 	}
 
 	public void select(int x1, int y1, int x2, int y2) {
-		Map map = GameState.getMap();
+		Units units = GameState.getUnits();
 		if (x1 > x2)
 			x1 = (x1 ^= x2) ^ (x2 ^= x1); // swap x1 and x2, ^=xor
 		if (y1 > y2)
 			y1 = (y1 ^= y2) ^ (y2 ^= y1);
 		
 		int x, y;
-		for (int i = 0; i < map.getUnitNum(); i++) {
-			x = map.getUnit(i).getPosition().x;
-			y = map.getUnit(i).getPosition().y;
+		for (int i = 0; i < units.getUnitNum(); i++) {
+			x = units.getUnit(i).getPosition().x;
+			y = units.getUnit(i).getPosition().y;
 			if ((y1 < y) && (y2 > y) && (x1 < x) && (x2 > x))
-				selectUnit(map.getUnit(i));
+				selectUnit(units.getUnit(i));
 		}
 	}
 
@@ -49,18 +57,18 @@ public class SelectedUnits {
 		// int, int, int)) kthxbye
 		selectedUnits.clear();
 		int uHeight = GameState.getConfig().getUnitHeight();
-		Map map = GameState.getMap();
+		Units units = GameState.getUnits();
 		
 		int x1 = x - uHeight;
 		int y1 = y - uHeight;
 		int x2 = x1 + uHeight;
 		int y2 = y1 + uHeight;
-		for (int i = 0; i < map.getUnitNum(); i++) {
-			if ((y1 < map.getUnit(i).getPosition().y)
-					&& (y2 > map.getUnit(i).getPosition().y)
-					&& (x1 < map.getUnit(i).getPosition().x)
-					&& (x2 > map.getUnit(i).getPosition().x)) {
-				selectUnit(map.getUnit(i));
+		for (int i = 0; i < units.getUnitNum(); i++) {
+			if ((y1 < units.getUnit(i).getPosition().y)
+					&& (y2 > units.getUnit(i).getPosition().y)
+					&& (x1 < units.getUnit(i).getPosition().x)
+					&& (x2 > units.getUnit(i).getPosition().x)) {
+				selectUnit(units.getUnit(i));
 			}
 		}
 	}

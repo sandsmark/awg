@@ -6,14 +6,10 @@ public class MovementThread extends Thread {
 														// threading works okay
 	protected Condition update = lock.newCondition(); // This synchronises
 														// things nicely
-	protected Map map; // This holds the current Map object
-	protected Canvas canvas; // This holds the current canvas object
 	protected boolean running = false; // This is true while this thread is
 										// running
 
-	public MovementThread(Canvas newCanvas) {
-		map = newCanvas.getMap();
-		canvas = newCanvas;
+	public MovementThread() {
 		running = true;
 	}
 
@@ -23,12 +19,13 @@ public class MovementThread extends Thread {
 
 	@Override
 	public void run() {
+		Units units = GameState.getUnits();
+		Canvas canvas = GameState.getMainWindow().getCanvas(); // This holds the current canvas object
 		try {
 			while (running) {
-				sleep(1000);
-				for (int i = 0; i < map.getUnitNum(); i++) {
-					System.out.println(i);
-					if (map.getUnit(i).move() != 0)
+				sleep(50);
+				for (int i = 0; i < units.getUnitNum(); i++) {
+					if (units.getUnit(i).move() != 0)
 						canvas.setDirty();
 				}
 				canvas.repaint();

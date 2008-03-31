@@ -30,9 +30,10 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	Map map;
 
 	MainWindow() throws IOException {
+		GameState.setMainWindow(this);
 		map = GameState.getMap();
 		outer = new JPanel();
-		canvas = new Canvas(map);
+		canvas = new Canvas();
 		menu = new JPanel();
 
 		curUnitIcon = new JLabel();
@@ -64,23 +65,23 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Start threads
-		gThread = new GraphicsThread(canvas, 50);
+		gThread = new GraphicsThread();
 		gThread.start();
 
-		sThread = new SelectThread(canvas);
+		sThread = new SelectThread();
 		sThread.start();
 
-		aiThread = new AIThread(canvas);
+		aiThread = new AIThread();
 		aiThread.start();
 
 		wThread = new WindowThread(this);
 		wThread.start();
 
-		mThread = new MovementThread(canvas);
+		mThread = new MovementThread();
 		mThread.start();
 
 		// Add testing unit
-		map.addUnit(new Worker(0, 10, 10));
+		GameState.getUnits().addUnit(new Worker(1, 10, 10));
 		canvas.updateInternal(); // Should be called whenever the map updates
 	}
 

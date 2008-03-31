@@ -18,7 +18,6 @@ public class Canvas extends JPanel implements Moveable {
 
 	private static final long serialVersionUID = 1L;
 
-	Map map;
 	int offsetX = 0;
 	int offsetY = 0;
 	int width;
@@ -34,8 +33,8 @@ public class Canvas extends JPanel implements Moveable {
 	ReentrantLock lock = new ReentrantLock();
 	Condition updated = lock.newCondition();
 
-	public Canvas(Map newMap) {
-		map = newMap;
+	public Canvas() {
+		Map map = GameState.getMap();
 		height = map.getHeight();
 		width = map.getWidth();
 		baseMap = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
@@ -44,7 +43,7 @@ public class Canvas extends JPanel implements Moveable {
 
 		bg2.setColor(Color.green);
 		bg2.fill(new Rectangle(0, 0, width, height));
-		bg2.setColor(Color.blue);
+		bg2.setColor(Color.DARK_GRAY);
 		bg2.draw(map.getWater());
 		bg2.fill(map.getWater());
 
@@ -79,14 +78,17 @@ public class Canvas extends JPanel implements Moveable {
 
 	public void updateInternal() {
 		SelectedUnits selectedUnits = GameState.getSelectedUnits();
+		Units units = GameState.getUnits();
+		Map map = GameState.getMap();
+		
 		lock.lock();
 		Graphics2D ig2 = internalMap.createGraphics();
 		ig2.drawImage(baseMap, null, 0, 0);
 		Unit unit;
 		Resource res;
 
-		for (int i = 0; i < map.getUnitNum(); i++) {
-			unit = map.getUnit(i);
+		for (int i = 0; i < units.getUnitNum(); i++) {
+			unit = units.getUnit(i);
 			ig2.drawImage(unit.getSprite(), null, unit.getPosition().x, unit
 					.getPosition().y);
 			ig2.setColor(Color.BLUE);
@@ -151,10 +153,6 @@ public class Canvas extends JPanel implements Moveable {
 		if (dir != Direction.NONE) {
 			repaint();
 		}
-	}
-
-	public Map getMap() {
-		return map;
 	}
 
 	public int getOffsetX() {

@@ -2,16 +2,14 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class GraphicsThread extends Thread {
-	protected Moveable m;
 	protected Moveable.Direction curdir;
 	protected boolean running;
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition updated = lock.newCondition();
 	protected long sleeptime = 0;
 
-	GraphicsThread(Moveable m, long s) {
-		this.m = m;
-		this.sleeptime = s;
+	GraphicsThread() {
+		this.sleeptime = GameState.getConfig().getSleeptime();
 		this.running = true;
 		this.curdir = Moveable.Direction.NONE;
 	}
@@ -22,10 +20,11 @@ public class GraphicsThread extends Thread {
 
 	@Override
 	public void run() {
+		Canvas canvas = GameState.getMainWindow().getCanvas(); 
 		while (running) {
 			lock.lock();
 			if (curdir != Moveable.Direction.NONE) {
-				m.move(curdir);
+				canvas.move(curdir);
 				lock.unlock();
 				try {
 					sleep(sleeptime);
