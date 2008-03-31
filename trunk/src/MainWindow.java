@@ -26,7 +26,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	AIThread aiThread;
 	WindowThread wThread;
 	MovementThread mThread;
-
+	Music music;
+	
 	Map map;
 
 	MainWindow() throws IOException {
@@ -79,6 +80,10 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 		mThread = new MovementThread();
 		mThread.start();
+		
+		music = new Music("resources/music.ogg");
+		music.start();
+		
 
 		// Add testing unit
 		GameState.getUnits().addUnit(new Worker(1, 10, 10));
@@ -148,7 +153,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	public void mousePressed(MouseEvent m) {
 		if (m.getButton() == MouseEvent.BUTTON3) {
-			GameState.getSelectedUnits().moveSelectedTo(m.getX(), m.getY());
+			GameState.getSelectedUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
 			return;
 		}
 		sThread.start(m);
