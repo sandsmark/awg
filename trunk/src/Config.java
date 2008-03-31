@@ -4,7 +4,13 @@ public class Config {
 	private int worldHeight = 1000; // y pixels high
 	private int unitWidth = 25; //Ditto
 	private int unitHeight = 25;
-	
+	private int sleeptime = 50; // in ms.
+	public int getSleeptime() {
+		return sleeptime;
+	}
+	public void setSleeptime(int sleeptime) {
+		this.sleeptime = sleeptime;
+	}
 	public int getWorldWidth() {
 		return worldWidth;
 	}

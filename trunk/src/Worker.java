@@ -19,10 +19,10 @@ public class Worker extends Unit {
 		setPosition(new Point(nx + 2, ny + 2)); // FIXX martin :P
 		setFaction(1);
 
-		if (getFaction() == 0)
-			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); // Gl�shaugen
-		else
-			setSprite(ImageIO.read(new File("resources/gls-worker.png"))); // Dragvoll
+//		if (getFaction() == 0)
+		setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); // Gl�shaugen
+//		else
+//			setSprite(ImageIO.read(new File("resources/gls-worker.png"))); // Dragvoll
 	}
 
 	public void deliverResource() {

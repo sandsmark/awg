@@ -5,7 +5,6 @@ import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Map {
@@ -13,9 +12,6 @@ public class Map {
 	public int width;
 	public int height;
 	public BufferedImage[] sprite;
-	int uWidth = 25; // Unit width in pixels
-	int uHeight = 25;
-	ArrayList<Unit> units = new ArrayList<Unit>();
 	
 	Resource[] resources;
 	Polygon waterShape;
@@ -24,7 +20,6 @@ public class Map {
 		sprite = new BufferedImage[3];
 		height = nHeight;
 		width = nWidth;
-		units = new ArrayList<Unit>();
 		pathMap = new int[width / 10][height / 10];
 		int x, y;
 		for (x = 0; x < pathMap.length; x++)
@@ -89,27 +84,6 @@ public class Map {
 
 	public Shape getWater() {
 		return waterShape;
-	}
-
-	public void addUnit(Unit unit) {
-		if (units.contains(unit))
-			return;
-		units.add(unit);
-	}
-
-	public void removeUnit(Unit unit) {
-		if (!units.contains(unit))
-			return;
-		units.remove(unit);
-
-	}
-
-	public Unit getUnit(int i) {
-		return units.get(i);
-	}
-
-	public int getUnitNum() {
-		return units.size();
 	}
 
 	public Resource getResource(int i) {

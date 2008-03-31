@@ -14,14 +14,17 @@ public class Unit {
 	private Point target;
 	private double orientation;
 	
-	private double speed = 25;
+	private double speed = 10; //How many pixels the unit moves in 1 tick
+
+	private double maxSpeed = 10;
+	
+	private double accel = 1.5;
 	
 	Unit targetUnit; // This unit's target unit.
-	Resource targetResource;
+	Resource targetResource; // move to worker
 	private BufferedImage sprite; // Sprite to be drawn. The picture of the
 									// unit
 	private int faction;
-//	private double speed = 2.5;
 	private double lastMove = 0;
 
 	public int getFaction() {
@@ -72,15 +75,6 @@ public class Unit {
 		this.currentAction = currentAction;
 	}
 
-//	public Path getPath() {
-//		return path;
-//	}
-//
-//	public void setPath(Path path) {
-//		lastMove = System.currentTimeMillis();
-//		this.path = path;
-//	}
-
 	public Unit getTargetUnit() {
 		return targetUnit;
 	}
@@ -105,62 +99,31 @@ public class Unit {
 		position = p;
 	}
 
-	public void setTarget(Point target) {
-		int distX = target.x - position.x;
-		int distY = target.y - position.y;
-		orientation = Math.atan(distY / distX);
-		System.out.println(orientation);
+	public void setTarget(Point target) { 
+		this.target = target;
+		float distX = target.x - position.x;
+		System.out.println(distX);
+		float distY = target.y - position.y;
+		System.out.println(distY);
+		if (distX == 0) distX = 1;
+		if (distY == 0) distY = 1;
+		orientation = Math.atan2(distY, distX);
+		System.out.println("New orientation: " + orientation);
+		speed = 0;
 	}
 	
 	public int move() {
 		if (target == null) return 0;
-		if (position.distance(target) < 25) {
+		else if (position.distance(target) < 10) {
 			target = null;
 			return 0;
-		}
+		} else if (position.distance(target) < 50) speed = speed / accel;
+		else if (speed < maxSpeed) speed = Math.abs(speed + accel);
+		
 		int newX = position.x + (int)(Math.cos(orientation) * this.speed);
 		int newY = position.y + (int)(Math.sin(orientation) * this.speed);
-		System.out.println(newX);
+
 		this.setPosition(new Point(newX, newY));
 		return 1;
 	}
-	
-	/*
-	 * All of this was commented out in the great switch from paths.
-	 */
-//		if (path == null || path.getPath() == null)
-//			return 0; // Return codes: 0 = Not moved, do not repaint, 1 =
-//						// repaint
-//		int dMove = 5; //(int) ((System.currentTimeMillis() - lastMove) / 100 * speed);
-//		lastMove = System.currentTimeMillis();
-//		if (currentTarget == null)
-//			currentTarget = path.pop();
-//		if (currentTarget.distance(position) < 5) {
-//			if (path.getLength() > 0)
-//				currentTarget = path.pop();
-//			else {
-//				path = null;
-//				return 0;
-//			}
-//		}
-//
-//		int newX = position.x;
-//		int newY = position.y;
-//
-//		if (currentTarget.x * 10 > position.x)
-//			newX = position.x + dMove;
-//		if (currentTarget.x * 10 < position.x)
-//			newX = position.x - dMove;
-//		if (currentTarget.y * 10 > position.y)
-//			newY = position.y + dMove;
-//		if (currentTarget.y * 10 < position.y)
-//			newY = position.y - dMove;
-//		System.out.println("moving unit::::::");
-//		
-//		setPosition(new Point(newX, newY));
-//		if (newX != position.x || newY != position.y)
-//			return 1;
-//		else
-//			return 0;
-//	}
 }

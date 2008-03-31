@@ -12,12 +12,8 @@ public class SelectThread extends Thread {
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition moved = lock.newCondition();
 	protected boolean running;
-	protected Map map;
-	protected Canvas canvas;
 
-	public SelectThread(Canvas newCanvas) {
-		map = newCanvas.getMap();
-		canvas = newCanvas;
+	public SelectThread() {
 		running = true;
 	}
 
@@ -36,6 +32,7 @@ public class SelectThread extends Thread {
 	}
 
 	public void stop(MouseEvent m) {
+		Canvas canvas = GameState.getMainWindow().getCanvas();
 		SelectedUnits selectedUnits = GameState.getSelectedUnits();
 		lock.lock();
 		endX = m.getX();
@@ -66,6 +63,7 @@ public class SelectThread extends Thread {
 
 	@Override
 	public void run() {
+		Canvas canvas = GameState.getMainWindow().getCanvas();
 		while (running) {
 			lock.lock();
 			if (started && (System.currentTimeMillis() - startT > 100)) {
