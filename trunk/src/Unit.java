@@ -102,13 +102,10 @@ public class Unit {
 	public void setTarget(Point target) { 
 		this.target = target;
 		float distX = target.x - position.x;
-		System.out.println(distX);
 		float distY = target.y - position.y;
-		System.out.println(distY);
 		if (distX == 0) distX = 1;
 		if (distY == 0) distY = 1;
 		orientation = Math.atan2(distY, distX);
-		System.out.println("New orientation: " + orientation);
 		speed = 0;
 	}
 	
