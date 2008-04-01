@@ -87,13 +87,13 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		mThread = new MovementThread();
 		mThread.start();
 		
-		music = new Music("resources/music.ogg");
-		music.start();
+//		music = new Music("resources/music.ogg");
+//		music.start();
 		
 
 		// Add testing unit
-		GameState.getUnits().addUnit(new Worker(new Player(true)));
-		GameState.getUnits().addUnit(new Worker(new Player(false)));
+		GameState.getUnits().addUnit(new Worker(GameState.getComputer()));
+		GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
 		canvas.updateInternal(); // Should be called whenever the map updates
 		splash.destroy();
 		frame.setVisible(true);

@@ -6,6 +6,9 @@ public class GameState {
 	private Map map = new Map(1000,1000);
 	private Units units = new Units();
 	private MainWindow mainWindow;
+	private Player human = new Player(false); // is not ai
+	private Player computer = new Player(true);
+	
 	
 	private GameState() {}
 
@@ -40,5 +43,13 @@ public class GameState {
 	
 	public static MainWindow getMainWindow() {
 		return GameStateHolder.state.mainWindow;
+	}
+	
+	public static Player getHuman() {
+		return GameStateHolder.state.human;
+	}
+	
+	public static Player getComputer() {
+		return GameStateHolder.state.computer;
 	}
 }

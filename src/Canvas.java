@@ -96,7 +96,18 @@ public class Canvas extends JPanel implements Moveable {
 		ig2.drawImage(baseMap, null, 0, 0);
 		Unit unit;
 		Resource res;
+		
+		for (int i = 0; i < map.getResourceNum(); i++) {
+			res = map.getResource(i);
+			ig2.drawImage(res.getSprite(), null, res.getX(), res.getY());
+		}
 
+		Building humanHouse = GameState.getHuman().mainHouse;
+		ig2.drawImage(humanHouse.getSprite(), null, humanHouse.getPosition().x, humanHouse.getPosition().y);
+		
+		Building computerHouse = GameState.getComputer().mainHouse;
+		ig2.drawImage(computerHouse.getSprite(), null, computerHouse.getPosition().x, computerHouse.getPosition().y);
+		
 		for (int i = 0; i < units.getUnitNum(); i++) {
 			unit = units.getUnit(i);
 			ig2.drawImage(unit.getSprite(), null, unit.getPosition().x, unit.getPosition().y);
@@ -105,10 +116,8 @@ public class Canvas extends JPanel implements Moveable {
 				ig2.drawOval(unit.getPosition().x, unit.getPosition().y, 20, 20);
 		}
 
-		for (int i = 0; i < map.getResourceNum(); i++) {
-			res = map.getResource(i);
-			ig2.drawImage(res.getSprite(), null, res.getX(), res.getY());
-		}
+
+
 		lock.unlock();
 	}
 
