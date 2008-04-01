@@ -15,23 +15,20 @@ public class Unit {
 	private double orientation;
 	
 	private double speed = 10; //How many pixels the unit moves in 1 tick
-
 	private double maxSpeed = 10;
-	
 	private double accel = 1.5;
 	
 	Unit targetUnit; // This unit's target unit.
-	Resource targetResource; // move to worker
 	private BufferedImage sprite; // Sprite to be drawn. The picture of the
 									// unit
-	private int faction;
+	private Player player;
 
-	public int getFaction() {
-		return faction;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setFaction(int faction) {
-		this.faction = faction;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	public int getMaxHealth() {
