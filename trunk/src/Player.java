@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -8,7 +7,7 @@ public class Player {
 	Building mainHouse;
 	private boolean isAI;
 	
-	public Player(boolean isAI) throws IOException{
+	public Player(boolean isAI) {
 		this.isAI = isAI;
 		mainHouse = new Building(this);
 	}

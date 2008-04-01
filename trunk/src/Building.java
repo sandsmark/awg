@@ -1,5 +1,6 @@
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,22 +10,26 @@ public class Building {
 
 	private Point position;
 	public int health; // How many HP the building has
-	public Image sprite;
+	public BufferedImage sprite;
 	private int buildingLevel; //1 == original, 2 == upgraded
 	
-	public Building(Player player) throws IOException{
+	public Building(Player player) {
 		buildingLevel = 1;
 		setHealth(1000);
 		
-		if(player.isAI()){
-			setSprite(ImageIO.read(new File("resources/buildings/start2.gif")));
-			position = new Point(100,100); //Sette faste plasser bygningene starter?
+		try {
+			if(player.isAI()){
+				setSprite(ImageIO.read(new File("resources/buildings/start2.gif")));
+				position = new Point(100,100); //Sette faste plasser bygningene starter?
+			}
+			else{
+				setSprite(ImageIO.read(new File("resources/buildings/start1.gif")));
+				position = new Point(900,900); //Sette faste plasser bygningene starter?
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
 		}
-		else{
-			setSprite(ImageIO.read(new File("resources/buildings/start1.gif")));
-			position = new Point(900,900); //Sette faste plasser bygningene starter?
-		}
-		
 		
 	}
 	
@@ -45,11 +50,11 @@ public class Building {
 		this.health = health;
 	}
 
-	public Image getSprite() {
+	public BufferedImage getSprite() {
 		return sprite;
 	}
 
-	public void setSprite(Image sprite) {
+	public void setSprite(BufferedImage sprite) {
 		this.sprite = sprite;
 	}
 
