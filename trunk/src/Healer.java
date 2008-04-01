@@ -1,22 +1,26 @@
-import java.awt.image.BufferedImage;
+import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Healer extends Unit {
 
 	private int mana;
 
-	public Healer(Player owner, int buildingXcoord, int buildingYcoord) {
-		int xCoord = buildingXcoord + 5;
-		int yCoord = buildingYcoord + 5;
+
+	public Healer(Player player) throws IOException {
+		
 		setMana(100);
 		setMaxHealth(75);
 		setCurrentHealth(getMaxHealth());
 		setCurrentAction(0);
-		setDamage(10);
-//		if (ownaer == GameState.getHuman()) // GameState.getPlayers();
-//			setSprite(new BufferedImage(0, 0, 0)); // Gl�shaugen
-//		else if (faction == 2)
-//			setSprite(new BufferedImage(0, 0, 0)); // Dragvoll
-
+		setDamage(3);
+		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
+		if (player.isAI())
+			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png")));
+		else
+			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png")));
 	}
 
 	public void heal(Unit target) {
