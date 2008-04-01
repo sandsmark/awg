@@ -290,7 +290,6 @@ public class Music implements Runnable{
 				vd.synthesis_init(vi);
 				vb.init(vd);
 
-				double[][][] _pcm=new double[1][][];
 				float[][][] _pcmf=new float[1][][];
 				int[] _index=new int[vi.channels];
 
@@ -339,9 +338,7 @@ public class Music implements Runnable{
 										vd.synthesis_blockin(vb);
 									}
 									while((samples=vd.synthesis_pcmout(_pcmf, _index))>0){
-										double[][] pcm=_pcm[0];
 										float[][] pcmf=_pcmf[0];
-										boolean clipflag=false;
 										int bout=(samples<convsize?samples:convsize);
 
 										// convert doubles to 16 bit signed ints (host order) and
@@ -354,11 +351,9 @@ public class Music implements Runnable{
 												int val=(int)(pcmf[i][mono+j]*32767.);
 												if(val>32767){
 													val=32767;
-													clipflag=true;
 												}
 												if(val<-32768){
 													val=-32768;
-													clipflag=true;
 												}
 												if(val<0) val=val|0x8000;
 												convbuffer[ptr]=(byte)(val);
