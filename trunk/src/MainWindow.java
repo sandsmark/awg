@@ -64,9 +64,10 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		frame.setContentPane(outer);
 
 		frame.pack();
-		frame.setAlwaysOnTop(true);
+//		frame.setAlwaysOnTop(true);
 //		frame.setUndecorated(false);
-		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+//		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		frame.setTitle("Awesome WarGame is Awesome!");
 
 		canvas.repaint();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
