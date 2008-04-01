@@ -18,6 +18,7 @@ Kartet blir ikke representert som en enhet, men heller alle enheter og objekter 
   * http://www.molotov.nu/?page=graphics
   * http://sdb.drshnaps.com/SpritesGBA.htm
   * http://fenrir.finalfantasyq.com/
+  * http://blogoscoped.com/archive/2006-08-08-n51.html
 
 = TODO =
 Bestemme units og hvilke sprites.
