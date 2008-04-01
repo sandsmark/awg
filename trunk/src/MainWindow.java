@@ -31,6 +31,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	Map map;
 
 	MainWindow() throws IOException {
+		frame = new JFrame();
+		SplashScreen splash = new SplashScreen(frame);
+		
 		GameState.setMainWindow(this);
 		map = GameState.getMap();
 		outer = new JPanel();
@@ -56,11 +59,11 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer.add(canvas);
 		outer.add(menu);
 
-		frame = new JFrame();
+
 		frame.setContentPane(outer);
 
 		frame.pack();
-		frame.setVisible(true);
+		
 
 		canvas.repaint();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,13 +84,15 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		mThread = new MovementThread();
 		mThread.start();
 		
-		music = new Music("resources/music.ogg");
-		music.start();
+//		music = new Music("resources/music.ogg");
+//		music.start();
 		
 
 		// Add testing unit
 		GameState.getUnits().addUnit(new Worker(new Player(), 10, 10));
 		canvas.updateInternal(); // Should be called whenever the map updates
+		splash.destroy();
+		frame.setVisible(true);
 	}
 
 	public static void main(String args[]) {
