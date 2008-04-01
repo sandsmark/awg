@@ -9,15 +9,16 @@ public class Worker extends Unit {
 
 	private int carrying; // How much resources the worker is carrying, when
 							// == 10, go home or something
+	Resource targetResource;
 
-	public Worker(Player owner, int nx, int ny) {
+	public Worker(Player player) throws IOException {
 		setMaxHealth(50);
 		setCurrentHealth(getMaxHealth());
-		setDamage(5);
+		setDamage(1);
 		setRange(25);
 		setCurrentAction(0);
-		setPosition(new Point(nx + 2, ny + 2)); // FIXX martin :P
-		setFaction(1);
+		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
+		setPlayer(player);
 		try {
 	//		if (getFaction() == 0)
 			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); // Gl�shaugen
