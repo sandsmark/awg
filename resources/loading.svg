@@ -43,9 +43,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.77472525"
-     inkscape:cx="261.85247"
-     inkscape:cy="214.90191"
+     inkscape:zoom="1.095627"
+     inkscape:cx="359.01297"
+     inkscape:cy="251.41069"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      showgrid="false"
@@ -131,5 +131,19 @@
            x="36.141846"
            y="17.900694"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Balker;-inkscape-font-specification:Balker" /></flowRegion><flowPara
-         id="flowPara2404">Roffol Productions ha presentado</flowPara></flowRoot>  </g>
+         id="flowPara2404">Roffol Productions ha presentado</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Balker;-inkscape-font-specification:Balker"
+       x="339.13007"
+       y="25.867268"
+       id="text2406"><tspan
+         sodipodi:role="line"
+         id="tspan2408"
+         x="339.13007"
+         y="25.867268">Music by Gilles Costard (http://gilles.costard.free.fr)</tspan><tspan
+         sodipodi:role="line"
+         x="339.13007"
+         y="41.866718"
+         id="tspan2410">Sprites by Philipp Lenssen (http://blogoscoped.com/)</tspan></text>
+  </g>
 </svg>
