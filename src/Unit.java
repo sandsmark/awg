@@ -115,7 +115,8 @@ public class Unit {
 		int newX = position.x + (int)(Math.cos(orientation) * this.speed);
 		int newY = position.y + (int)(Math.sin(orientation) * this.speed);
 
-		this.setPosition(new Point(newX, newY));
+		if (GameState.getMap().canMove(newX, newY)) this.setPosition(new Point(newX, newY));
+		else target = null;
 		return 1;
 	}
 }
