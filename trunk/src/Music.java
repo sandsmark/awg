@@ -108,7 +108,6 @@ public class Music implements Runnable{
 	public Music(String filename) {
 		try {
 			bitStream= new FileInputStream(filename);
-			System.out.println(bitStream.available());
 			playing = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,11 +150,11 @@ public class Music implements Runnable{
 				outputLine.open(audioFormat);
 			} 
 			catch (LineUnavailableException ex) { 
-				System.out.println("Unable to open the sourceDataLine: " + ex);
+				System.err.println("Unable to open the sourceDataLine: " + ex);
 				return;
 			} 
 			catch (IllegalArgumentException ex) { 
-				System.out.println("Illegal Argument: " + ex);
+				System.err.println("Illegal Argument: " + ex);
 				return;
 			}
 
@@ -167,7 +166,7 @@ public class Music implements Runnable{
 			this.channels=channels;
 		}
 		catch(Exception ee){
-			System.out.println(ee);
+			System.err.println(ee);
 		}
 	}
 
@@ -280,14 +279,14 @@ public class Music implements Runnable{
 				}
 
 				{
-					byte[][] ptr=vc.user_comments;
-
-					for(int j=0; j<ptr.length;j++){
-						if(ptr[j]==null) break;
-						System.err.println("Comment: "+new String(ptr[j], 0, ptr[j].length-1));
-					} 
-					System.err.println("Bitstream is "+vi.channels+" channel, "+vi.rate+"Hz");
-					System.err.println("Encoded by: "+new String(vc.vendor, 0, vc.vendor.length-1)+"\n");
+//					byte[][] ptr=vc.user_comments;
+//
+//					for(int j=0; j<ptr.length;j++){
+//						if(ptr[j]==null) break;
+//						System.err.println("Comment: "+new String(ptr[j], 0, ptr[j].length-1));
+//					} 
+//					System.err.println("Bitstream is "+vi.channels+" channel, "+vi.rate+"Hz");
+//					System.err.println("Encoded by: "+new String(vc.vendor, 0, vc.vendor.length-1)+"\n");
 				}
 
 				convsize=BUFSIZE/vi.channels;

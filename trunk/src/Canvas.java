@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.TimeUnit;
@@ -12,11 +13,11 @@ import javax.swing.JPanel;
 
 public class Canvas extends JPanel implements Moveable {
 	/**
-	 * Epic and great canvas Copyright 2008 Martin Sandsmark, Frederik M. J.
-	 * Vestre
+	 * Epic and great canvas
+	 *  @author Martin Sandsmark, Frederik M. J. Vestre
 	 */
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; // Ignorer
 
 	int offsetX = 0;
 	int offsetY = 0;
@@ -29,6 +30,9 @@ public class Canvas extends JPanel implements Moveable {
 	BufferedImage baseMap;
 	int bx, by, bw, bh = 0;
 	boolean showBox = false;
+	boolean showTarget = false;
+	Point target;
+	int targetR = 20;
 	boolean dirty = false;
 	ReentrantLock lock = new ReentrantLock();
 	Condition updated = lock.newCondition();
@@ -68,6 +72,12 @@ public class Canvas extends JPanel implements Moveable {
 					offsetX + dWidth, offsetY + dHeight, null);
 			if (showBox)
 				g2.drawRect(bx, by, bw, bh);
+			if (showTarget) {
+				g2.setColor(Color.RED);
+				g2.drawOval(target.x - targetR / 2, target.y - targetR / 2, targetR, targetR);
+				targetR /= 1.5;
+				if (targetR < 2) showTarget = false;
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
@@ -93,9 +103,7 @@ public class Canvas extends JPanel implements Moveable {
 					.getPosition().y);
 			ig2.setColor(Color.BLUE);
 			if (selectedUnits.contains(unit))
-				ig2
-						.drawOval(unit.getPosition().x, unit.getPosition().y,
-								20, 20);
+				ig2.drawOval(unit.getPosition().x, unit.getPosition().y, 20, 20);
 		}
 
 		for (int i = 0; i < map.getResourceNum(); i++) {
@@ -185,5 +193,11 @@ public class Canvas extends JPanel implements Moveable {
 
 	public void setDirty() {
 		dirty = true;
+	}
+	
+	public void showTarget (int x, int y) {
+		target = new Point(x, y);
+		targetR = 50;
+		showTarget = true;
 	}
 }

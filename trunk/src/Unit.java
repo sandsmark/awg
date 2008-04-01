@@ -25,7 +25,6 @@ public class Unit {
 	private BufferedImage sprite; // Sprite to be drawn. The picture of the
 									// unit
 	private int faction;
-	private double lastMove = 0;
 
 	public int getFaction() {
 		return faction;
@@ -104,14 +103,13 @@ public class Unit {
 		float distX = target.x - position.x;
 		float distY = target.y - position.y;
 		if (distX == 0) distX = 1;
-		if (distY == 0) distY = 1;
 		orientation = Math.atan2(distY, distX);
 		speed = 0;
 	}
 	
 	public int move() {
 		if (target == null) return 0;
-		else if (position.distance(target) < 10) {
+		else if (position.distance(target) < 2) {
 			target = null;
 			return 0;
 		} else if (position.distance(target) < 50) speed = speed / accel;

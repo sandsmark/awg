@@ -86,7 +86,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		
 
 		// Add testing unit
-		GameState.getUnits().addUnit(new Worker(1, 10, 10));
+		GameState.getUnits().addUnit(new Worker(new Player(), 10, 10));
 		canvas.updateInternal(); // Should be called whenever the map updates
 	}
 
@@ -154,6 +154,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	public void mousePressed(MouseEvent m) {
 		if (m.getButton() == MouseEvent.BUTTON3) {
 			GameState.getSelectedUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
+			canvas.showTarget(m.getX(), m.getY());
 			return;
 		}
 		sThread.start(m);
