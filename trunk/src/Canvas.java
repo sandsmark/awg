@@ -47,7 +47,7 @@ public class Canvas extends JPanel implements Moveable {
 
 		bg2.setColor(Color.green);
 		bg2.fill(new Rectangle(0, 0, width, height));
-		bg2.setColor(Color.DARK_GRAY);
+		bg2.setColor(Color.blue);
 		bg2.draw(map.getWater());
 		bg2.fill(map.getWater());
 

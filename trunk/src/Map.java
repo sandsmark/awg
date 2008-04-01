@@ -94,5 +94,13 @@ public class Map {
 		return resources.length;
 	}
 
+	public boolean canMove(int x, int y) {
+		boolean can = true;
+		if (waterShape.contains(x, y)) can = false;
+		if (waterShape.contains(x+35, y)) can = false;
+		if (waterShape.contains(x, y+35)) can = false;
+		if (waterShape.contains(x+35, y+35)) can = false;
+		return can;
+	}
 
 }
