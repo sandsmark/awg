@@ -1,3 +1,4 @@
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -63,7 +64,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		frame.setContentPane(outer);
 
 		frame.pack();
-		
+		frame.setAlwaysOnTop(true);
+//		frame.setUndecorated(false);
+		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 
 		canvas.repaint();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,12 +87,13 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		mThread = new MovementThread();
 		mThread.start();
 		
-//		music = new Music("resources/music.ogg");
-//		music.start();
+		music = new Music("resources/music.ogg");
+		music.start();
 		
 
 		// Add testing unit
 		GameState.getUnits().addUnit(new Worker(new Player(), 10, 10));
+		GameState.getUnits().addUnit(new Worker(new Player(), 15, 15));
 		canvas.updateInternal(); // Should be called whenever the map updates
 		splash.destroy();
 		frame.setVisible(true);
