@@ -4,7 +4,7 @@ public class Healer extends Unit {
 
 	private int mana;
 
-	public Healer(int faction, int buildingXcoord, int buildingYcoord) {
+	public Healer(Player owner, int buildingXcoord, int buildingYcoord) {
 		int xCoord = buildingXcoord + 5;
 		int yCoord = buildingYcoord + 5;
 		setMana(100);
@@ -12,10 +12,10 @@ public class Healer extends Unit {
 		setCurrentHealth(getMaxHealth());
 		setCurrentAction(0);
 		setDamage(10);
-		if (faction == 1)
-			setSprite(new BufferedImage(0, 0, 0)); // Gl�shaugen
-		else if (faction == 2)
-			setSprite(new BufferedImage(0, 0, 0)); // Dragvoll
+//		if (ownaer == GameState.getHuman()) // GameState.getPlayers();
+//			setSprite(new BufferedImage(0, 0, 0)); // Gl�shaugen
+//		else if (faction == 2)
+//			setSprite(new BufferedImage(0, 0, 0)); // Dragvoll
 
 	}
 

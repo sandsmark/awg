@@ -25,8 +25,9 @@ public class Resource {
 			return 0;
 		int harvested = (int) Math.random() * max;
 		if (harvested > resourcesLeft) {
+			harvested = harvested % resourcesLeft;
 			resourcesLeft = 0;
-			return harvested % resourcesLeft; // Modulo, magnus
+			return harvested;
 		}
 		resourcesLeft -= harvested;
 		return harvested;

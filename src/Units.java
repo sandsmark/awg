@@ -18,7 +18,6 @@ public class Units {
 		if (!units.contains(unit))
 			return;
 		units.remove(unit);
-
 	}
 
 	public Unit getUnit(int i) {

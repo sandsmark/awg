@@ -10,7 +10,7 @@ public class Worker extends Unit {
 	private int carrying; // How much resources the worker is carrying, when
 							// == 10, go home or something
 
-	public Worker(int faction, int nx, int ny) throws IOException {
+	public Worker(Player owner, int nx, int ny) {
 		setMaxHealth(50);
 		setCurrentHealth(getMaxHealth());
 		setDamage(5);
@@ -18,11 +18,15 @@ public class Worker extends Unit {
 		setCurrentAction(0);
 		setPosition(new Point(nx + 2, ny + 2)); // FIXX martin :P
 		setFaction(1);
-
-//		if (getFaction() == 0)
-		setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); // Gl�shaugen
-//		else
-//			setSprite(ImageIO.read(new File("resources/gls-worker.png"))); // Dragvoll
+		try {
+	//		if (getFaction() == 0)
+			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); // Gl�shaugen
+	//		else
+	//			setSprite(ImageIO.read(new File("resources/gls-worker.png"))); // Dragvoll
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 
 	public void deliverResource() {
