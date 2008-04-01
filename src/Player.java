@@ -4,6 +4,8 @@ import java.util.ArrayList;
 public class Player {
 	ArrayList<Unit> units = new ArrayList<Unit>();
 	SelectedUnits selected = new SelectedUnits();
+	Building mainHouse;
+	private boolean isAI;
 	
 	
 	public void addUnit(Unit u) {
@@ -12,5 +14,13 @@ public class Player {
 	
 	public void removeUnit(Unit u) {
 		if (units.contains(u)) units.remove(u);
+	}
+
+	public boolean isAI() {
+		return isAI;
+	}
+
+	public void setAI(boolean isAI) {
+		this.isAI = isAI;
 	}
 }
