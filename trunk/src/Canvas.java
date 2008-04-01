@@ -99,8 +99,7 @@ public class Canvas extends JPanel implements Moveable {
 
 		for (int i = 0; i < units.getUnitNum(); i++) {
 			unit = units.getUnit(i);
-			ig2.drawImage(unit.getSprite(), null, unit.getPosition().x, unit
-					.getPosition().y);
+			ig2.drawImage(unit.getSprite(), null, unit.getPosition().x, unit.getPosition().y);
 			ig2.setColor(Color.BLUE);
 			if (selectedUnits.contains(unit))
 				ig2.drawOval(unit.getPosition().x, unit.getPosition().y, 20, 20);

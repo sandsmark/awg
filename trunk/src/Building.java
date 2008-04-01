@@ -22,7 +22,7 @@ public class Building {
 		}
 		else{
 			setSprite(ImageIO.read(new File("resources/buildings/start1.gif")));
-			position = new Point(2400,2400); //Sette faste plasser bygningene starter?
+			position = new Point(900,900); //Sette faste plasser bygningene starter?
 		}
 		
 		

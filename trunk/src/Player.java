@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -6,6 +7,11 @@ public class Player {
 	SelectedUnits selected = new SelectedUnits();
 	Building mainHouse;
 	private boolean isAI;
+	
+	public Player(boolean isAI) throws IOException{
+		this.isAI = isAI;
+		mainHouse = new Building(this);
+	}
 	
 	
 	public void addUnit(Unit u) {
