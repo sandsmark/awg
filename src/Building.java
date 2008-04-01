@@ -1,4 +1,3 @@
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,7 +18,7 @@ public class Building {
 		
 		try {
 			if(player.isAI()){
-				setSprite(ImageIO.read(new File("resources/buildings/start2.gif")));
+				setSprite(ImageIO.read(new File("resources/buildings/start2.png")));
 				position = new Point(100,100); //Sette faste plasser bygningene starter?
 			}
 			else{
