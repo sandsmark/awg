@@ -26,18 +26,13 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-import java.util.*;
-import java.net.*;
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.applet.*;
-import javax.swing.*;
+/**
+ * Modified by Martin T. Sandsmark in 2008
+ */
 
+import java.io.*;
 import com.jcraft.jorbis.*;
 import com.jcraft.jogg.*;
-
-import javax.sound.midi.*;
 import javax.sound.sampled.*;
 
 public class Music implements Runnable{
@@ -123,6 +118,7 @@ public class Music implements Runnable{
 				outputLine.close();
 			}
 			init_audio(channels, rate);
+			if (outputLine == null) return null;
 			outputLine.start();
 		}
 		return outputLine;
@@ -151,6 +147,7 @@ public class Music implements Runnable{
 			} 
 			catch (LineUnavailableException ex) { 
 				System.err.println("Unable to open the sourceDataLine: " + ex);
+				outputLine = null;
 				return;
 			} 
 			catch (IllegalArgumentException ex) { 
@@ -232,8 +229,7 @@ public class Music implements Runnable{
 				if(os.packetout(op)!=1){ 
 					// no page? must not be vorbis
 					System.err.println("Error reading initial header packet.");
-					break;
-//					return;
+					return;
 				}
 
 				if(vi.synthesis_headerin(vc, op)<0){ 
@@ -298,8 +294,12 @@ public class Music implements Runnable{
 				float[][][] _pcmf=new float[1][][];
 				int[] _index=new int[vi.channels];
 
-				getOutputLine(vi.channels, vi.rate);
-
+				if (getOutputLine(vi.channels, vi.rate) == null) {
+					this.stop();
+					return;
+				}
+				
+				
 				while(eos==0){
 					while(eos==0){
 
