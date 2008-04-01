@@ -4,7 +4,7 @@ import java.util.TreeSet;
 
 public class Path implements Comparable<Path> {
 	Stack<WeightedNode> path;
-	int cur;
+	int cur; //The index of the current step in the path
 	int tarX, tarY; // For a-star to work correctly, we need to know the
 					// distance to the target node
 
