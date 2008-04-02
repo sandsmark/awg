@@ -1,6 +1,9 @@
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,7 +15,7 @@ public class Map {
 	public int width;
 	public int height;
 	public BufferedImage[] sprite;
-	
+	public BufferedImage baseMap;
 	Resource[] resources;
 	Polygon waterShape;
 
@@ -68,6 +71,18 @@ public class Map {
 			y = (int) (Math.sin(i) * width / 3) + width / 2;
 			resources[i] = new Resource((int) Math.random() * 20 + 20, x, y);
 		}
+		
+		//Create the base buffer/image of the map
+		baseMap = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
+
+		Graphics2D bg2 = baseMap.createGraphics();
+
+		bg2.setColor(Color.green);
+		bg2.fill(new Rectangle(0, 0, width, height));
+		bg2.setColor(Color.blue);
+		bg2.draw(this.getWater());
+		bg2.fill(this.getWater());
+
 	}
 
 	public int getHeight() {
@@ -103,4 +118,7 @@ public class Map {
 		return can;
 	}
 
+	public BufferedImage getBaseMap() {
+		return baseMap;
+	}
 }

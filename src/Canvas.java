@@ -41,15 +41,6 @@ public class Canvas extends JPanel implements Moveable {
 		Map map = GameState.getMap();
 		height = map.getHeight();
 		width = map.getWidth();
-		baseMap = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D bg2 = baseMap.createGraphics();
-
-		bg2.setColor(Color.green);
-		bg2.fill(new Rectangle(0, 0, width, height));
-		bg2.setColor(Color.blue);
-		bg2.draw(map.getWater());
-		bg2.fill(map.getWater());
 
 		internalMap = new BufferedImage(height, width,
 				BufferedImage.TYPE_INT_ARGB);
@@ -93,7 +84,7 @@ public class Canvas extends JPanel implements Moveable {
 		
 		lock.lock();
 		Graphics2D ig2 = internalMap.createGraphics();
-		ig2.drawImage(baseMap, null, 0, 0);
+		ig2.drawImage(GameState.getMap().getBaseMap(), null, 0, 0);
 		Unit unit;
 		Resource res;
 		
