@@ -13,10 +13,14 @@ import javax.swing.JPanel;
 
 public class Canvas extends JPanel implements Moveable {
 	/**
-	 * Epic and great canvas
-	 *  @author Martin Sandsmark, Frederik M. J. Vestre
+	 * Epic and great canvas, for drawing things (the central graphics thingy...)
+	 *  @author Martin Sandsmark
 	 */
 
+	/**
+	 * TODO: Optimize drawing, "dirty" rectangles. Split up into several "sub-maps", which are re-drawn only when necessary.
+	 */
+	
 	private static final long serialVersionUID = 1L; // Ignorer
 
 	int offsetX = 0;
@@ -28,10 +32,15 @@ public class Canvas extends JPanel implements Moveable {
 	int step = 20;
 	BufferedImage internalMap;
 	BufferedImage baseMap;
+	
+ 	//Box x/y-coordinates, and height and width
 	int bx, by, bw, bh = 0;
 	boolean showBox = false;
+	
+	//Target is the shrinking circle when setting a target for a unit
 	boolean showTarget = false;
 	Point target;
+	
 	int targetR = 20;
 	boolean dirty = false;
 	ReentrantLock lock = new ReentrantLock();
