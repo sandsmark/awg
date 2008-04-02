@@ -18,6 +18,8 @@ public class Unit {
 	private double maxSpeed = 10;
 	private double accel = 1.5;
 	
+
+	
 	Unit targetUnit; // This unit's target unit.
 	private BufferedImage sprite; // Sprite to be drawn. The picture of the
 									// unit
