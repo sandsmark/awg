@@ -13,7 +13,7 @@ public class Resource {
 		x = nx;
 		y = ny;
 		try {
-			sprite = ImageIO.read(new File("resources/grass.png"));
+			sprite = ImageIO.read(new File("resources/gull.png"));
 		} catch (IOException e) {
 			System.err.println("Could not load resource sprite!");
 			System.exit(1);
