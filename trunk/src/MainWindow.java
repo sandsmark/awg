@@ -163,12 +163,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	public void mousePressed(MouseEvent m) {
 		if (m.getButton() == MouseEvent.BUTTON3) {
-			GameState.getSelectedUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
+			GameState.getUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
 			canvas.showTarget(m.getX(), m.getY());
-			return;
-		}
-		sThread.start(m);
-
+		} else sThread.start(m);
 	}
 
 	public void mouseReleased(MouseEvent m) {
