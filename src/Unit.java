@@ -2,27 +2,26 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Unit {
-	private Point position;
-	private int maxHealth; // The unit's max health
-	private int CurrentHealth; // The unit's current HP
-	private int damage; // The damage the unit deals
-	private int range; // The unit's attack range
-	private int currentAction; // 0=stand still, 1 = move to target, 2 = attack
-								// target
-//	private Path path;
+	protected Point position;
+	protected int maxHealth; // The unit's max health
+	protected int CurrentHealth; // The unit's current HP
+	protected int damage; // The damage the unit deals
+	protected int range; // The unit's attack range
+	protected int currentAction; // 0=stand still, 1 = move to target, 2 = attack
 	
-	private Point target;
-	private double orientation;
 	
-	private double speed = 10; //How many pixels the unit moves in 1 tick
-	private double maxSpeed = 10;
-	private double accel = 1.5;
+	protected Sprite sprite; 
+	
+	protected Point target;
+	protected double orientation;
+	
+	protected double speed = 10; //How many pixels the unit moves in 1 tick
+	protected double maxSpeed = 10;
+	protected double accel = 1.5;
 	
 
 	
 	Unit targetUnit; // This unit's target unit.
-	private BufferedImage sprite; // Sprite to be drawn. The picture of the
-									// unit
 	private Player player;
 
 	public Player getPlayer() {
@@ -81,13 +80,6 @@ public class Unit {
 		this.targetUnit = targetUnit;
 	}
 
-	public BufferedImage getSprite() {
-		return sprite;
-	}
-
-	public void setSprite(BufferedImage sprite) {
-		this.sprite = sprite;
-	}
 
 	public Point getPosition() {
 		return position;
@@ -120,5 +112,9 @@ public class Unit {
 		if (GameState.getMap().canMove(newX, newY)) this.setPosition(new Point(newX, newY));
 		else target = null;
 		return 1;
+	}
+	
+	public Sprite getSprite() {
+		return sprite;
 	}
 }

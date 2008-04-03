@@ -127,7 +127,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	public void setSeletectedUnit(Unit u) {
 		curUnitText.setText(u.toString());
-		curUnitIcon.setIcon(new ImageIcon(u.getSprite()));
+		curUnitIcon.setIcon(new ImageIcon(u.getSprite().get()));
 	}
 
 	public void mouseMoved(MouseEvent e) {
