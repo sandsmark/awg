@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Player {
 	ArrayList<Unit> units = new ArrayList<Unit>();
-	SelectedUnits selected = new SelectedUnits();
+	Units globalUnits = GameState.getUnits();
 	Building mainHouse;
 	private boolean isAI;
 	
