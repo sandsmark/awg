@@ -147,19 +147,15 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		}
 	}
 
-	public void mouseDragged(MouseEvent e) {
-		sThread.moved(e);
+	public void mouseDragged(MouseEvent m) {
+		if (m.getButton() == 0) sThread.moved(m);
 	}
 
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent m) {	}
 
-	}
+	public void mouseEntered(MouseEvent m) {	}
 
-	public void mouseEntered(MouseEvent arg0) {
-	}
-
-	public void mouseExited(MouseEvent m) {
-	}
+	public void mouseExited(MouseEvent m) {		}
 
 	public void mousePressed(MouseEvent m) {
 		if (m.getButton() == MouseEvent.BUTTON3) {
@@ -169,7 +165,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	}
 
 	public void mouseReleased(MouseEvent m) {
-		sThread.stop(m);
+		if (m.getButton() == 1) sThread.stop(m);
 	}
 
 	public Canvas getCanvas() {
