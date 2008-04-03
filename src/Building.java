@@ -67,13 +67,13 @@ public class Building {
 		this.buildingLevel = buildingLevel;
 	}
 	
-	public void spawn (int type, Player owner) { // 1 = Healer, 2 = worker, 3 = Fighter
+	public void spawn (String type, Player owner) { // 1 = Healer, 2 = worker, 3 = Fighter
 		Unit unit;
-//		if (type == 1) unit = new Healer(owner);
-//		else if (type == 2) unit = new Worker(owner);
-//		else if (type == 3) unit = new Fighter(owner, position.x, position.y);
-//		else return;
-//		GameState.getUnits().addUnit(unit);
+		if (type.equalsIgnoreCase("healer")) unit = new Healer(owner);
+		else if (type.equalsIgnoreCase("worker")) unit = new Worker(owner);
+		else if (type.equalsIgnoreCase("fighter")) unit = new Fighter(owner);
+		else return;
+		GameState.getUnits().addUnit(unit);
 	}
 
 }
