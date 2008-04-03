@@ -11,14 +11,12 @@ public class Units {
 	}
 	
 	public void addUnit(Unit unit) {
-		if (units.contains(unit))
-			return;
+		if (units.contains(unit)) return;
 		units.add(unit);
 	}
 
 	public void removeUnit(Unit unit) {
-		if (!units.contains(unit))
-			return;
+		if (!units.contains(unit))	return;
 		units.remove(unit);
 	}
 
@@ -31,14 +29,12 @@ public class Units {
 	}
 	
 	public void selectUnit(Unit u) {
-		if (selectedUnits.contains(u))
-			return;
+		if (selectedUnits.contains(u)) return;
 		selectedUnits.add(u);
 	}
 
 	public void deselectUnit(Unit u) {
-		if (!selectedUnits.contains(u))
-			return;
+		if (!selectedUnits.contains(u)) return;
 		selectedUnits.remove(u);
 	}
 

@@ -21,6 +21,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	JLabel curUnitText;
 	JLabel curUnitIcon;
 
+	
+	
+	
 	GraphicsThread gThread;
 	SelectThread sThread;
 	AIThread aiThread;
@@ -169,5 +172,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	public Canvas getCanvas() {
 		return canvas;
+	}
+	
+	public void setMenu(JPanel menu){
+		this.menu = menu;
 	}
 }

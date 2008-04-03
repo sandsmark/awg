@@ -9,7 +9,6 @@ public class Unit {
 	protected int range; // The unit's attack range
 	protected int currentAction; // 0=stand still, 1 = move to target, 2 = attack
 	
-	
 	protected Sprite sprite; 
 	
 	protected Point target;
@@ -88,6 +87,10 @@ public class Unit {
 		position = p;
 	}
 
+	public Sprite getSprite() {
+		return sprite;
+	}
+	
 	public void setTarget(Point target) { 
 		this.target = target;
 		float distX = target.x - position.x;
@@ -118,7 +121,7 @@ public class Unit {
 		
 		int newX = position.x + (int)(Math.cos(orientation) * this.speed);
 		int newY = position.y + (int)(Math.sin(orientation) * this.speed);
-
+		
 		if (GameState.getMap().canMove(newX, newY)) this.setPosition(new Point(newX, newY));
 		else target = null;
 		
@@ -128,7 +131,25 @@ public class Unit {
 		return 1;
 	}
 	
-	public Sprite getSprite() {
-		return sprite;
+	
+	/* 
+	 * Brukes på en unit som skal ta skade av en annen. Kjøres fra dealDamage.
+	 */
+	public void takeDamage(int damage){
+		this.CurrentHealth -= damage;
+		if(this.CurrentHealth<=0){
+			GameState.getUnits().removeUnit(this);
+		}
+	}
+	/*
+	 * Skal brukes på en unit som har funnet et target. 
+	 * Kan kjøres hver gang den beveger seg, og se om den er innenfor range,
+	 * om den er det, gjør den skade på uniten den har som targetUnit
+	 */
+	
+	public void dealDamage(){
+		if((position.distance(targetUnit.position.getX(), targetUnit.position.getY())<5) && targetUnit.player != this.player){
+			targetUnit.takeDamage(this.damage);
+		}
 	}
 }
