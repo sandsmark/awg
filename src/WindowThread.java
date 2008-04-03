@@ -18,12 +18,12 @@ public class WindowThread extends Thread {
 
 	@Override
 	public void run() {
-		SelectedUnits selectedUnits = GameState.getSelectedUnits();
+		Units units = GameState.getUnits();
 		try {
 			while (running) {
 				window.delSeletectedUnit();
-				for (int i = 0; i < selectedUnits.count(); i++)
-					window.setSeletectedUnit(selectedUnits.get(i));
+				for (Unit selected : units.getSelectedUnits())
+					window.setSeletectedUnit(selected);
 				Thread.sleep(500);
 			}
 		} catch (InterruptedException e) {

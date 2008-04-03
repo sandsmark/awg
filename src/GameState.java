@@ -2,7 +2,6 @@
 public class GameState {
 
 	private Config config = new Config();
-	private SelectedUnits selectedUnits = new SelectedUnits();
 	private Map map = new Map(1000,1000);
 	private Units units = new Units();
 	private MainWindow mainWindow;
@@ -35,10 +34,6 @@ public class GameState {
 
 	public static Units getUnits() {
 		return GameStateHolder.state.units;
-	}
-	
-	public static SelectedUnits getSelectedUnits() {
-		return GameStateHolder.state.selectedUnits;
 	}
 	
 	public static MainWindow getMainWindow() {
