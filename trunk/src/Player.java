@@ -5,6 +5,7 @@ public class Player {
 	ArrayList<Unit> units = new ArrayList<Unit>();
 	Building mainHouse;
 	private boolean isAI;
+	private int resources;
 	
 	public Player(boolean isAI) {
 		this.isAI = isAI;
@@ -26,5 +27,9 @@ public class Player {
 
 	public void setAI(boolean isAI) {
 		this.isAI = isAI;
+	}
+	
+	public void increaseResources(int n) {
+		resources += resources;
 	}
 }

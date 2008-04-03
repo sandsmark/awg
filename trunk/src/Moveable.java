@@ -1,5 +1,5 @@
 public interface Moveable {
-	enum Direction {
+	public enum Direction {
 		NONE, UP, DOWN, LEFT, RIGHT
 	}
 

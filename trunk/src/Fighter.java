@@ -12,5 +12,7 @@ public class Fighter extends Unit {
 		setCurrentAction(0);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5)); // FIXX martin :P
 		setPlayer(player);
+		if (player.isAI()) sprite = new Sprite("fighter", 1);
+		else sprite = new Sprite("fighter", 0);
 	}
 }

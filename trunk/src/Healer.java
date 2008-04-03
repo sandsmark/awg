@@ -9,18 +9,15 @@ public class Healer extends Unit {
 	private int mana;
 
 
-	public Healer(Player player) throws IOException {
-		
+	public Healer(Player player) {
 		setMana(100);
 		setMaxHealth(75);
 		setCurrentHealth(getMaxHealth());
 		setCurrentAction(0);
 		setDamage(3);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
-		if (player.isAI())
-			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png")));
-		else
-			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png")));
+		if (player.isAI()) sprite = new Sprite("healer", 1);
+		else sprite = new Sprite("healer", 0);
 	}
 
 	public void heal(Unit target) {

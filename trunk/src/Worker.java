@@ -1,7 +1,5 @@
-import java.io.File;
 import java.io.IOException;
 import java.awt.Point;
-import javax.imageio.ImageIO;
 
 public class Worker extends Unit {
 	// Bevegelses- og idrettsvitenskap for Dragvoll
@@ -10,7 +8,9 @@ public class Worker extends Unit {
 	private int carrying; // How much resources the worker is carrying, when
 							// == 10, go home or something
 	Resource targetResource;
-
+	private int maxCarrying = 10;
+	private int harvestMax = 5;
+	
 	public Worker(Player player) throws IOException {
 		setMaxHealth(50);
 		setCurrentHealth(getMaxHealth());
@@ -19,25 +19,13 @@ public class Worker extends Unit {
 		setCurrentAction(0);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
 		setPlayer(player);
-		try {
-	//		if (getFaction() == 0)
-			setSprite(ImageIO.read(new File("resources/dragvoll-noe.png"))); // Gl�shaugen
-	//		else
-	//			setSprite(ImageIO.read(new File("resources/gls-worker.png"))); // Dragvoll
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}
+		if (player.isAI()) sprite = new Sprite("worker", 1);
+		else sprite = new Sprite("worker", 0);
 	}
 
 	public void deliverResource() {
-		// GOTO mainhouse
-		// if(getX() == mainhouse coord +- 25 || getPosition().getY() ==
-		// mainhousecoord +-25){
-		// int delivered = getCarrying();
-		// //increase resource counter with delivered
-		// setCarrying(0);
-		// }
+		this.getPlayer().increaseResources(carrying);
+		carrying = 0;
 	}
 
 	public int getCarrying() {
@@ -51,5 +39,21 @@ public class Worker extends Unit {
 	@Override
 	public String toString() {
 		return "Worker(x:" + getPosition().x + ",y" + getPosition().y + ")";
+	}
+	
+	@Override
+	public int move() {
+		if (targetResource != null) {
+			if (this.getCarrying()>0 && this.getPlayer().mainHouse.getPosition().distance(position) < 5) {
+				deliverResource();
+				this.target = targetResource.position;
+			} else if (this.getCarrying() >= maxCarrying) {
+				this.target = this.getPlayer().mainHouse.getPosition();
+			} else if (this.targetResource.position.distance(this.position) < 5) {
+				this.target = null;
+				this.setCarrying(this.getCarrying() + targetResource.harvest(harvestMax));
+			}
+		}
+		return super.move();
 	}
 }
