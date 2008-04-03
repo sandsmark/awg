@@ -1,3 +1,4 @@
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -5,13 +6,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Resource {
-	int resourcesLeft;
-	BufferedImage sprite;
-	int x, y;
-
-	public Resource(int initialVal, int nx, int ny) {
-		x = nx;
-		y = ny;
+	protected int resourcesLeft;
+	protected BufferedImage sprite;
+	protected Point position;
+	
+	public Resource(int initialVal, int x, int y) {
+		position = new Point(x,y);
 		try {
 			sprite = ImageIO.read(new File("resources/gull.png"));
 		} catch (IOException e) {
@@ -37,11 +37,7 @@ public class Resource {
 		return sprite;
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
+	public Point getPosition() {
+		return position;
 	}
 }

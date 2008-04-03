@@ -87,7 +87,6 @@ public class Canvas extends JPanel implements Moveable {
 	}
 
 	public void updateInternal() {
-		SelectedUnits selectedUnits = GameState.getSelectedUnits();
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
 		
@@ -99,7 +98,7 @@ public class Canvas extends JPanel implements Moveable {
 		
 		for (int i = 0; i < map.getResourceNum(); i++) {
 			res = map.getResource(i);
-			ig2.drawImage(res.getSprite(), null, res.getX(), res.getY());
+			ig2.drawImage(res.getSprite(), null, res.getPosition().x, res.getPosition().y);
 		}
 
 		Building humanHouse = GameState.getHuman().mainHouse;
@@ -112,7 +111,7 @@ public class Canvas extends JPanel implements Moveable {
 			unit = units.getUnit(i);
 			ig2.drawImage(unit.getSprite(), null, unit.getPosition().x, unit.getPosition().y);
 			ig2.setColor(Color.BLUE);
-			if (selectedUnits.contains(unit))
+			if (units.isSelected(unit))
 				ig2.drawOval(unit.getPosition().x, unit.getPosition().y, 20, 20);
 		}
 
