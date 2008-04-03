@@ -12,6 +12,7 @@ public class Sprite {
 	
 	private Direction direction = Direction.FORWARD;
 	private int cycle = 0;
+	private boolean isMoving = false;
 	
 	/**
 	 * Faction this sprite belongs to, either 0 or 1.
@@ -32,20 +33,21 @@ public class Sprite {
 				for (int dir=0; dir<4; dir++) {
 					for (int c=0; c<2; c++){
 						String filename = "resources/" 
-							+ basename + f + "_" + directionNames[dir] + c + ".gif";
+							+ basename + "/" + f + "_" + directionNames[dir] + c + ".gif";
 						sprite[f][dir][c] = ImageIO.read(new File(filename)); 
 					}
 				}
 			}
 		
 		} catch (IOException e) {
-			System.err.println("Could not load sprites!");
+			System.err.println("Could not load sprites! : ");
+			e.printStackTrace();
 			GameState.getMainWindow().exit();
 		}
 	}
 	
-	public BufferedImage popSprite() {
-		cycle = cycle++ % 2;
+	public BufferedImage pop() {
+		if (isMoving) cycle = (cycle+1) % 2;
 		return sprite[faction][direction.ordinal()][cycle];
 	}
 
@@ -55,5 +57,9 @@ public class Sprite {
 
 	public BufferedImage get() {
 		return sprite[faction][direction.ordinal()][cycle];
+	}
+	
+	public void setMoving(boolean moving) {
+		isMoving = moving;
 	}
 }

@@ -99,11 +99,13 @@ public class Unit {
 	}
 	
 	public int move() {
-		if (target == null) return 0;
-		else if (position.distance(target) < 2) {
+		if (target == null) {
+			return 0;
+		}
+		else if (position.distance(target) < 5) {
 			target = null;
 			return 0;
-		} else if (position.distance(target) < 50) speed = speed / accel;
+		} else if (position.distance(target) < 50) speed = speed / 1.1;
 		else if (speed < maxSpeed) speed = Math.abs(speed + accel);
 		
 		int newX = position.x + (int)(Math.cos(orientation) * this.speed);
@@ -111,6 +113,10 @@ public class Unit {
 
 		if (GameState.getMap().canMove(newX, newY)) this.setPosition(new Point(newX, newY));
 		else target = null;
+		
+		if (speed < 2) sprite.setMoving(false);
+		else sprite.setMoving(true);
+		
 		return 1;
 	}
 	
