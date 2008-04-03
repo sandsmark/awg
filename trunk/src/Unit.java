@@ -19,7 +19,6 @@ public class Unit {
 	protected double maxSpeed = 5;
 	protected double accel = 1.5;
 	
-
 	
 	Unit targetUnit; // This unit's target unit.
 	private Player player;
@@ -113,7 +112,8 @@ public class Unit {
 		else if (position.distance(target) < 5) {
 			target = null;
 			return 0;
-		} else if (position.distance(target) < 50) speed = speed / 1.1;
+		} 
+		else if (position.distance(target) < 25) speed = speed / 2;
 		else if (speed < maxSpeed) speed = Math.abs(speed + accel);
 		
 		int newX = position.x + (int)(Math.cos(orientation) * this.speed);

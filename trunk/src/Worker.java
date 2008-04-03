@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.awt.Point;
 
 public class Worker extends Unit {
@@ -11,7 +10,7 @@ public class Worker extends Unit {
 	private int maxCarrying = 10;
 	private int harvestMax = 5;
 	
-	public Worker(Player player) throws IOException {
+	public Worker(Player player){
 		setMaxHealth(50);
 		setCurrentHealth(getMaxHealth());
 		setDamage(1);
