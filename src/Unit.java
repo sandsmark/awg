@@ -16,7 +16,7 @@ public class Unit {
 	protected double orientation;
 	
 	protected double speed = 10; //How many pixels the unit moves in 1 tick
-	protected double maxSpeed = 10;
+	protected double maxSpeed = 5;
 	protected double accel = 1.5;
 	
 
@@ -95,6 +95,13 @@ public class Unit {
 		float distY = target.y - position.y;
 		if (distX == 0) distX = 1;
 		orientation = Math.atan2(distY, distX);
+		System.out.println(orientation);
+		orientation += Math.PI;
+		if (orientation < Math.PI/4 || orientation > 7 * Math.PI / 4) sprite.setDirection(Sprite.Direction.LEFT);
+		else if (orientation > Math.PI/4 && orientation < 3 * Math.PI / 4) sprite.setDirection(Sprite.Direction.BACK);
+		else if (orientation >  3 * Math.PI/4 && orientation < 5 * Math.PI / 4) sprite.setDirection(Sprite.Direction.RIGHT);
+		else if (orientation >  5 * Math.PI/4 && orientation < 7 * Math.PI / 4) sprite.setDirection(Sprite.Direction.FORWARD);
+		orientation -= Math.PI;
 		speed = 0;
 	}
 	

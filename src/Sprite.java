@@ -33,7 +33,7 @@ public class Sprite {
 				for (int dir=0; dir<4; dir++) {
 					for (int c=0; c<2; c++){
 						String filename = "resources/" 
-							+ basename + "/" + f + "_" + directionNames[dir] + c + ".gif";
+							+ basename + "/" + f + "_" + directionNames[dir] + c + ".png";
 						sprite[f][dir][c] = ImageIO.read(new File(filename)); 
 					}
 				}
