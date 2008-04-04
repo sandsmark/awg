@@ -5,13 +5,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Building {
-
-	JPanel menu;
-	JLabel upgradeBuilding, worker, fighter, healer;
 	private Point position;
 	public int health; // How many HP the building has
 	public BufferedImage sprite;
@@ -36,35 +34,7 @@ public class Building {
 			return;
 		}
 		
-		menu = new JPanel();
-		upgradeBuilding = new JLabel();
-		worker = new JLabel();
-		fighter = new JLabel();
-		healer = new JLabel();
 		
-		/*
-		 * Sets the menu according to which "faction" the player is.
-		 */
-		if(player.isAI()){
-			upgradeBuilding.setIcon(new ImageIcon("resources/buildings/end2.gif"));
-			fighter.setIcon(new ImageIcon("resources/fighter/1_forward0.png"));
-			worker.setIcon(new ImageIcon("resources/worker/1_forward0.png"));
-			healer.setIcon(new ImageIcon("resources/healer/1_forward0.png"));
-			menu.add(upgradeBuilding);
-			menu.add(fighter);
-			menu.add(worker);
-			menu.add(healer);
-		}else if(!player.isAI()){
-			upgradeBuilding.setIcon(new ImageIcon("resources/buildings/end1.gif"));
-			fighter.setIcon(new ImageIcon("resources/fighter/0_forward0.png"));
-			worker.setIcon(new ImageIcon("resources/worker/0_forward0.png"));
-			healer.setIcon(new ImageIcon("resources/healer/0_forward0.png"));
-			menu.add(upgradeBuilding);
-			menu.add(fighter);
-			menu.add(worker);
-			menu.add(healer);
-	
-		}
 		
 		
 	}
@@ -126,10 +96,6 @@ public class Building {
 	 * prolly something with listeners and 
 	 * if selected == building and stuff.
 	 */
-	
-	public void selected(){
-		GameState.getMainWindow().setMenu(menu);
-	}
 	
 
 }
