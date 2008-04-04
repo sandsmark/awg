@@ -10,6 +10,7 @@ public class Healer extends Unit {
 
 
 	public Healer(Player player) {
+		type = "healer";
 		setMana(100);
 		setMaxHealth(75);
 		setCurrentHealth(getMaxHealth());
@@ -17,7 +18,7 @@ public class Healer extends Unit {
 		setDamage(3);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
 		if (player.isAI()) sprite = new Sprite("healer", 1);
-		else sprite = new Sprite("healer", 0);
+		else sprite = new Sprite(type, 0);
 	}
 
 	public void heal(Unit target) {
