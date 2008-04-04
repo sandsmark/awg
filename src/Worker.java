@@ -44,7 +44,6 @@ public class Worker extends Unit {
 	@Override
 	public int move() {
 		Point mainPos = getPlayer().mainHouse.getPosition();
-		System.out.println("Cur: " + getCarrying() + " Max:" + maxCarrying);
 		if (targetResource != null) {
 			if (this.getCarrying() > 0 && mainPos.distance(position) < 25 && !targetResource.position.equals(target)) {
 				deliverResource();
