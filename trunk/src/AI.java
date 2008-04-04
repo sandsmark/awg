@@ -1,6 +1,6 @@
 
 public class AI {
-	//her skal oppførselen til AI legges til
+	//her skal oppfÃ¸rselen til AI legges til
 	AIrules oppforsel;
 	
 	
@@ -18,7 +18,7 @@ public class AI {
 		return true;
 	}
 	public void build() { //AI sjekker om han kan bygge en unit, og hvilken unit han skal bygge
-		// må også sjekke om han builder noe/eventuelt oppgraderer noe
+		// mÃ¥ ogsÃ¥ sjekke om han builder noe/eventuelt oppgraderer noe
 	}
 	public boolean willUpgrade() {//sjekker om AI vil angripe
 		return true; 

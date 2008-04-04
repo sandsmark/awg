@@ -2,14 +2,14 @@
 public class AIrules {
 
 	double unitSenseRange; //radius for sansevidde
-	int attackForce; //hvor mange units før attack
+	int attackForce; //hvor mange units fÃ¸r attack
 	int workers; //hvor mange workers han opererer med
-	double baseSenseRange; //hvor nære basen før han forsvarer
+	double baseSenseRange; //hvor nÃ¦re basen fÃ¸r han forsvarer
 	int aggro; //hvor ofte han sender wave i sekunder
 	int defence; //hvor mange units i forsvar
 	int fighterPerHealer; //healer/fighter ratio
 	int startGold; //start gull
-	int upgrade; // når han skal oppgradere hovedbygg i sek
+	int upgrade; // nÃ¥r han skal oppgradere hovedbygg i sek
 	
 	public AIrules() {
 		this.unitSenseRange=15;
