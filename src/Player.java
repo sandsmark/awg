@@ -30,6 +30,10 @@ public class Player {
 	}
 	
 	public void increaseResources(int n) {
-		resources += resources;
+		resources += n;
+	}
+	
+	public int getResources() {
+		return resources;
 	}
 }
