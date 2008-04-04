@@ -24,6 +24,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	JLabel curUnitText;
 	JLabel curUnitIcon;
 
+	JButton upgradeBuilding, worker, fighter, healer;
 	
 	
 	
@@ -41,10 +42,13 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		SplashScreen splash = new SplashScreen(frame);
 		
 		GameState.setMainWindow(this);
+		
 		map = GameState.getMap();
 		outer = new JPanel();
 		canvas = new Canvas();
 		menu = new JPanel();
+		
+		setupBuildingGUI();
 
 		curUnitIcon = new JLabel();
 		menu.add(curUnitIcon);
@@ -189,5 +193,28 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	
 	public void setMenu(JPanel menu){
 		this.menu = menu;
+	}
+	
+	private void setupBuildingGUI(){
+		upgradeBuilding = new JButton("UpgradeButton");
+		worker = new JButton("TrainWorkerButton");
+		fighter = new JButton("TrainFighterButton");
+		healer = new JButton("TrainHealerButton");
+		
+		upgradeBuilding.setIcon(new ImageIcon("resources/buildings/end2.gif"));
+		fighter.setIcon(new ImageIcon("resources/fighter/1_forward0.png"));
+		worker.setIcon(new ImageIcon("resources/worker/1_forward0.png"));
+		healer.setIcon(new ImageIcon("resources/healer/1_forward0.png"));
+		
+		upgradeBuilding.addActionListener(GameState.getMainWindow());
+		worker.addActionListener(GameState.getMainWindow());
+		fighter.addActionListener(GameState.getMainWindow());
+		healer.addActionListener(GameState.getMainWindow());
+		
+		menu.add(upgradeBuilding);
+		menu.add(worker);
+		menu.add(fighter);
+		menu.add(healer);
+		
 	}
 }

@@ -36,4 +36,8 @@ public class Player {
 	public int getResources() {
 		return resources;
 	}
+	
+	public Building getMainBuilding(){
+		return mainHouse;
+	}
 }
