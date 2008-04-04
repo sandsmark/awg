@@ -37,8 +37,6 @@ import javax.sound.sampled.*;
 
 public class Music implements Runnable{
 
-	boolean running_as_applet=true;
-
 	Thread player=null;
 	InputStream bitStream=null;
 
@@ -52,14 +50,14 @@ public class Music implements Runnable{
 	
 	String filename;
 
-	SyncState oy;
-	StreamState os;
-	Page og;
-	Packet op;
-	Info vi;
-	Comment vc;
-	DspState vd;
-	Block vb;
+	SyncState syncState;
+	StreamState streamState;
+	Page page;
+	Packet packet;
+	Info info;
+	Comment comment;
+	DspState dspState;
+	Block block;
 
 	byte[] buffer=null;
 	int bytes=0;
@@ -84,20 +82,20 @@ public class Music implements Runnable{
 	
 	
 	void init_jorbis(){
-		oy=new SyncState();
-		os=new StreamState();
-		og=new Page();
-		op=new Packet();
+		syncState=new SyncState();
+		streamState=new StreamState();
+		page=new Page();
+		packet=new Packet();
 
-		vi=new Info();
-		vc=new Comment();
-		vd=new DspState();
-		vb=new Block(vd);
+		info=new Info();
+		comment=new Comment();
+		dspState=new DspState();
+		block=new Block(dspState);
 
 		buffer=null;
 		bytes=0;
 
-		oy.init();
+		syncState.init();
 	}
 
 	public Music(String filename) {
@@ -193,32 +191,32 @@ public class Music implements Runnable{
 			while(true){
 				int eos=0;
 
-				int index=oy.buffer(BUFSIZE);
-				buffer=oy.data;
+				int index=syncState.buffer(BUFSIZE);
+				buffer=syncState.data;
 				try{ bytes=bitStream.read(buffer, index, BUFSIZE); }
 				catch(Exception e){
 					System.err.println(e);
 					return;
 				}
-				oy.wrote(bytes);
+				syncState.wrote(bytes);
 
 				if(chained){
 					chained=false;   
 				}
 				else{
-					if(oy.pageout(og)!=1){
+					if(syncState.pageout(page)!=1){
 						if(bytes<BUFSIZE)break;
 						System.err.println("Input does not appear to be an Ogg bitstream.");
 						return;
 					}
 				}
-				os.init(og.serialno());
-				os.reset();
+				streamState.init(page.serialno());
+				streamState.reset();
 
-				vi.init();
-				vc.init();
+				info.init();
+				comment.init();
 
-				if(os.pagein(og)<0){ 
+				if(streamState.pagein(page)<0){ 
 					// error; stream version mismatch perhaps
 					System.err.println("Error reading first page of Ogg bitstream data.");
 					return;
@@ -226,13 +224,13 @@ public class Music implements Runnable{
 
 				retry=RETRY;
 
-				if(os.packetout(op)!=1){ 
+				if(streamState.packetout(packet)!=1){ 
 					// no page? must not be vorbis
 					System.err.println("Error reading initial header packet.");
 					return;
 				}
 
-				if(vi.synthesis_headerin(vc, op)<0){ 
+				if(info.synthesis_headerin(comment, packet)<0){ 
 					// error case; not a vorbis header
 					System.err.println("This Ogg bitstream does not contain Vorbis audio data.");
 					return;
@@ -242,26 +240,26 @@ public class Music implements Runnable{
 
 				while(i<2){
 					while(i<2){
-						int result=oy.pageout(og);
+						int result=syncState.pageout(page);
 						if(result==0) break; // Need more data
 						if(result==1){
-							os.pagein(og);
+							streamState.pagein(page);
 							while(i<2){
-								result=os.packetout(op);
+								result=streamState.packetout(packet);
 								if(result==0)break;
 								if(result==-1){
 									System.err.println("Corrupt secondary header.  Exiting.");
 									//return;
 									break loop;
 								}
-								vi.synthesis_headerin(vc, op);
+								info.synthesis_headerin(comment, packet);
 								i++;
 							}
 						}
 					}
 
-					index=oy.buffer(BUFSIZE);
-					buffer=oy.data; 
+					index=syncState.buffer(BUFSIZE);
+					buffer=syncState.data; 
 					try{ bytes=bitStream.read(buffer, index, BUFSIZE); }
 					catch(Exception e){
 						System.err.println(e);
@@ -271,7 +269,7 @@ public class Music implements Runnable{
 						System.err.println("End of file before finding all Vorbis headers!");
 						return;
 					}
-					oy.wrote(bytes);
+					syncState.wrote(bytes);
 				}
 
 				{
@@ -285,15 +283,15 @@ public class Music implements Runnable{
 //					System.err.println("Encoded by: "+new String(vc.vendor, 0, vc.vendor.length-1)+"\n");
 				}
 
-				convsize=BUFSIZE/vi.channels;
+				convsize=BUFSIZE/info.channels;
 
-				vd.synthesis_init(vi);
-				vb.init(vd);
+				dspState.synthesis_init(info);
+				block.init(dspState);
 
 				float[][][] _pcmf=new float[1][][];
-				int[] _index=new int[vi.channels];
+				int[] _index=new int[info.channels];
 
-				if (getOutputLine(vi.channels, vi.rate) == null) {
+				if (getOutputLine(info.channels, info.rate) == null) {
 					this.stop();
 					return;
 				}
@@ -310,22 +308,22 @@ public class Music implements Runnable{
 							return;
 						}
 
-						int result=oy.pageout(og);
+						int result=syncState.pageout(page);
 						if(result==0)break; // need more data
 						if(result==-1){ // missing or corrupt data at this page position
 //							System.err.println("Corrupt or missing data in bitstream; continuing...");
 						}
 						else{
-							os.pagein(og);
+							streamState.pagein(page);
 
-							if(og.granulepos()==0){  //
+							if(page.granulepos()==0){  //
 								chained=true;          //
 								eos=1;                 // 
 								break;                 //
 							}                        //
 
 							while(true){
-								result=os.packetout(op);
+								result=streamState.packetout(packet);
 								if(result==0)break; // need more data
 								if(result==-1){ // missing or corrupt data at this page position
 									// no reason to complain; already complained above
@@ -334,16 +332,16 @@ public class Music implements Runnable{
 								else{
 									// we have a packet.  Decode it
 									int samples;
-									if(vb.synthesis(op)==0){ // test for success!
-										vd.synthesis_blockin(vb);
+									if(block.synthesis(packet)==0){ // test for success!
+										dspState.synthesis_blockin(block);
 									}
-									while((samples=vd.synthesis_pcmout(_pcmf, _index))>0){
+									while((samples=dspState.synthesis_pcmout(_pcmf, _index))>0){
 										float[][] pcmf=_pcmf[0];
 										int bout=(samples<convsize?samples:convsize);
 
 										// convert doubles to 16 bit signed ints (host order) and
 										// interleave
-										for(i=0;i<vi.channels;i++){
+										for(i=0;i<info.channels;i++){
 											int ptr=i*2;
 											//int ptr=i;
 											int mono=_index[i];
@@ -358,21 +356,21 @@ public class Music implements Runnable{
 												if(val<0) val=val|0x8000;
 												convbuffer[ptr]=(byte)(val);
 												convbuffer[ptr+1]=(byte)(val>>>8);
-												ptr+=2*(vi.channels);
+												ptr+=2*(info.channels);
 											}
 										}
-										outputLine.write(convbuffer, 0, 2*vi.channels*bout);
-										vd.synthesis_read(bout);
+										outputLine.write(convbuffer, 0, 2*info.channels*bout);
+										dspState.synthesis_read(bout);
 									}	  
 								}
 							}
-							if(og.eos()!=0)eos=1;
+							if(page.eos()!=0)eos=1;
 						}
 					}
 
 					if(eos==0){
-						index=oy.buffer(BUFSIZE);
-						buffer=oy.data;
+						index=syncState.buffer(BUFSIZE);
+						buffer=syncState.data;
 						try{ bytes=bitStream.read(buffer,index,BUFSIZE); }
 						catch(Exception e){
 							System.err.println(e);
@@ -381,18 +379,18 @@ public class Music implements Runnable{
 						if(bytes==-1){
 							break;
 						}
-						oy.wrote(bytes);
+						syncState.wrote(bytes);
 						if(bytes==0)eos=1;
 					}
 				}
 
-				os.clear();
-				vb.clear();
-				vd.clear();
-				vi.clear();
+				streamState.clear();
+				block.clear();
+				dspState.clear();
+				info.clear();
 			}
 
-		oy.clear();
+		syncState.clear();
 
 		try {
 			if(bitStream!=null)bitStream.close();
