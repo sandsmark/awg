@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -11,11 +10,12 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JPanel;
 
+
+/**
+ * Epic and great canvas, for drawing things (the central graphics thingy...)
+ *  @author Martin Sandsmark
+ */
 public class Canvas extends JPanel implements Moveable {
-	/**
-	 * Epic and great canvas, for drawing things (the central graphics thingy...)
-	 *  @author Martin Sandsmark
-	 */
 
 	/**
 	 * TODO: Optimize drawing, "dirty" rectangles. Split up into several "sub-maps", which are re-drawn only when necessary.
@@ -25,37 +25,40 @@ public class Canvas extends JPanel implements Moveable {
 
 	int offsetX = 0;
 	int offsetY = 0;
-	int width;
-	int height;
-	int dWidth = 500;
-	int dHeight = 500;
-	int step = 20;
-	BufferedImage internalMap;
-	BufferedImage baseMap;
 	
- 	//Box x/y-coordinates, and height and width
+	int width = 500;
+	int height = 500;
+
+	int step = 20;
+
+	BufferedImage internalMap;
+	
 	int bx, by, bw, bh = 0;
 	boolean showBox = false;
 	
-	//Target is the shrinking circle when setting a target for a unit
-	boolean showTarget = false;
 	Point target;
-	
 	int targetR = 20;
+
 	boolean dirty = false;
+
 	ReentrantLock lock = new ReentrantLock();
 	Condition updated = lock.newCondition();
 
+	/**
+	 * This constructs a new canvas, and creates a new internal map.
+	 */
 	public Canvas() {
-		Map map = GameState.getMap();
-		height = map.getHeight();
-		width = map.getWidth();
-
-		internalMap = new BufferedImage(height, width,
-				BufferedImage.TYPE_INT_ARGB);
+		int mapHeight = GameState.getMap().getHeight();
+		int mapWidth = GameState.getMap().getWidth();
+		
+		internalMap = new BufferedImage(mapHeight, mapWidth, BufferedImage.TYPE_INT_ARGB); // Overwrite the old internal map
 		updateInternal();
 	}
 
+	/**
+	 * This overrides the JPanel paintComponent(), and renders what is on the
+	 * actual screen. 
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		try {
@@ -66,17 +69,17 @@ public class Canvas extends JPanel implements Moveable {
 				dirty = false;
 			}
 			Graphics g2 = g;
-			dWidth = getSize().width;
-			dHeight = getSize().height;
-			g2.drawImage(internalMap, 0, 0, dWidth, dHeight, offsetX, offsetY,
-					offsetX + dWidth, offsetY + dHeight, null);
+			width = getSize().width;
+			height = getSize().height;
+			g2.drawImage(internalMap, 0, 0, width, height, offsetX, offsetY,
+					offsetX + width, offsetY + height, null);
 			if (showBox)
 				g2.drawRect(bx, by, bw, bh);
-			if (showTarget) {
+			if (target != null) {
 				g2.setColor(Color.RED);
 				g2.drawOval(target.x - targetR / 2, target.y - targetR / 2, targetR, targetR);
 				targetR /= 1.5;
-				if (targetR < 2) showTarget = false;
+				if (targetR < 2) target = null;
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -85,7 +88,11 @@ public class Canvas extends JPanel implements Moveable {
 		}
 
 	}
-
+	
+	/**
+	 * This method updates the internal map representation/cache, which
+	 * contains all layers.
+	 */
 	public void updateInternal() {
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
@@ -114,33 +121,47 @@ public class Canvas extends JPanel implements Moveable {
 			if (units.isSelected(unit))
 				ig2.drawRect(unit.getPosition().x, unit.getPosition().y, unit.getCurHealth(), 2);
 		}
-
-
-
 		lock.unlock();
 	}
 
+	/**
+	 * This returns the minimum size for this component.
+	 */
 	@Override
 	public Dimension getMinimumSize() {
 		return new Dimension(500, 500);
 	}
 
+	/**
+	 * This returns the preferred size for this component.
+	 */
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(500, 500);
 	}
 
+	/**
+	 * This returns the current width of this component.
+	 */
 	@Override
 	public int getWidth() {
-		return dWidth;
+		return width;
 	}
 
+	/**
+	 * This returns the current height of this component.
+	 */
 	@Override
 	public int getHeight() {
-		return dHeight;
+		return height;
 	}
 
+	/**
+	 * This moves the offset of the internal map, in a given direction.
+	 */
 	public void move(Direction dir) {
+		int mapHeight = GameState.getMap().getHeight();
+		int mapWidth = GameState.getMap().getWidth();
 		lock.lock();
 		switch (dir) {
 		case UP:
@@ -149,7 +170,7 @@ public class Canvas extends JPanel implements Moveable {
 			}
 			break;
 		case DOWN:
-			if (dHeight + offsetY < height) {
+			if (height + offsetY < mapHeight) {
 				offsetY += step;
 			}
 			break;
@@ -159,7 +180,7 @@ public class Canvas extends JPanel implements Moveable {
 			}
 			break;
 		case RIGHT:
-			if (dWidth + offsetX < width) {
+			if (width + offsetX < mapWidth) {
 				offsetX += step;
 			}
 			break;
@@ -170,14 +191,30 @@ public class Canvas extends JPanel implements Moveable {
 		}
 	}
 
+	/**
+	 * This returns the current x-offset of the internal map relative to the
+	 * display on screen. 
+	 */
 	public int getOffsetX() {
 		return offsetX;
 	}
 
+	/**
+	 * This returns the current y-offset of the internal map relative to the
+	 * display on screen. 
+	 */
 	public int getOffsetY() {
 		return offsetY;
 	}
 
+	/**
+	 * This sets the coordinates for the selection box used for selecting units.
+	 * These coordinates are used by the paintComponent()-function. 
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 */
 	public void drawSelectBox(int x1, int y1, int x2, int y2) {
 		if (x1 < x2)
 			bx = x1;
@@ -193,18 +230,31 @@ public class Canvas extends JPanel implements Moveable {
 		repaint();
 	}
 
+	/**
+	 * This hides the selection box.
+	 */
 	public void hideSelectBox() {
 		showBox = false;
 		repaint();
 	}
 
+	/**
+	 * This specifies that the map has been updated somehow (for example a unit
+	 * has moved), and that we need to update our internal representation.
+	 * This saves us some repaints.
+	 */
 	public void setDirty() {
 		dirty = true;
 	}
 	
+	/**
+	 * This sets up the coordinates and radius for the target-circle, and
+	 * therefore makes it be displayed.
+	 * @param x
+	 * @param y
+	 */
 	public void showTarget (int x, int y) {
 		target = new Point(x, y);
 		targetR = 50;
-		showTarget = true;
 	}
 }
