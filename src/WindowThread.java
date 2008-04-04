@@ -24,6 +24,7 @@ public class WindowThread extends Thread {
 				window.delSeletectedUnit();
 				for (Unit selected : units.getSelectedUnits())
 					window.setSeletectedUnit(selected);
+				GameState.getMainWindow().resPan.update();
 				Thread.sleep(500);
 			}
 		} catch (InterruptedException e) {

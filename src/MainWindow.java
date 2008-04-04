@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +24,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	JButton close;
 	JLabel curUnitText;
 	JLabel curUnitIcon;
+	ResourcePanel resPan;
 
 	JButton upgradeBuilding, worker, fighter, healer;
 	
@@ -47,6 +49,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer = new JPanel();
 		canvas = new Canvas();
 		menu = new JPanel();
+		
+		resPan = new ResourcePanel();
+		menu.add(resPan);
 		
 		setupBuildingGUI();
 
@@ -122,6 +127,14 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		canvas.repaint();
 		if (e.getSource() == close) {
 			exit();
+		}else if(e.getSource() == upgradeBuilding){
+			//UPgradeBUILDING!!!!!!
+		}else if(e.getSource() == worker){
+			GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
+		}else if(e.getSource() == fighter){
+			//CONSTRUCT FIGHETER
+		}else if(e.getSource() == healer){
+			//CONSTRUCT HEALER
 		}
 	}
 
@@ -196,15 +209,16 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	}
 	
 	private void setupBuildingGUI(){
-		upgradeBuilding = new JButton("UpgradeButton");
-		worker = new JButton("TrainWorkerButton");
-		fighter = new JButton("TrainFighterButton");
-		healer = new JButton("TrainHealerButton");
+		upgradeBuilding = new JButton("Upgrade");
+		worker = new JButton("Worker");
+		fighter = new JButton("Fighter");
+		healer = new JButton("Healer");
 		
-		upgradeBuilding.setIcon(new ImageIcon("resources/buildings/end2.gif"));
-		fighter.setIcon(new ImageIcon("resources/fighter/1_forward0.png"));
-		worker.setIcon(new ImageIcon("resources/worker/1_forward0.png"));
-		healer.setIcon(new ImageIcon("resources/healer/1_forward0.png"));
+		Dimension d = new Dimension(400,100);
+		upgradeBuilding.setIcon(new ImageIcon("resources/buildings/end1.png"));
+		fighter.setIcon(new ImageIcon("resources/fighter/0_forward0.png"));
+		worker.setIcon(new ImageIcon("resources/worker/0_forward0.png"));
+		healer.setIcon(new ImageIcon("resources/healer/0_forward0.png"));
 		
 		upgradeBuilding.addActionListener(GameState.getMainWindow());
 		worker.addActionListener(GameState.getMainWindow());
@@ -215,6 +229,5 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.add(worker);
 		menu.add(fighter);
 		menu.add(healer);
-		
 	}
 }
