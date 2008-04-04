@@ -124,7 +124,7 @@ public class Unit {
 		int newX = position.x + (int)(Math.cos(orientation) * this.speed);
 		int newY = position.y + (int)(Math.sin(orientation) * this.speed);
 		
-		if (GameState.getMap().canMove(newX, newY)) this.setPosition(new Point(newX, newY));
+		if (GameState.getMap().canMove(newX, newY) && newX > 0 && newY > 0 && newX < GameState.getConfig().getWorldWidth() && newY < GameState.getConfig().getWorldHeight()) this.setPosition(new Point(newX, newY));
 		else target = null;
 		
 		if (speed < 2) sprite.setMoving(false);
@@ -150,7 +150,7 @@ public class Unit {
 	 */
 	
 	public void dealDamage(){
-		if((position.distance(targetUnit.position.getX(), targetUnit.position.getY())<5) && targetUnit.player != this.player){
+		if((position.distance(targetUnit.position) < 25) && targetUnit.player != this.player){
 			targetUnit.takeDamage(this.damage);
 		}
 	}
