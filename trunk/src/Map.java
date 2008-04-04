@@ -105,6 +105,9 @@ public class Map {
 		return resources[i];
 	}
 
+	public Resource[] getResources() {
+		return resources;
+	}
 	public int getResourceNum() {
 		return resources.length;
 	}
