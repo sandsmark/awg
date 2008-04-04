@@ -51,7 +51,7 @@ public class Worker extends Unit {
 				this.setTarget(targetResource.position);
 			} else if (this.getCarrying() >= maxCarrying && !getPlayer().mainHouse.getPosition().equals(target)) {
 				this.setTarget(this.getPlayer().mainHouse.getPosition());
-			} else if (this.targetResource.position.distance(this.position) < 25) {
+			} else if (this.targetResource.position.distance(this.position) < 25 && mainPos.equals(target)) {
 				/**
 				 * Harvest!
 				 */
