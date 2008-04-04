@@ -11,6 +11,7 @@ public class Resource {
 	protected Point position;
 	
 	public Resource(int initialVal, int x, int y) {
+		resourcesLeft = initialVal;
 		position = new Point(x,y);
 		try {
 			sprite = ImageIO.read(new File("resources/gull.png"));
@@ -21,9 +22,10 @@ public class Resource {
 	}
 
 	public int harvest(int max) {
+		System.out.println(resourcesLeft);
 		if (resourcesLeft == 0)
 			return 0;
-		int harvested = (int) Math.random() * max;
+		int harvested = (int) (Math.random() * max) + 1;
 		if (harvested > resourcesLeft) {
 			harvested = harvested % resourcesLeft;
 			resourcesLeft = 0;
@@ -39,5 +41,9 @@ public class Resource {
 
 	public Point getPosition() {
 		return position;
+	}
+	
+	public int getRemaining() {
+		return resourcesLeft;
 	}
 }

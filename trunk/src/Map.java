@@ -68,7 +68,7 @@ public class Map {
 		for (int i = 0; i < resources.length; i++) {
 			x = (int) (Math.cos(i) * width / 3) + width / 2;
 			y = (int) (Math.sin(i) * width / 3) + width / 2;
-			resources[i] = new Resource((int) Math.random() * 20 + 20, x, y);
+			resources[i] = new Resource((int) (Math.random() * 20000) + 20000, x, y);
 		}
 		
 		//Create the base buffer/image of the map

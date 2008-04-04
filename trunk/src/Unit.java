@@ -114,10 +114,11 @@ public class Unit {
 			return 0;
 		}
 		else if (position.distance(target) < 5) {
+			
 			target = null;
 			return 0;
 		} 
-		else if (position.distance(target) < 25) speed = speed / 2;
+		else if (position.distance(target) < 15) speed = speed / 1.5;
 		else if (speed < maxSpeed) speed = Math.abs(speed + accel);
 		
 		int newX = position.x + (int)(Math.cos(orientation) * this.speed);
@@ -134,7 +135,7 @@ public class Unit {
 	
 	
 	/* 
-	 * Brukes p� en unit som skal ta skade av en annen. Kj�res fra dealDamage.
+	 * Brukes på en unit som skal ta skade av en annen. Kjøres fra dealDamage.
 	 */
 	public void takeDamage(int damage){
 		this.CurrentHealth -= damage;
