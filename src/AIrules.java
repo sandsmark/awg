@@ -7,14 +7,16 @@ public class AIrules {
 	double BaseSenseRange; //hvor nære basen før han forsvarer
 	int Aggro; //hvor ofte han sender wave i sekunder
 	int Defence; //hvor mange units i forsvar
+	int FighterPerHealer;
 	
 	public AIrules() {
 		this.UnitSenseRange=15;
-		this.AttackForce = 5;
+		this.AttackForce = 6;
 		this.Workers = 5;
 		this.BaseSenseRange = 30;
 		this.Aggro = 36000; //i sek
 		this.Defence = 5;
+		this.FighterPerHealer = 5;
 	}
 	public void setUnitSenseRange(double d) {
 		this.UnitSenseRange = d;
@@ -51,6 +53,12 @@ public class AIrules {
 	}
 	public int getDefence() {
 		return this.Defence;
+	}
+	public int getFighterPerHealer() {
+		return this.FighterPerHealer;
+	}
+	public void setFighterPerHealer(int fighterPerHealer) {
+		this.FighterPerHealer = fighterPerHealer;
 	}
 	
 	
