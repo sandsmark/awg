@@ -18,6 +18,7 @@ public class Unit {
 	protected double maxSpeed = 5;
 	protected double accel = 1.5;
 	
+	protected String type;
 	
 	Unit targetUnit; // This unit's target unit.
 	private Player player;
@@ -133,7 +134,7 @@ public class Unit {
 	
 	
 	/* 
-	 * Brukes på en unit som skal ta skade av en annen. Kjøres fra dealDamage.
+	 * Brukes pï¿½ en unit som skal ta skade av en annen. Kjï¿½res fra dealDamage.
 	 */
 	public void takeDamage(int damage){
 		this.CurrentHealth -= damage;
@@ -142,9 +143,9 @@ public class Unit {
 		}
 	}
 	/*
-	 * Skal brukes på en unit som har funnet et target. 
-	 * Kan kjøres hver gang den beveger seg, og se om den er innenfor range,
-	 * om den er det, gjør den skade på uniten den har som targetUnit
+	 * Skal brukes pï¿½ en unit som har funnet et target. 
+	 * Kan kjï¿½res hver gang den beveger seg, og se om den er innenfor range,
+	 * om den er det, gjï¿½r den skade pï¿½ uniten den har som targetUnit
 	 */
 	
 	public void dealDamage(){
@@ -152,4 +153,17 @@ public class Unit {
 			targetUnit.takeDamage(this.damage);
 		}
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public int getCurHealth() {
+		return getMaxHealth() - getDamage();
+	}
 }
+
