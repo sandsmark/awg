@@ -1,6 +1,4 @@
 #labels Phase-Implementation,Featured,Phase-Support
-#Her er arbeidsfordelingen internt i gruppen.
-
 = Arbeidsfordeling =
 
 Vi har fordelt arbeidet internt i gruppen etter Argus-Kreysig-metoden.
