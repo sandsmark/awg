@@ -64,7 +64,7 @@ AIThread kaller AI. AI sjekker med AIRules for hvordan den skal oppføre seg.
 Det er ikke alle klassene vi benytter for øyeblikket, enten fordi de ikke trengs, eller fordi vi ikke har kodet de ferdig.
 
 == Path ==
-Dette er en klasse som inneholder en sti, bestående WeightedNodes, som vil brukes av en unit for å bevege seg rundt på kartet. Konstruktøren tar inn nåværende posisjon, og target, og benytter seg av A* for å finne en sti frem til målet på en Width/10*Height/10-grid (for å spare cpu og minne). Denne er ikke ferdig.
+Dette er en klasse som inneholder en sti, bestående WeightedNodes, som vil brukes av en unit for å bevege seg rundt på kartet. Konstruktøren tar inn nåværende posisjon, og target, og benytter seg av A\* for å finne en sti frem til målet på en Width/10*Height/10-grid (for å spare cpu og minne). Denne er ikke ferdig.
 
 == WeightedNode ==
 Dette er en hjelpeklasse for Path, som inneholder et Point og en vekt. Denne er ikke ferdig.
