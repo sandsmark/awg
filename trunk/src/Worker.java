@@ -44,11 +44,12 @@ public class Worker extends Unit {
 	@Override
 	public int move() {
 		Point mainPos = getPlayer().mainHouse.getPosition();
-		System.out.println("Cur: " + getCarrying() + " Max:" + maxCarrying);
 		if (targetResource != null) {
 			if (this.getCarrying() > 0 && mainPos.distance(position) < 25 && !targetResource.position.equals(target)) {
 				deliverResource();
 				this.setTarget(targetResource.position);
+			} else if (this.getCarrying() >= maxCarrying && !mainPos.equals(target)) {
+				this.setTarget(this.getPlayer().mainHouse.getPosition());
 			} else if (this.targetResource.position.distance(this.position) < 25) {
 				/**
 				 * Harvest!
@@ -56,8 +57,6 @@ public class Worker extends Unit {
 				this.target = null;
 				this.setCarrying(this.getCarrying() + targetResource.harvest(harvestMax));
 				if (targetResource.getRemaining() <= 0) targetResource = null;
-			} else if (this.getCarrying() >= maxCarrying && !getPlayer().mainHouse.getPosition().equals(target)) {
-				this.setTarget(this.getPlayer().mainHouse.getPosition());
 			}
 		} else if (this.getCarrying() != 0 && !getPlayer().mainHouse.getPosition().equals(target)) { 
 			this.setTarget(this.getPlayer().mainHouse.getPosition());
