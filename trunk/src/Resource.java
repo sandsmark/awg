@@ -22,6 +22,7 @@ public class Resource {
 	}
 
 	public int harvest(int max) {
+		System.out.println(resourcesLeft);
 		if (resourcesLeft == 0)
 			return 0;
 		int harvested = (int) (Math.random() * max) + 1;
