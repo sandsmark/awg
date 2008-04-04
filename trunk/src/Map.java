@@ -37,7 +37,6 @@ public class Map {
 			System.err.println("Could not load sprite!");
 			System.exit(1);
 		}
-		System.out.println(width + "." + height);
 		// Add water to the map
 		waterShape = new Polygon();
 
