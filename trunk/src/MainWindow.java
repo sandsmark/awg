@@ -169,7 +169,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		if (m.getButton() == MouseEvent.BUTTON3) {
 			if (GameState.getUnits().selectedOnlyContains("worker"))
 				for (Resource resource : GameState.getMap().getResources()){
-					if (resource.position.distance(new Point(x+10, y+10)) < 10) {
+					if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
 						GameState.getUnits().setTargetResource(resource);
 						System.out.println("ohaio");
 					}
