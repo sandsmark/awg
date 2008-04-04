@@ -1,10 +1,13 @@
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -69,6 +72,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 //		frame.setAlwaysOnTop(true);
 //		frame.setUndecorated(false);
 //		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		frame.setIconImage(ImageIO.read(new File("resources/icon.png")));
 		frame.setTitle("Awesome WarGame is Awesome!");
 
 		canvas.repaint();
@@ -160,7 +164,16 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	public void mouseExited(MouseEvent m) {		}
 
 	public void mousePressed(MouseEvent m) {
+		int x = m.getX() + GameState.getMainWindow().canvas.getOffsetX();
+		int y = m.getY() + GameState.getMainWindow().canvas.getOffsetY();
 		if (m.getButton() == MouseEvent.BUTTON3) {
+			if (GameState.getUnits().selectedOnlyContains("worker"))
+				for (Resource resource : GameState.getMap().getResources()){
+					if (resource.position.distance(new Point(x+10, y+10)) < 10) {
+						GameState.getUnits().setTargetResource(resource);
+						System.out.println("ohaio");
+					}
+				}
 			GameState.getUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
 			canvas.showTarget(m.getX(), m.getY());
 		} else if (m.getButton() == MouseEvent.BUTTON1) sThread.start(m);
