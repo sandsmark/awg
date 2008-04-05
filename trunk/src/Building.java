@@ -22,11 +22,11 @@ public class Building {
 		setPlayer(player);
 		try {
 			if(player.isAI()){
-				setSprite(ImageIO.read(new File("resources/buildings/start1.gif")));
+				setSprite(ImageIO.read(new File("resources/buildings/start2.gif")));
 				position = new Point(900,900); //Sette faste plasser bygningene starter?
 			}
 			else{
-				setSprite(ImageIO.read(new File("resources/buildings/start2.png")));
+				setSprite(ImageIO.read(new File("resources/buildings/start1.png")));
 				position = new Point(100,100); //Sette faste plasser bygningene starter?
 			}
 		} catch (IOException e) {
