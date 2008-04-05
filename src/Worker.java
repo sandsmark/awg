@@ -80,4 +80,12 @@ public class Worker extends Unit {
 	public void setMaxCarrying(int maxCarrying) {
 		this.maxCarrying = maxCarrying;
 	}
+
+	public int getHarvestMax() {
+		return harvestMax;
+	}
+
+	public void setHarvestMax(int harvestMax) {
+		this.harvestMax = harvestMax;
+	}
 }
