@@ -47,9 +47,6 @@ public class Music implements Runnable{
 	private int RETRY=3;
 	int retry=RETRY;
 
-	
-	String filename;
-
 	SyncState syncState;
 	StreamState streamState;
 	Page page;
@@ -68,7 +65,6 @@ public class Music implements Runnable{
 	int left_vol_scale=100;
 	int right_vol_scale=100;
 	SourceDataLine outputLine=null;
-	String current_source=null;
 
 	int frameSizeInBytes;
 	int bufferLengthInBytes;
@@ -100,8 +96,14 @@ public class Music implements Runnable{
 
 	public Music(String filename) {
 		try {
-			bitStream= new FileInputStream(filename);
+//			bitStream= new FileInputStream(filename);
+			bitStream = getClass().getResourceAsStream(filename);
+			if (bitStream == null) {
+				System.err.println("Could not load music.");
+				return; 
+			}
 			playing = true;
+			this.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
