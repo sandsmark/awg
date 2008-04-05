@@ -76,16 +76,20 @@ public class Building {
 	}
 	
 	public void upgradeBuilding(){
-		try{
-			if(!player.isAI()){
-				GameState.getHuman().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end1.gif")));
-			}else if(player.isAI()){
-				GameState.getComputer().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end2.gif")));
-			}	
-		}catch(IOException IOE){
-			System.out.println("Error loading updated building image");
+		if(buildingLevel == 1){
+			try{
+				if(!player.isAI()){
+					GameState.getHuman().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end1.gif")));
+				}else if(player.isAI()){
+					GameState.getComputer().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end2.gif")));
+				}
+				buildingLevel = 2;
+			}catch(IOException IOE){
+				System.out.println("Error loading updated building image");
+			}
+			GameState.getMainWindow().getCanvas().updateInternal();
+			System.out.println("Upgraded building");
 		}
-		GameState.getMainWindow().getCanvas().updateInternal();
 	}
 	
 
