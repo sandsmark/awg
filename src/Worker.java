@@ -72,4 +72,12 @@ public class Worker extends Unit {
 	public void setTargetResource(Resource targetResource) {
 		this.targetResource = targetResource;
 	}
+
+	public int getMaxCarrying() {
+		return maxCarrying;
+	}
+
+	public void setMaxCarrying(int maxCarrying) {
+		this.maxCarrying = maxCarrying;
+	}
 }
