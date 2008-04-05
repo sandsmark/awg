@@ -187,19 +187,22 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	}
 
 	public void mousePressed(MouseEvent m) {
-		int x = m.getX() + GameState.getMainWindow().canvas.getOffsetX();
-		int y = m.getY() + GameState.getMainWindow().canvas.getOffsetY();
-		if (m.getButton() == MouseEvent.BUTTON3) {
-			if (GameState.getUnits().selectedOnlyContains("worker"))
-				for (Resource resource : GameState.getMap().getResources()){
-					if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
-						GameState.getUnits().setTargetResource(resource);
-						System.out.println("ohaio");
+		
+		if (m.getSource() == canvas){
+			int x = m.getX() + GameState.getMainWindow().canvas.getOffsetX();
+			int y = m.getY() + GameState.getMainWindow().canvas.getOffsetY();
+			if (m.getButton() == MouseEvent.BUTTON3) {
+				if (GameState.getUnits().selectedOnlyContains("worker"))
+					for (Resource resource : GameState.getMap().getResources()){
+						if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
+							GameState.getUnits().setTargetResource(resource);
+							System.out.println("ohaio");
+						}
 					}
-				}
-			GameState.getUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
-			canvas.showTarget(m.getX(), m.getY());
-		} else if (m.getButton() == MouseEvent.BUTTON1) sThread.start(m);
+				GameState.getUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
+				canvas.showTarget(m.getX(), m.getY());
+			} else if (m.getButton() == MouseEvent.BUTTON1) sThread.start(m);
+		}
 	}
 
 	public void mouseReleased(MouseEvent m) {
