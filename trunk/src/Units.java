@@ -38,7 +38,7 @@ public class Units {
 		selectedUnits.remove(u);
 	}
 
-	public Unit get(int num) {
+	public Unit getFromSelected(int num) {
 		return selectedUnits.get(num);
 	}
 
@@ -89,5 +89,30 @@ public class Units {
 	public void setTargetResource(Resource resource) {
 		for (Unit unit : selectedUnits)
 			if (unit instanceof Worker) ((Worker)unit).setTargetResource(resource);	
+	}
+	
+	public void upgradeUnits(Player player){
+		Unit unit;
+		for (int i = 0; i < GameState.getUnits().count(); i++) {
+			unit = GameState.getUnits().getUnit(i);
+			if(unit.getPlayer() == player){
+				if(unit instanceof Worker){
+					Worker worker = (Worker)unit;
+					worker.setMaxCarrying(worker.getMaxCarrying() * 2);
+					worker.setMaxHealth(worker.getMaxHealth() * 2);
+					worker.setDamage(worker.getDamage() *2);
+				}else if(unit instanceof Fighter){
+					Fighter fighter = (Fighter)unit;
+					fighter.setDamage(fighter.getDamage() * 2);
+					fighter.setMaxHealth(fighter.getMaxHealth() *2);
+				}else if(unit instanceof Healer){
+					Healer healer = (Healer)unit;
+					healer.setMana(healer.getMana() * 2);
+					healer.setMaxHealth(healer.getMaxHealth() *2);
+					healer.setDamage(healer.getDamage() *2);
+				}
+			}
+			
+		}
 	}
 }

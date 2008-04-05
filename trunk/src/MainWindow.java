@@ -126,14 +126,19 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		canvas.repaint();
 		if (e.getSource() == close) {
 			exit();
+			/*
+			 * Upgrades units if the upgradeBuilding-button is pushed
+			 * as well as the unit sprite. Need to add costs for upgrades, but at a later point.
+			 */
 		}else if(e.getSource() == upgradeBuilding){
-			//UPgradeBUILDING!!!!!!
+			GameState.getHuman().getMainBuilding().upgradeBuilding();
+			GameState.getUnits().upgradeUnits(GameState.getHuman());
 		}else if(e.getSource() == worker){
 			GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
 		}else if(e.getSource() == fighter){
-			//CONSTRUCT FIGHETER
+			GameState.getUnits().addUnit(new Fighter(GameState.getHuman()));
 		}else if(e.getSource() == healer){
-			//CONSTRUCT HEALER
+			GameState.getUnits().addUnit(new Healer(GameState.getHuman()));
 		}
 	}
 

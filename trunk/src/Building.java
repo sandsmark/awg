@@ -2,12 +2,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 
 public class Building {
 	private Point position;
@@ -22,11 +18,11 @@ public class Building {
 		setPlayer(player);
 		try {
 			if(player.isAI()){
-				setSprite(ImageIO.read(new File("resources/buildings/start2.gif")));
+				setSprite(ImageIO.read(new File("resources/buildings/start2.png")));
 				position = new Point(900,900); //Sette faste plasser bygningene starter?
 			}
 			else{
-				setSprite(ImageIO.read(new File("resources/buildings/start1.png")));
+				setSprite(ImageIO.read(new File("resources/buildings/start1.gif")));
 				position = new Point(100,100); //Sette faste plasser bygningene starter?
 			}
 		} catch (IOException e) {
@@ -79,23 +75,18 @@ public class Building {
 		this.player = player;
 	}
 	
-//	public void spawn (String type, Player owner) { // 1 = Healer, 2 = worker, 3 = Fighter
-//		Unit unit;
-//		if (type.equalsIgnoreCase("healer")) unit = new Healer(owner);
-//		else if (type.equalsIgnoreCase("worker")) unit = new Worker(owner);
-//		else if (type.equalsIgnoreCase("fighter")) unit = new Fighter(owner);
-//		else return;
-//		GameState.getUnits().addUnit(unit);
-//	}
-	
-
-	/*
-	 * Sets that the building menu should be 
-	 * displayed when it is selected.
-	 * How we do that, martin fixxxes,
-	 * prolly something with listeners and 
-	 * if selected == building and stuff.
-	 */
+	public void upgradeBuilding(){
+		try{
+			if(!player.isAI()){
+				GameState.getHuman().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end1.gif")));
+			}else if(player.isAI()){
+				GameState.getComputer().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end2.gif")));
+			}	
+		}catch(IOException IOE){
+			System.out.println("Error loading updated building image");
+		}
+		GameState.getMainWindow().getCanvas().updateInternal();
+	}
 	
 
 }
