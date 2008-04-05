@@ -103,8 +103,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		mThread = new MovementThread();
 		mThread.start();
 		
-		music = new Music("resources/music.ogg");
-		music.start();
+		music = new Music("/music.ogg");
 		
 
 		// Add testing unit
