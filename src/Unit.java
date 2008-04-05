@@ -1,5 +1,4 @@
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 
 public class Unit {
 	protected Point position;
@@ -113,7 +112,7 @@ public class Unit {
 		if (target == null) {
 			return 0;
 		}
-		else if (position.distance(target) < 5) {
+		else if (position.distance(target) <25) {
 			
 			target = null;
 			return 0;
