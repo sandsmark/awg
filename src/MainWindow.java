@@ -197,7 +197,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 					for (Resource resource : GameState.getMap().getResources()){
 						if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
 							GameState.getUnits().setTargetResource(resource);
-							System.out.println("ohaio");
+							resource.startHighlight();
 						}
 					}
 				GameState.getUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
