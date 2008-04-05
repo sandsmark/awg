@@ -178,7 +178,13 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	public void mouseEntered(MouseEvent m) {	}
 
-	public void mouseExited(MouseEvent m) {		}
+	public void mouseExited(MouseEvent m) {
+		/**
+		 * When mouse exits canvas, stop scrolling.
+		 */
+		if (m.getSource() == canvas) 
+			gThread.setDirection(Moveable.Direction.NONE);
+	}
 
 	public void mousePressed(MouseEvent m) {
 		int x = m.getX() + GameState.getMainWindow().canvas.getOffsetX();
