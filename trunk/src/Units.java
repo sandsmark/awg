@@ -101,6 +101,7 @@ public class Units {
 					worker.setMaxCarrying(worker.getMaxCarrying() * 2);
 					worker.setMaxHealth(worker.getMaxHealth() * 2);
 					worker.setDamage(worker.getDamage() *2);
+					worker.setHarvestMax(worker.getHarvestMax()*2);
 				}else if(unit instanceof Fighter){
 					Fighter fighter = (Fighter)unit;
 					fighter.setDamage(fighter.getDamage() * 2);
