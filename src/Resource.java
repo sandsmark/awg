@@ -9,12 +9,13 @@ public class Resource {
 	protected int resourcesLeft;
 	protected BufferedImage sprite;
 	protected Point position;
+	protected long blinking;
 	
 	public Resource(int initialVal, int x, int y) {
 		resourcesLeft = initialVal;
 		position = new Point(x,y);
 		try {
-			sprite = ImageIO.read(new File("resources/gull.png"));
+			sprite = ImageIO.read(new File("resources/rocks/" + (int)(Math.random()*2) + ".png"));
 		} catch (IOException e) {
 			System.err.println("Could not load resource sprite!");
 			System.exit(1);
@@ -45,4 +46,9 @@ public class Resource {
 	public int getRemaining() {
 		return resourcesLeft;
 	}
+	
+	public void startBlink() {
+		blinking = System.currentTimeMillis();
+	}
+	
 }
