@@ -12,6 +12,7 @@ public class Unit {
 	
 	protected Point target;
 	protected double orientation;
+	protected Path path;
 	
 	protected double speed = 0; //How many pixels the unit moves in 1 tick
 	protected double maxSpeed = 5;
@@ -91,11 +92,15 @@ public class Unit {
 		return sprite;
 	}
 	
-	public void setTarget(Point target) { 
+	public void goTo(Point target) { 
+		this.path = new Path(this.position, target);
+		this.target = path.getNext();
+	}
+	
+	private void setTarget(Point target) { 
 		this.target = target;
 		float distX = target.x - position.x;
 		float distY = target.y - position.y;
-//		if (distX == 0) distX = 1;
 		orientation = Math.atan2(distY, distX);
 		
 		orientation += Math.PI; // TODO: Ugly hack
@@ -126,9 +131,13 @@ public class Unit {
 		 * or changing  "position.distance(target) <25" to something bigger, but then it looks weird.
 		 */
 		else if (position.distance(target) <25) {
-			target = null;
-			speed = 0;
-			return 0;
+			if (path.isEmpty()) {
+				target = null;
+				speed = 0;
+				return 0;
+			} else {
+				this.setTarget(path.getNext());
+			}
 		} 
 		else if (position.distance(target) < 15) speed = speed / 1.5;
 		else if (speed < maxSpeed) speed = Math.abs(speed + accel);
@@ -136,8 +145,9 @@ public class Unit {
 		int newX = position.x + Math.round(Math.round(Math.cos(orientation) * this.speed));
 		int newY = position.y + Math.round(Math.round(Math.sin(orientation) * this.speed));
 		
-		if (GameState.getMap().canMove(newX, newY) && newX > 0 && newY > 0 && newX < GameState.getConfig().getWorldWidth() && newY < GameState.getConfig().getWorldHeight()) this.setPosition(new Point(newX, newY));
-		else target = null;
+//		if (GameState.getMap().canMove(newX, newY)) 
+		this.setPosition(new Point(newX, newY));
+//		else target = null;
 		
 		return 1;
 	}

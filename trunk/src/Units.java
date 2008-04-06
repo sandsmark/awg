@@ -84,7 +84,7 @@ public class Units {
 
 	public void moveSelectedTo(int tarX, int tarY) {
 		for (Unit unit : this.selectedUnits)
-			unit.setTarget(new Point(tarX, tarY));
+			unit.goTo(new Point(tarX, tarY));
 	}
 
 	public ArrayList<Unit> getSelectedUnits() {
