@@ -110,7 +110,7 @@ public class Unit {
 		else if (orientation >  5 * Math.PI/4 && orientation < 7 * Math.PI / 4) sprite.setDirection(Sprite.Direction.FORWARD);
 		orientation -= Math.PI;
 		
-		speed = 0;
+//		speed = 0;
 	}
 	
 	public int move() {
