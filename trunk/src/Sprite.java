@@ -47,7 +47,8 @@ public class Sprite {
 	}
 	
 	public BufferedImage pop() {
-		if (isMoving) cycle = (cycle+1) % 2;
+		if (!isMoving) return sprite[faction][direction.ordinal()][0];
+		cycle = (cycle+1) % 2;
 		return sprite[faction][direction.ordinal()][cycle];
 	}
 
@@ -60,6 +61,6 @@ public class Sprite {
 	}
 	
 	public void setMoving(boolean moving) {
-		isMoving = moving;
+		this.isMoving = moving;
 	}
 }

@@ -31,7 +31,6 @@ public class Player {
 	
 	public void increaseResources(int n) {
 		resources += n;
-		System.out.println(resources);
 	}
 	
 	public int getResources() {
