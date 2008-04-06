@@ -59,12 +59,5 @@ Denne tråden spiller musikk, og er derivert fra Jorbis, med tunge modifikasjone
 AI har tre klasser, AI, AIRules, og AIThread.
 AIThread kaller AI. AI sjekker med AIRules for hvordan den skal oppføre seg.
 
-= Ubenyttede klasser =
-
-Det er ikke alle klassene vi benytter for øyeblikket, enten fordi de ikke trengs, eller fordi vi ikke har kodet de ferdig.
-
 == Path ==
-Dette er en klasse som inneholder en sti, bestående WeightedNodes, som vil brukes av en unit for å bevege seg rundt på kartet. Konstruktøren tar inn nåværende posisjon, og target, og benytter seg av A-star for å finne en sti frem til målet på en Width/10*Height/10-grid (for å spare cpu og minne). Denne er ikke ferdig.
-
-== WeightedNode ==
-Dette er en hjelpeklasse for Path, som inneholder et Point og en vekt. Denne er ikke ferdig.
+Dette er en klasse som inneholder en sti, bestående WeightedNodes, som brukes av en unit for å bevege seg rundt på kartet. Konstruktøren tar inn nåværende posisjon, og target, og benytter seg av A-star for å finne en sti frem til målet på kartet. Den genererer et nett over kartet, bestående av ruter i varierende størrelse, som den bruker for å finne stien (dette for å spare cpu og minne).
