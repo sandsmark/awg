@@ -1,5 +1,3 @@
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
@@ -8,6 +6,10 @@ import javax.swing.JPanel;
 
 
 public class UnitPanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel stats = new JPanel();
 	private JLabel icon = new JLabel();
 	
