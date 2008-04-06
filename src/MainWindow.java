@@ -41,6 +41,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	MainWindow() throws IOException {
 		frame = new JFrame();
+		new Intro(frame);
 		SplashScreen splash = new SplashScreen(frame);
 		
 		GameState.setMainWindow(this);
