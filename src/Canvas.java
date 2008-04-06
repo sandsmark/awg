@@ -169,9 +169,33 @@ public class Canvas extends JPanel implements Moveable {
 				offsetY -= step;
 			}
 			break;
+		case UP_RIGHT:
+			if (offsetY > 0 && width + offsetX < mapWidth) {
+				offsetY -= step;
+				offsetX += step;
+			}
+			break;
+		case UP_LEFT:
+			if (offsetY > 0 && offsetX > 0) {
+				offsetY -= step;
+				offsetX -= step;
+			}
+			break;
 		case DOWN:
 			if (height + offsetY < mapHeight) {
 				offsetY += step;
+			}
+			break;
+		case DOWN_RIGHT:
+			if (height + offsetY < mapHeight && width + offsetX < mapWidth) {
+				offsetY += step;
+				offsetX += step;
+			}
+			break;
+		case DOWN_LEFT:
+			if (height + offsetY < mapHeight && offsetX > 0) {
+				offsetY += step;
+				offsetX -= step;
 			}
 			break;
 		case LEFT:
