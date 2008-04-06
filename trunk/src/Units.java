@@ -1,10 +1,12 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class Units {
 	ArrayList<Unit> units = new ArrayList<Unit>();
 	ArrayList<Unit> selectedUnits = new ArrayList<Unit>();
+	public ReentrantLock lock = new ReentrantLock();
 	
 	public Units () {
 		units = new ArrayList<Unit>();
@@ -102,6 +104,10 @@ public class Units {
 			if (unit instanceof Worker) ((Worker)unit).setTargetResource(resource);	
 	}
 	
+	public void setTargetUnit(Unit target) {
+		for (Unit unit : selectedUnits)	unit.setTargetUnit(target);
+	}
+	
 	public void upgradeUnits(Player player){
 		Unit unit;
 		for (int i = 0; i < GameState.getUnits().count(); i++) {
@@ -126,5 +132,23 @@ public class Units {
 			}
 			
 		}
+	}
+
+	public void target(int x, int y) {
+		if (GameState.getUnits().selectedOnlyContains("worker"))
+			for (Resource resource : GameState.getMap().getResources()){
+				if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
+					GameState.getUnits().setTargetResource(resource);
+					resource.startHighlight();
+				}
+			}
+		else if (this.selectedOnlyContains("fighter"))
+			for (Unit unit : this.getUnits()){
+				if (unit.position.distance(new Point(x - 10, y - 10)) < 10) {
+					if (unit.getPlayer().equals(GameState.getComputer())) this.setTargetUnit(unit);
+				}
+			}
+		GameState.getUnits().moveSelectedTo(x, y);
+		
 	}
 }
