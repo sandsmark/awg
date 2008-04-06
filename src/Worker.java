@@ -63,7 +63,7 @@ public class Worker extends Unit {
 					try{
 						targetResource.setSprite(ImageIO.read(new File("resources/grass.png")));
 					}catch(IOException IOE){
-						System.out.println("Could not set sprite on resource to empty");
+						System.err.println("Could not load empty resource sprite!");
 					}
 					targetResource = null;
 				}
