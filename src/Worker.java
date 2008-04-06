@@ -47,19 +47,17 @@ public class Worker extends Unit {
 	
 	@Override
 	public int move() {
-		Point mainPos = getPlayer().mainHouse.getPosition();
+		Point house = getPlayer().mainHouse.getPosition();
 		if (targetResource != null) {
-			if (this.getCarrying() > 0 && mainPos.distance(position) < 25 && !targetResource.position.equals(target)) {
+			if (this.getCarrying() > 0 && house.distance(position) < 25 && !targetResource.position.equals(target)) {
 				deliverResource();
-				System.out.println(this.getPlayer().getResources());
 				this.setTarget(targetResource.position);
 			} else if (this.getCarrying() >= maxCarrying && !getPlayer().mainHouse.getPosition().equals(target)) {
 				this.setTarget(this.getPlayer().mainHouse.getPosition());
-			} else if (this.targetResource.position.distance(this.position) < 25 && mainPos.equals(target)) {
+			} else if (this.targetResource.position.distance(this.position) < 55){
 				/**
 				 * Harvest!
 				 */
-				this.target = null;
 				this.setCarrying(this.getCarrying() + targetResource.harvest(harvestMax));
 				if (targetResource.getRemaining() <= 0){
 					try{
@@ -68,12 +66,12 @@ public class Worker extends Unit {
 						System.out.println("Could not set sprite on resource to empty");
 					}
 					targetResource = null;
-					
 				}
 			}
-		} else if (this.getCarrying() != 0 && !getPlayer().mainHouse.getPosition().equals(target)) { 
+		} else if (this.getCarrying() != 0 && !getPlayer().mainHouse.getPosition().equals(target)) {
 			this.setTarget(this.getPlayer().mainHouse.getPosition());
 		}
+		
 		return super.move();
 	}
 
