@@ -2,7 +2,7 @@ import java.awt.Point;
 public class Healer extends Unit {
 
 	private int mana;
-
+	final static int healPower = 50; //Sette denne etter hvor mye den skal heale
 
 	public Healer(Player player) {
 		type = "healer";
@@ -16,9 +16,9 @@ public class Healer extends Unit {
 		else sprite = new Sprite(type, 0);
 	}
 
-	public void heal(Unit target) {
+	public void heal() {
 		if (mana >= 10) {
-			target.setCurrentHealth(target.getCurrentHealth() + 50);
+			targetUnit.setCurrentHealth(targetUnit.getCurrentHealth() + healPower);
 			this.setMana(getMana() - 10);
 		}
 	}
@@ -29,5 +29,20 @@ public class Healer extends Unit {
 
 	public void setMana(int mana) {
 		this.mana = mana;
+	}
+	
+	public int move(){
+		Unit unit;
+		if(targetUnit == null){
+			for (int i = 0; i < GameState.getUnits().count(); i++) {
+				unit = GameState.getUnits().getUnit(i);
+				if(unit.getPlayer() == this.getPlayer() && position.distance(unit.position) < 100 && unit.getCurrentHealth() < (unit.getMaxHealth()-healPower)){
+					targetUnit = unit;
+					heal();
+					targetUnit = null;
+				}
+			}
+		}
+		return super.move();
 	}
 }

@@ -16,4 +16,20 @@ public class Fighter extends Unit {
 		if (player.isAI()) sprite = new Sprite(type, 1);
 		else sprite = new Sprite(type, 0);
 	}
+	
+	public int move(){
+		Unit unit;
+		if(targetUnit == null){
+			for (int i = 0; i < GameState.getUnits().count(); i++) {
+				unit = GameState.getUnits().getUnit(i);
+				if(unit.getPlayer() != this.getPlayer() && position.distance(unit.position) < 100){
+					setTargetUnit(unit);
+					goTo(unit.position);
+				}
+			}
+		}else if(position.distance(getTargetUnit().position)<35){
+			dealDamage();
+		}
+		return super.move();
+	}
 }
