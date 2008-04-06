@@ -133,8 +133,8 @@ public class Unit {
 		else if (position.distance(target) < 15) speed = speed / 1.5;
 		else if (speed < maxSpeed) speed = Math.abs(speed + accel);
 		
-		int newX = position.x + (int)(Math.cos(orientation) * this.speed);
-		int newY = position.y + (int)(Math.sin(orientation) * this.speed);
+		int newX = position.x + Math.round(Math.round(Math.cos(orientation) * this.speed));
+		int newY = position.y + Math.round(Math.round(Math.sin(orientation) * this.speed));
 		
 		if (GameState.getMap().canMove(newX, newY) && newX > 0 && newY > 0 && newX < GameState.getConfig().getWorldWidth() && newY < GameState.getConfig().getWorldHeight()) this.setPosition(new Point(newX, newY));
 		else target = null;
