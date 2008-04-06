@@ -109,7 +109,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		aiThread = new AIThread();
 		aiThread.start();
 
-		wThread = new WindowThread(this);
+		wThread = new WindowThread();
 		wThread.start();
 
 		mThread = new MovementThread();
@@ -172,7 +172,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		//curUnitIcon.setIcon(new ImageIcon());
 	}
 
-	public void setSeletectedUnit(Unit u) {
+	public void setSelectedUnit(Unit u) {
 		uPan.select(u);
 		//curUnitText.setText(u.toString());
 		//curUnitIcon.setIcon(new ImageIcon(u.getSprite().get()));
@@ -225,14 +225,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			int x = m.getX() + GameState.getMainWindow().canvas.getOffsetX();
 			int y = m.getY() + GameState.getMainWindow().canvas.getOffsetY();
 			if (m.getButton() == MouseEvent.BUTTON3) {
-				if (GameState.getUnits().selectedOnlyContains("worker"))
-					for (Resource resource : GameState.getMap().getResources()){
-						if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
-							GameState.getUnits().setTargetResource(resource);
-							resource.startHighlight();
-						}
-					}
-				GameState.getUnits().moveSelectedTo(m.getX() + canvas.getOffsetX(), m.getY() + canvas.getOffsetY());
+				GameState.getUnits().target(x,y);
 				canvas.showTarget(m.getX(), m.getY());
 			} else if (m.getButton() == MouseEvent.BUTTON1) sThread.start(m);
 		}

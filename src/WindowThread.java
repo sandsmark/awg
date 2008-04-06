@@ -2,13 +2,9 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class WindowThread extends Thread {
-	protected ReentrantLock lock = new ReentrantLock();
-	protected Condition update = lock.newCondition();
-	protected MainWindow window;
 	protected boolean running = false;
 
-	public WindowThread(MainWindow newWin) {
-		window = newWin;
+	public WindowThread() {
 		running = true;
 	}
 
@@ -19,13 +15,17 @@ public class WindowThread extends Thread {
 	@Override
 	public void run() {
 		Units units = GameState.getUnits();
+		MainWindow window = GameState.getMainWindow();
 		try {
 			while (running) {
-				window.delSeletectedUnit();
-				for (Unit selected : units.getSelectedUnits())
-					window.setSeletectedUnit(selected);
-				GameState.getMainWindow().resPan.update();
-				Thread.sleep(500);
+				if (units.lock.tryLock()) {
+					window.delSeletectedUnit();
+					for (Unit selected : units.getSelectedUnits())
+						window.setSelectedUnit(selected);
+					GameState.getMainWindow().resPan.update();
+					units.lock.unlock();
+				}
+				Thread.sleep(250);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
