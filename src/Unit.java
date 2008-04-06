@@ -112,6 +112,16 @@ public class Unit {
 		if (target == null) {
 			return 0;
 		}
+		
+		/*									
+		 * TODO: if you press to the side of a straight line from the unit, kind of like this 
+		 * (* is target, and empty line is the path the unit takes)
+		 *      *                   
+		 *       							<--Unit                  
+		 * If you press a certain distance from the straight line, he will never stop, just continue past,
+		 * and I see no other way to change it other than making sure he will go up as well as straight forward,
+		 * or changing  "position.distance(target) <25" to something bigger, but then it looks weird.
+		 */
 		else if (position.distance(target) <25) {
 			
 			target = null;
