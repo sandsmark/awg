@@ -2,41 +2,90 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
 
 
 
-public class Intro extends JWindow{
+public class Intro extends JWindow implements MouseListener {
 	/**
 	 * @author Martin T. Sandsmark
 	 */
 	private static final long serialVersionUID = 1L;
+	private JLabel image;
+	ReentrantLock lock = new ReentrantLock();
+	private Condition clicked = lock.newCondition();
 
+	
+	
 	public Intro(Frame f) {
 		super(f);
 		try {
-			JLabel image = new JLabel(new ImageIcon("resources/intro/soiheard.png"));
+			image = new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/intro/soiheard.png"))));
+			image.addMouseListener(this);
 			getContentPane().add(image, BorderLayout.CENTER);
 			this.pack();
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			Dimension imageSize = image.getPreferredSize();
 			this.setLocation(screenSize.width/2 - imageSize.width/2, screenSize.height/2 - imageSize.height/2);
 			this.setVisible(true);
-			Thread.sleep(2000); 
-			
+			lock.lock();
+			clicked.await(2, TimeUnit.SECONDS);
+			lock.unlock();
 
-			image.setIcon(new ImageIcon("resources/intro/iliketurtles.png"));
-			Thread.sleep(2000);
-			
+			lock.lock();
+			image.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/intro/iliketurtles.png"))));
+			clicked.await(2, TimeUnit.SECONDS);
+			lock.unlock();
 
-			image.setIcon(new ImageIcon("resources/intro/diefoolishmortal.png"));
-			Thread.sleep(2000);
+			lock.lock();
+			image.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/intro/diefoolishmortal.png"))));
+			clicked.await(2, TimeUnit.SECONDS);
+			lock.unlock();
 			
 			this.setVisible(false);
 			this.dispose();
-		} catch (InterruptedException e) { e.printStackTrace(); }
+		} catch (Exception e) { e.printStackTrace(); }
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		lock.lock();
+		clicked.signal();
+		lock.unlock();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
