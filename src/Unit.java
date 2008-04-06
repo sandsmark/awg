@@ -175,9 +175,7 @@ public class Unit {
 	 */
 	
 	public void dealDamage(){
-		if((position.distance(targetUnit.position) < 25) && targetUnit.player != this.player){
-			targetUnit.takeDamage(this.damage);
-		}
+		targetUnit.takeDamage(this.damage);
 	}
 
 	public String getType() {
@@ -186,10 +184,6 @@ public class Unit {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-	
-	public int getCurHealth() {
-		return getMaxHealth() - getDamage();
 	}
 }
 
