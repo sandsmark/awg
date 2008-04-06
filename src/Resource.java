@@ -55,5 +55,9 @@ public class Resource {
 	public void startHighlight() {
 		highlightTime = System.currentTimeMillis();
 	}
+
+	public void setSprite(BufferedImage sprite) {
+		this.sprite = sprite;
+	}
 	
 }
