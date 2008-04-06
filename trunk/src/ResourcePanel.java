@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 
@@ -11,16 +13,17 @@ public class ResourcePanel extends JPanel{
 	JLabel gold;
 	
 	public ResourcePanel(){
-		setLayout(new GridLayout(2,1));
+		setLayout(new GridLayout(1,2));
 		gold = new JLabel(""+GameState.getHuman().getResources());
+		add(new JLabel(new ImageIcon("resources/gull.png")));
 		add(gold);
-//		add(new JLabel(new ImageIcon("resources/gull.png")));
+		//this.setBackground(Color.RED);
+		this.setMaximumSize(new Dimension(250,30));
 	}
 	
 	
 	public void update(){
-		gold.setText("Gold: "+GameState.getHuman().getResources());
-//		System.out.println("Gold human has " +GameState.getHuman().getResources());
+		gold.setText(""+GameState.getHuman().getResources());
 		repaint();
 		
 	}

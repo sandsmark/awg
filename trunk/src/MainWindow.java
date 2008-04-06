@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -22,9 +23,11 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	JPanel outer, menu;
 	Canvas canvas;
 	JButton close;
-	JLabel curUnitText;
-	JLabel curUnitIcon;
+	JLabel curUnitText; // Obsolete
+	JLabel curUnitIcon; // Obsolete
+	
 	ResourcePanel resPan;
+	UnitPanel uPan;
 
 	JButton upgradeBuilding, worker, fighter, healer;
 	
@@ -53,18 +56,26 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		resPan = new ResourcePanel();
 		menu.add(resPan);
 		
+		uPan = new UnitPanel();
+		uPan.setMaximumSize(new Dimension(300,200));
+		menu.add(uPan);
+		
 		setupBuildingGUI();
-
+		
+		
+		
 		curUnitIcon = new JLabel();
-		menu.add(curUnitIcon);
+		//menu.add(curUnitIcon);
 
 		curUnitText = new JLabel("[]");
-		menu.add(curUnitText);
+		//menu.add(curUnitText);
 
 		close = new JButton("Close");
 		close.addActionListener(this);
 		menu.add(close);
+		
 
+		menu.setPreferredSize(new Dimension(150,600));
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
 
@@ -148,14 +159,23 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		System.exit(0);
 	}
 
+	/* Problem: 
+	 * - Unit seems to be selected/deselected each "tick".
+	 * - If several different units is selected, the panel switches between them.
+	 * 
+	 */ 
+	
+	//These methods is now obsolete. uPan should be called directly
 	public void delSeletectedUnit() {
-		curUnitText.setText(".");
-		curUnitIcon.setIcon(new ImageIcon());
+		uPan.deselect();
+		//curUnitText.setText(".");
+		//curUnitIcon.setIcon(new ImageIcon());
 	}
 
 	public void setSeletectedUnit(Unit u) {
-		curUnitText.setText(u.toString());
-		curUnitIcon.setIcon(new ImageIcon(u.getSprite().get()));
+		uPan.select(u);
+		//curUnitText.setText(u.toString());
+		//curUnitIcon.setIcon(new ImageIcon(u.getSprite().get()));
 	}
 
 	public void mouseMoved(MouseEvent e) {
@@ -236,7 +256,12 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		fighter = new JButton("Fighter");
 		healer = new JButton("Healer");
 		
-		Dimension d = new Dimension(400,100);
+		Dimension d = new Dimension(500,50);
+		upgradeBuilding.setMaximumSize(d);
+		worker.setMaximumSize(d);
+		fighter.setMaximumSize(d);
+		healer.setMaximumSize(d);
+		
 		upgradeBuilding.setIcon(new ImageIcon("resources/buildings/end1.png"));
 		fighter.setIcon(new ImageIcon("resources/fighter/0_forward0.png"));
 		worker.setIcon(new ImageIcon("resources/worker/0_forward0.png"));
