@@ -23,6 +23,10 @@ public class Units {
 	public Unit getUnit(int i) {
 		return units.get(i);
 	}
+	
+	public ArrayList<Unit> getUnits() {
+		return units;
+	}
 
 	public int getUnitNum() {
 		return units.size();
