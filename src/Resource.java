@@ -17,8 +17,8 @@ public class Resource {
 		position = new Point(x,y);
 		try {
 			int num = (int)(Math.random()*2);
-			sprite = ImageIO.read(new File("resources/rocks/" + num + ".png"));
-			selectedSprite = ImageIO.read(new File("resources/rocks/" + num + "s.png")); 
+			sprite = ImageIO.read(getClass().getResource("/rocks/" + num + ".png"));
+			selectedSprite = ImageIO.read(getClass().getResource("/rocks/" + num + "s.png")); 
 		} catch (IOException e) {
 			System.err.println("Could not load resource sprite!");
 			System.exit(1);

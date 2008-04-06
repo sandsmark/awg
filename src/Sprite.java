@@ -32,9 +32,9 @@ public class Sprite {
 			for (int f=0; f<2; f++){
 				for (int dir=0; dir<4; dir++) {
 					for (int c=0; c<2; c++){
-						String filename = "resources/" 
+						String filename = "/" 
 							+ basename + "/" + f + "_" + directionNames[dir] + c + ".png";
-						sprite[f][dir][c] = ImageIO.read(new File(filename)); 
+						sprite[f][dir][c] = ImageIO.read(getClass().getResource(filename)); 
 					}
 				}
 			}

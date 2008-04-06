@@ -30,9 +30,9 @@ public class Map {
 				pathMap[x][y] = 0;
 
 		try {
-			sprite[0] = ImageIO.read(new File("resources/grass.png"));
-			sprite[1] = ImageIO.read(new File("resources/water.png"));
-			sprite[2] = ImageIO.read(new File("resources/trees.png"));
+			sprite[0] = ImageIO.read(getClass().getResource("/grass.png"));
+			sprite[1] = ImageIO.read(getClass().getResource("/water.png"));
+			sprite[2] = ImageIO.read(getClass().getResource("/trees.png"));
 		} catch (IOException e) {
 			System.err.println("Could not load sprite!");
 			System.exit(1);
