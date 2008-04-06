@@ -1,13 +1,25 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
 
 public class Path implements Comparable<Path> {
-	ArrayList<Point> path = new ArrayList<Point>();
+	LinkedList<Point> path = new LinkedList<Point>();
 
+	/**
+	 * This should be used when creating a new path.
+	 * @param start
+	 * @param target
+	 */
 	public Path(Point start, Point target) {
-		path = findPath(start, target).path;
+		Path tmpath = findPath(start, target);
+		if (tmpath!=null){
+			LinkedList<Point> tmp = tmpath.path;
+			for (Point point: tmp)
+				path.add(new Point(point.x*10, point.y*10));
+			System.out.println(path);
+		}
 	}
 	
 	/**
@@ -22,7 +34,7 @@ public class Path implements Comparable<Path> {
 	 * @param point
 	 * @param target
 	 */
-	public Path(Path old, Point point, Point target) {
+	private Path(Path old, Point point, Point target) {
 		path.addAll(old.path);
 		path.add(point);
 		left = point.distance(target);
@@ -33,7 +45,7 @@ public class Path implements Comparable<Path> {
 	 * Used by the findPath-routine, for adding the initial start-path.
 	 * @param point
 	 */
-	public Path(Point point) { 
+	private Path(Point point) { 
 		path.add(point);
 		left = 0;
 		length = 0;
@@ -50,6 +62,14 @@ public class Path implements Comparable<Path> {
 		return left + length; 
 	}
 	
+	public boolean isEmpty() {
+		return path.isEmpty();
+	}
+	
+	public Point getNext() {
+		return path.pop();
+	}
+	
 	public Point getLast() {
 		return path.get(path.size() - 1);
 	}
@@ -62,8 +82,14 @@ public class Path implements Comparable<Path> {
 	 * @return
 	 */
 	public static Path findPath (Point start, Point target) {
-		int width = GameState.getMap().getWidth();
-		int height= GameState.getMap().getHeight();
+		System.out.println("FIND ZE SEKRET BATH");
+		
+		int width = GameState.getMap().getWidth() / 10;
+		int height= GameState.getMap().getHeight() / 10;
+		
+		start = new Point(start.x/10, start.y/10);
+		target = new Point(target.x/10, target.y/10);
+		
 		Point[][] map = new Point[width][height];
 		Map m = GameState.getMap();
 		
@@ -92,25 +118,25 @@ public class Path implements Comparable<Path> {
 			/**
 			 * TODO: Fix up and optimize.
 			 */
-			if (m.canMove(point.x - 1, point.y))
+			if (m.canMove((point.x - 1)*10, point.y*10))
 				queue.add(new Path(path, map[point.x - 1][point.y], target));
-			if (m.canMove(point.x - 1, point.y - 1)) 
+			if (m.canMove((point.x - 1)*10, (point.y - 1)*10)) 
 					queue.add(new Path(path, map[point.x - 1][point.y - 1], target));
-			if (m.canMove(point.x - 1, point.y + 1)) 
+			if (m.canMove((point.x - 1)*10, (point.y + 1)*10)) 
 					queue.add(new Path(path, map[point.x - 1][point.y + 1], target));
 			
 
-			if (m.canMove(point.x + 1, point.y)) 
+			if (m.canMove((point.x + 1)*10, point.y*10)) 
 				queue.add(new Path(path, map[point.x + 1][point.y], target));
-			if (m.canMove(point.x + 1, point.y - 1)) 
+			if (m.canMove((point.x + 1)*10, (point.y - 1)*10)) 
 				queue.add(new Path(path, map[point.x + 1][point.y - 1], target));
-			if (m.canMove(point.x + 1, point.y + 1))
+			if (m.canMove((point.x + 1)*10, (point.y + 1)*10))
 				queue.add(new Path(path, map[point.x + 1][point.y + 1], target));
 						
-			if (m.canMove(point.x, point.y - 1))
+			if (m.canMove(point.x*10, (point.y - 1)*10))
 				queue.add(new Path(path, map[point.x][point.y - 1], target));
 
-			if (m.canMove(point.x, point.y + 1))
+			if (m.canMove(point.x*10, (point.y + 1)*10))
 				queue.add(new Path(path, map[point.x][point.y + 1], target));
 
 			//Finished adding new points
