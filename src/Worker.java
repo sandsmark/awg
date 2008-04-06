@@ -13,6 +13,7 @@ public class Worker extends Unit {
 	Resource targetResource;
 	private int maxCarrying = 500;
 	private int harvestMax = 5;
+	private boolean delivering = false;
 	
 	public Worker(Player player){
 		type = "worker";
@@ -49,11 +50,13 @@ public class Worker extends Unit {
 	public int move() {
 		Point house = getPlayer().mainHouse.getPosition();
 		if (targetResource != null) {
-			if (this.getCarrying() > 0 && house.distance(position) < 25 && !targetResource.position.equals(target)) {
+			if (this.getCarrying() > 0 && house.distance(position) < 25 && delivering) {
 				deliverResource();
 				this.goTo(targetResource.position);
-			} else if (this.getCarrying() >= maxCarrying && !getPlayer().mainHouse.getPosition().equals(target)) {
+				delivering = false;
+			} else if (this.getCarrying() >= maxCarrying && !delivering) {
 				this.goTo(this.getPlayer().mainHouse.getPosition());
+				delivering = true;
 			} else if (this.targetResource.position.distance(this.position) < 55){
 				/**
 				 * Harvest!
@@ -68,8 +71,9 @@ public class Worker extends Unit {
 					targetResource = null;
 				}
 			}
-		} else if (this.getCarrying() != 0 && !getPlayer().mainHouse.getPosition().equals(target)) {
+		} else if (this.getCarrying() != 0 && !delivering) {
 			this.goTo(this.getPlayer().mainHouse.getPosition());
+			delivering = true;
 		}
 		
 		return super.move();
