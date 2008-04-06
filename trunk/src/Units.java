@@ -82,7 +82,7 @@ public class Units {
 	
 	public boolean selectedOnlyContains(String type) {
 		for (Unit unit : selectedUnits)
-			if (unit.getType().equals(type)) return false;
+			if (!unit.getType().equals(type)) return false;
 		return true;
 	}
 	
