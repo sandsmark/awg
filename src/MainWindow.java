@@ -81,7 +81,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 //		frame.setAlwaysOnTop(true);
 //		frame.setUndecorated(false);
 //		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		frame.setIconImage(ImageIO.read(new File("resources/icon.png")));
+		frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
+		
 		frame.setTitle("Awesome WarGame is Awesome!");
 
 		canvas.repaint();
