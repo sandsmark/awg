@@ -161,7 +161,15 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	public void mouseMoved(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		if (x > canvas.getWidth() - 50) {
+		if (x > canvas.getWidth() - 50 && y < 50) {
+			gThread.setDirection(Moveable.Direction.UP_RIGHT);
+		} else if (x < 50 && y < 50) {
+			gThread.setDirection(Moveable.Direction.UP_LEFT);
+		} else if (x < 50 && y > canvas.getHeight() - 50) {
+			gThread.setDirection(Moveable.Direction.DOWN_LEFT);
+		} else if (x > canvas.getWidth() - 50 && y > canvas.getHeight() - 50) {
+			gThread.setDirection(Moveable.Direction.DOWN_RIGHT);	
+		} else if (x > canvas.getWidth() - 50) {
 			gThread.setDirection(Moveable.Direction.RIGHT);
 		} else if (x < 50) {
 			gThread.setDirection(Moveable.Direction.LEFT);
