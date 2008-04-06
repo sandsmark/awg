@@ -1,6 +1,3 @@
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class WindowThread extends Thread {
 	protected boolean running = false;
 
