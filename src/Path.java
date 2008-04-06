@@ -7,6 +7,12 @@ import java.util.TreeSet;
 public class Path implements Comparable<Path> {
 	LinkedList<Point> path = new LinkedList<Point>();
 
+	
+	/**
+	 * The factor of which to downscale, for optimization.
+	 */
+	private static int factor = 15;
+	
 	/**
 	 * This should be used when creating a new path.
 	 * @param start
@@ -17,8 +23,7 @@ public class Path implements Comparable<Path> {
 		if (tmpath!=null){
 			LinkedList<Point> tmp = tmpath.path;
 			for (Point point: tmp)
-				path.add(new Point(point.x*10, point.y*10));
-			System.out.println(path);
+				path.add(new Point(point.x*factor, point.y*factor));
 		}
 	}
 	
@@ -82,13 +87,11 @@ public class Path implements Comparable<Path> {
 	 * @return
 	 */
 	public static Path findPath (Point start, Point target) {
-		System.out.println("FIND ZE SEKRET BATH");
+		int width = GameState.getMap().getWidth() / factor;
+		int height= GameState.getMap().getHeight() / factor;
 		
-		int width = GameState.getMap().getWidth() / 10;
-		int height= GameState.getMap().getHeight() / 10;
-		
-		start = new Point(start.x/10, start.y/10);
-		target = new Point(target.x/10, target.y/10);
+		start = new Point(start.x/factor, start.y/factor);
+		target = new Point(target.x/factor, target.y/factor);
 		
 		Point[][] map = new Point[width][height];
 		Map m = GameState.getMap();
@@ -118,25 +121,25 @@ public class Path implements Comparable<Path> {
 			/**
 			 * TODO: Fix up and optimize.
 			 */
-			if (m.canMove((point.x - 1)*10, point.y*10))
+			if (m.canMove((point.x - 1)*factor, point.y*factor))
 				queue.add(new Path(path, map[point.x - 1][point.y], target));
-			if (m.canMove((point.x - 1)*10, (point.y - 1)*10)) 
+			if (m.canMove((point.x - 1)*factor, (point.y - 1)*factor)) 
 					queue.add(new Path(path, map[point.x - 1][point.y - 1], target));
-			if (m.canMove((point.x - 1)*10, (point.y + 1)*10)) 
+			if (m.canMove((point.x - 1)*factor, (point.y + 1)*factor)) 
 					queue.add(new Path(path, map[point.x - 1][point.y + 1], target));
 			
 
-			if (m.canMove((point.x + 1)*10, point.y*10)) 
+			if (m.canMove((point.x + 1)*factor, point.y*factor)) 
 				queue.add(new Path(path, map[point.x + 1][point.y], target));
-			if (m.canMove((point.x + 1)*10, (point.y - 1)*10)) 
+			if (m.canMove((point.x + 1)*factor, (point.y - 1)*factor)) 
 				queue.add(new Path(path, map[point.x + 1][point.y - 1], target));
-			if (m.canMove((point.x + 1)*10, (point.y + 1)*10))
+			if (m.canMove((point.x + 1)*factor, (point.y + 1)*factor))
 				queue.add(new Path(path, map[point.x + 1][point.y + 1], target));
 						
-			if (m.canMove(point.x*10, (point.y - 1)*10))
+			if (m.canMove(point.x*factor, (point.y - 1)*factor))
 				queue.add(new Path(path, map[point.x][point.y - 1], target));
 
-			if (m.canMove(point.x*10, (point.y + 1)*10))
+			if (m.canMove(point.x*factor, (point.y + 1)*factor))
 				queue.add(new Path(path, map[point.x][point.y + 1], target));
 
 			//Finished adding new points
