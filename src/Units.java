@@ -48,18 +48,18 @@ public class Units {
 
 	public void select(int x1, int y1, int x2, int y2) {
 		selectedUnits.clear();
-		Units units = GameState.getUnits();
 		if (x1 > x2)
 			x1 = (x1 ^= x2) ^ (x2 ^= x1); // swap x1 and x2, ^=xor
 		if (y1 > y2)
 			y1 = (y1 ^= y2) ^ (y2 ^= y1);
 		
 		int x, y;
-		for (int i = 0; i < units.getUnitNum(); i++) {
-			x = units.getUnit(i).getPosition().x;
-			y = units.getUnit(i).getPosition().y;
-			if ((y1 < y) && (y2 > y) && (x1 < x) && (x2 > x))
-				selectUnit(units.getUnit(i));
+		for (int i = 0; i < this.getUnitNum(); i++) {
+			x = this.getUnit(i).getPosition().x;
+			y = this.getUnit(i).getPosition().y;
+			if ((y1 < y) && (y2 > y) && (x1 < x) && (x2 > x)){
+				selectUnit(this.getUnit(i));
+			}
 		}
 	}
 
@@ -68,7 +68,14 @@ public class Units {
 	}
 
 	public void select(int x, int y) {
-		this.select(x, y, x - GameState.getConfig().getUnitWidth(), y - GameState.getConfig().getUnitHeight());
+		selectedUnits.clear();
+		Point clicked = new Point(x - GameState.getConfig().getUnitWidth()/2, y - GameState.getConfig().getUnitHeight()/2);
+		for (int i = 0; i < this.getUnitNum(); i++) {
+			if (this.getUnit(i).getPosition().distance(clicked) < 15){
+				selectUnit(this.getUnit(i));
+				return;
+			}
+		}
 	}
 
 	public void moveSelectedTo(int tarX, int tarY) {
