@@ -14,13 +14,13 @@ public class ResourcePanel extends JPanel{
 		setLayout(new GridLayout(2,1));
 		gold = new JLabel(""+GameState.getHuman().getResources());
 		add(gold);
-		add(new JLabel(new ImageIcon("resources/gull.png")));
+//		add(new JLabel(new ImageIcon("resources/gull.png")));
 	}
 	
 	
 	public void update(){
-		gold.setText(""+GameState.getHuman().getResources());
-		//System.out.println(GameState.getHuman().getResources());
+		gold.setText("Gold: "+GameState.getHuman().getResources());
+//		System.out.println("Gold human has " +GameState.getHuman().getResources());
 		repaint();
 		
 	}

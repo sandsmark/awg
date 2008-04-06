@@ -1,4 +1,8 @@
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Worker extends Unit {
 	// Bevegelses- og idrettsvitenskap for Dragvoll
@@ -57,7 +61,15 @@ public class Worker extends Unit {
 				 */
 				this.target = null;
 				this.setCarrying(this.getCarrying() + targetResource.harvest(harvestMax));
-				if (targetResource.getRemaining() <= 0) targetResource = null;
+				if (targetResource.getRemaining() <= 0){
+					try{
+						targetResource.setSprite(ImageIO.read(new File("resources/grass.png")));
+					}catch(IOException IOE){
+						System.out.println("Could not set sprite on resource to empty");
+					}
+					targetResource = null;
+					
+				}
 			}
 		} else if (this.getCarrying() != 0 && !getPlayer().mainHouse.getPosition().equals(target)) { 
 			this.setTarget(this.getPlayer().mainHouse.getPosition());
