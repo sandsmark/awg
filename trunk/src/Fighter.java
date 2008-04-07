@@ -2,13 +2,15 @@ import java.awt.Point;
 
 
 public class Fighter extends Unit {
+	
+	final static int attackPower = 5;
 
 	
 	public Fighter(Player player){
 		type = "fighter";
 		setMaxHealth(100);
 		setCurrentHealth(getMaxHealth());
-		setDamage(5);
+		setDamage(attackPower);
 		setRange(25);
 		setCurrentAction(0);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5)); // FIXX martin :P
@@ -30,7 +32,7 @@ public class Fighter extends Unit {
 			}
 		}else if(position.distance(getTargetUnit().position)<35){
 			dealDamage();
-		}
+		}else if(targetUnit!= null)goTo(getTargetUnit().getPosition());
 		return super.move();
 	}
 }

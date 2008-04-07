@@ -175,7 +175,11 @@ public class Unit {
 	 */
 	
 	public void dealDamage(){
-		targetUnit.takeDamage(this.damage);
+		targetUnit.CurrentHealth -= damage;
+		if(targetUnit.CurrentHealth<=0){
+			this.targetUnit = null;
+			GameState.getUnits().removeUnit(targetUnit);
+		}
 	}
 
 	public String getType() {
