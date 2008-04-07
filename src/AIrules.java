@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * @author Stian Veum Møllersen
+ * makur of awsoem AI
+ *
+ */
 public class AIrules {
 
 	double unitSenseRange; //radius for sansevidde
@@ -15,7 +20,7 @@ public class AIrules {
 		this.unitSenseRange=15;
 		this.attackForce = 6;
 		this.workers = 5;
-		this.baseSenseRange = 30;
+		this.baseSenseRange = 300;
 		this.aggro = 36000000; //i ms
 		this.defence = 5;
 		this.fighterPerHealer = 5;
