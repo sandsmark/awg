@@ -15,6 +15,7 @@ public class Fighter extends Unit {
 		setPlayer(player);
 		if (player.isAI()) sprite = new Sprite(type, 1);
 		else sprite = new Sprite(type, 0);
+		GameState.getMainWindow().canvas.repaint();
 	}
 	
 	public int move(){
