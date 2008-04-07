@@ -1,9 +1,0 @@
-= Units =
-
-== Worker ==
-  * Gløshaugen: Bygg- og miljøteknikk
-  * Dragvoll: Bevegelses- og idrettsvitenskap
-
-== Healer ==
-  * Gløshaugen: Medisin
-  * Dragvoll: Religionsvitenskap
