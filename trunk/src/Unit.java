@@ -151,15 +151,7 @@ public class Unit {
 	}
 	
 	
-	/* 
-	 * Brukes på en unit som skal ta skade av en annen. Kjøres fra dealDamage.
-	 */
-	public void takeDamage(int damage){
-		this.CurrentHealth -= damage;
-		if(this.CurrentHealth<=0){
-			GameState.getUnits().removeUnit(this);
-		}
-	}
+
 	/*
 	 * Skal brukes p� en unit som har funnet et target. 
 	 * Kan kj�res hver gang den beveger seg, og se om den er innenfor range,
