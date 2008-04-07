@@ -4,8 +4,18 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
 public class Map {
@@ -15,17 +25,12 @@ public class Map {
 	public BufferedImage[] sprite;
 	public BufferedImage baseMap;
 	Resource[] resources;
-	Polygon waterShape;
+	private ArrayList<Shape> waters = new ArrayList<Shape>();
 
 	public Map(int nWidth, int nHeight) {
 		sprite = new BufferedImage[3];
 		height = nHeight;
 		width = nWidth;
-		pathMap = new int[width / 10][height / 10];
-		int x, y;
-		for (x = 0; x < pathMap.length; x++)
-			for (y = 0; y < pathMap[0].length; y++)
-				pathMap[x][y] = 0;
 
 		try {
 			sprite[0] = ImageIO.read(getClass().getResource("/grass.png"));
@@ -35,34 +40,11 @@ public class Map {
 			System.err.println("Could not load sprite!");
 			System.exit(1);
 		}
-		// Add water to the map
-		waterShape = new Polygon();
 
-		for (long i = 0; i < 6.28; i++) {
-			x = (int) (Math.cos(i) * width / 4) + width / 2;
-			y = (int) (Math.sin(i) * height / 4) + height / 2;
-			waterShape.addPoint(x, y);
-		}
-
-		for (x = 0; x < pathMap.length; x++)
-			for (y = 0; y < pathMap[0].length; y++)
-				pathMap[x][y] = 1;
-		
-		for (x = 0; x < pathMap.length; x++) {
-			for (y = 0; y < pathMap[0].length; y++) {
-				if (waterShape.contains(new Point(x, y)))
-					pathMap[x][y] = 200;
-				if (waterShape.contains(new Point(x + 10, y)))
-					pathMap[x][y] = 200;
-				if (waterShape.contains(new Point(x, y + 10)))
-					pathMap[x][y] = 200;
-				if (waterShape.contains(new Point(x + 10, y + 10)))
-					pathMap[x][y] = 200;
-			}
-		}
-
+		loadWater("/water.map");
 		// Add resources to the map
 		resources = new Resource[(int) Math.random() * 5 + 5];
+		int x,y;
 		for (int i = 0; i < resources.length; i++) {
 			x = (int) (Math.cos(i) * width / 3) + width / 2;
 			y = (int) (Math.sin(i) * width / 3) + width / 2;
@@ -77,8 +59,10 @@ public class Map {
 		bg2.setColor(Color.green);
 		bg2.fill(new Rectangle(0, 0, width, height));
 		bg2.setColor(Color.blue);
-		bg2.draw(this.getWater());
-		bg2.fill(this.getWater());
+		for (Shape water : waters) {
+			bg2.draw(water);
+			bg2.fill(water);
+		}
 
 	}
 
@@ -94,8 +78,8 @@ public class Map {
 		return pathMap;
 	}
 
-	public Shape getWater() {
-		return waterShape;
+	public ArrayList<Shape> getWater() {
+		return waters;
 	}
 
 	public Resource getResource(int i) {
@@ -114,14 +98,37 @@ public class Map {
 		 * TODO: Clean up.
 		 */
 		if (x < 0 || x > getWidth() || y < 0 || y > getHeight()) return false;
-		if (waterShape.contains(x, y)) return false;
-		if (waterShape.contains(x+35, y)) return false;
-		if (waterShape.contains(x, y+35)) return false;
-		if (waterShape.contains(x+35, y+35)) return false;
+		for (Shape water : waters) {
+			if (water.contains(x, y)) return false;
+			if (water.contains(x+35, y)) return false;
+			if (water.contains(x, y+35)) return false;
+			if (water.contains(x+35, y+35)) return false;
+		}
 		return true;
 	}
 
 	public BufferedImage getBaseMap() {
 		return baseMap;
+	}
+	
+	public void loadWater(String filename) {
+		try {
+			BufferedReader file = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filename)));
+			
+			String line;
+			String [] coords; 
+			Polygon poly;
+			while ((line = file.readLine()) != null) {
+				coords = line.split(" ");
+				poly = new Polygon();
+				for (String coordinate : coords) {
+					poly.addPoint(Integer.parseInt(coordinate.split(",")[0]), Integer.parseInt(coordinate.split(",")[1]));
+				}
+				waters.add(poly);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			waters.add(new Ellipse2D.Float(GameState.getConfig().getWorldWidth()/2,GameState.getConfig().getWorldHeight()/2,GameState.getConfig().getWorldWidth()/4,GameState.getConfig().getWorldHeight()/4));
+		}
 	}
 }

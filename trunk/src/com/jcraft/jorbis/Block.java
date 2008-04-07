@@ -43,14 +43,6 @@ public class Block{
   long sequence;
   DspState vd; // For read-only access of configuration
 
-  // local storage to avoid remallocing; it's up to the mapping to
-  // structure it
-//byte[] localstore;
-//int  localtop;
-//int  localalloc;
-//int  totaluse;
-//AllocChain reap;
-
   // bitmetrics for the frame
   int glue_bits;
   int time_bits;
@@ -59,8 +51,6 @@ public class Block{
 
   public Block(DspState vd){
     this.vd=vd;
-//  localalloc=0;
-//  localstore=null;
     if(vd.analysisp!=0){
       opb.writeinit();
     }
@@ -70,64 +60,12 @@ public class Block{
     this.vd=vd;
   }
 
-//  int alloc(int bytes){
-//    bytes=(bytes+(8-1))&(~(8-1));
-//    if(bytes+localtop>localalloc){
-//      if(localstore!=null){
-//	AllocChain link=new AllocChain();
-//	totaluse+=localtop;
-//	link.next=reap;
-//	link.ptr=localstore;
-//	reap=link;
-//      }
-//      // highly conservative
-//      localalloc=bytes;
-//      localstore=new byte[localalloc];
-//      localtop=0;
-//    }
-//    {
-//      int foo=localtop;
-//      //void *ret=(void *)(((char *)vb->localstore)+vb->localtop);
-//      localtop+=bytes;
-//      return foo;
-//    }
-//  }
-
-  // reap the chain, pull the ripcord
-//  void ripcord(){
-//    // reap the chain
-//    while(reap!=null){
-//      AllocChain next=reap.next;
-//      //free(reap->ptr);
-//      reap.ptr=null;
-//      //memset(reap,0,sizeof(struct alloc_chain));
-//      //free(reap);
-//      reap=next;
-//    }
-//    // consolidate storage
-//    if(totaluse!=0){
-//      //vb->localstore=realloc(vb->localstore,vb->totaluse+vb->localalloc);
-//      byte[] foo=new byte[totaluse+localalloc];
-//      System.arraycopy(localstore, 0, foo, 0, localstore.length);
-//      localstore=foo;
-//      localalloc+=totaluse;
-//      totaluse=0;
-//    }
-//    // pull the ripcord
-//    localtop=0;
-//    reap=null;
-//  }
-
   public int clear(){
     if(vd!=null){
       if(vd.analysisp!=0){
 	opb.writeclear();
       }
     }
-    //ripcord();
-    //if(localstore!=null)
-    //  localstore=null;
-    //memset(vb,0,sizeof(vorbis_block));
     return(0);
   }
 
@@ -135,7 +73,6 @@ public class Block{
     Info vi=vd.vi;
  
     // first things first.  Make sure decode is ready
-    // ripcord();
     opb.readinit(op.packet_base, op.packet, op.bytes);
 
     // Check the packet type
@@ -167,14 +104,12 @@ public class Block{
 
     // alloc pcm passback storage
     pcmend=vi.blocksizes[W];
-    //pcm=alloc(vi.channels);
     if(pcm.length<vi.channels){
       pcm=new float[vi.channels][];
     }
     for(int i=0;i<vi.channels;i++){
       if(pcm[i]==null || pcm[i].length<pcmend){
         pcm[i]=new float[pcmend];
-        //pcm[i]=alloc(pcmend);
       }
       else{
         for(int j=0;j<pcmend;j++){ pcm[i][j]=0; }

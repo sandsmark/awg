@@ -72,7 +72,8 @@ public class Path implements Comparable<Path> {
 	}
 	
 	public Point getNext() {
-		return path.pop();
+		if (!path.isEmpty()) return path.pop();
+		return null;
 	}
 	
 	public Point getLast() {
