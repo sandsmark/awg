@@ -57,8 +57,6 @@ public class SyncState{
     return(0);
   }
 
-// !!!!!!!!!!!!
-//  byte[] buffer(int size){
   public int buffer(int size){
     // first, clear out any space that has been previously returned
     if(returned!=0){
@@ -84,8 +82,6 @@ public class SyncState{
     }
 
     // expose a segment at least as large as requested at the fill mark
-//    return((char *)oy->data+oy->fill);
-//    return(data);
     return(fill);
   }
 
@@ -114,7 +110,6 @@ public class SyncState{
       if(bytes<27)return(0); // not enough for a header
     
     /* verify capture pattern */
-//!!!!!!!!!!!
       if(data[page]!='O' ||
 	 data[page+1]!='g' ||
 	 data[page+2]!='g' ||
@@ -127,7 +122,6 @@ public class SyncState{
         for(int ii=0; ii<bytes-1; ii++){
           if(data[page+1+ii]=='O'){next=page+1+ii; break;}
         }
-    //next=memchr(page+1,'O',bytes-1);
         if(next==0) next=fill;
 
         returned=next;
@@ -210,16 +204,6 @@ public class SyncState{
       bodybytes=0;
       return(bytes);
     }
-//  headerbytes=0;
-//  bodybytes=0;
-//  next=0;
-//  for(int ii=0; ii<bytes-1; ii++){
-//    if(data[page+1+ii]=='O'){next=page+1+ii;}
-//  }
-//  //next=memchr(page+1,'O',bytes-1);
-//  if(next==0) next=fill;
-//  returned=next;
-//  return(-(next-page));
   }
 
 

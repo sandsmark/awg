@@ -39,44 +39,4 @@ public class Packet{
                        // but we need coupling so that the codec
                        // (which is in a seperate abstraction
                        // layer) also knows about the gap
-
-  /*
-  // TEST
-  static int sequence=0;
-  static int lastno=0;
-  void checkpacket(int len, int no, int pos){
-    if(bytes!=len){
-      System.err.println("incorrect packet length!");
-      System.exit(1);
-    }
-    if(granulepos!=pos){
-      System.err.println("incorrect packet position!");
-      System.exit(1);
-    }
-
-    // packet number just follows sequence/gap; adjust the input number
-    // for that
-    if(no==0){
-      sequence=0;
-    }
-    else{
-      sequence++;
-      if(no>lastno+1)
-	sequence++;
-    }
-    lastno=no;
-    if(packetno!=sequence){
-     System.err.println("incorrect packet sequence "+packetno+" != "+sequence);
-      System.exit(1);
-    }
-
-    // Test data
-    for(int j=0;j<bytes;j++){
-      if((packet_base[packet+j]&0xff)!=((j+no)&0xff)){
-	System.err.println("body data mismatch at pos "+ j+": "+(packet_base[packet+j]&0xff)+"!="+((j+no)&0xff)+"!\n");
-	System.exit(1);
-      }
-    }
-  }
-  */
-}
+ }
