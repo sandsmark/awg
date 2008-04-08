@@ -30,6 +30,11 @@ public class Fighter extends Unit {
 					goTo(unit.position);
 				}
 			}
+			if(targetUnit == null && position.distance(GameState.getComputer().getMainBuilding().getPosition())<10 && getPlayer() != GameState.getComputer()){
+				GameState.getComputer().getMainBuilding().takeDamage(this.getDamage());
+			}else if(targetUnit == null && position.distance(GameState.getHuman().getMainBuilding().getPosition())<10 && getPlayer() != GameState.getHuman()){
+				GameState.getHuman().getMainBuilding().takeDamage(this.getDamage());
+			}
 		}else if(position.distance(getTargetUnit().position)<35){
 			dealDamage();
 		}else if(targetUnit!= null)goTo(getTargetUnit().getPosition());

@@ -161,8 +161,8 @@ public class Unit {
 	public void dealDamage(){
 		targetUnit.CurrentHealth -= damage;
 		if(targetUnit.CurrentHealth<=0){
-			this.targetUnit = null;
 			GameState.getUnits().removeUnit(targetUnit);
+			this.targetUnit = null;
 		}
 	}
 
