@@ -17,10 +17,17 @@ public class AI {
 
 			
 	}
-	
-	public boolean willAttack() { //for units som senser andre units
-		return true;
-	}
+//	FORELØPIG IKKE BRUK FOR DENNE METODEN	
+//	public void checkAttackUnits() { //for units som senser andre units
+//		double senseRange = oppforsel.getUnitSenseRange();
+//		for (Unit unit : GameState.getUnits().getUnits()) {
+//			if(unit.getPlayer().isAI()) {
+//				Point center = unit.getPosition();
+//				
+//				
+//			}
+//		}
+//	}
 	public boolean willDefend() { //om AI vil forsvare basen sin under angrep/range
 		double defParamRad = oppforsel.getBaseSenseRange();
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
@@ -38,12 +45,12 @@ public class AI {
 	public void defend() { //forsvarer seg
 		double defParamRad = oppforsel.getBaseSenseRange();
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
-		Point target = null;
+		Unit target = null;
 		
 		for (Unit unit: GameState.getUnits().getUnits()) {
 				if(!(unit.getPlayer().isAI()) ) {
 					if(mainb.distance(unit.getPosition())<defParamRad) {
-						target = unit.getPosition();
+						target = unit;
 						break;
 					}	
 				}
@@ -52,14 +59,14 @@ public class AI {
 		for (Unit unit : GameState.getUnits().getUnits()) {
 			if(unit.getPlayer().isAI()) {
 				if(unit instanceof Fighter) {
-					unit.goTo(target);
+					unit.setTargetUnit(target);
 				}
 			}
 		}
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
-		long timePassed = System.currentTimeMillis();
-		if(timePassed>oppforsel.getAggro() && (this.getFighters()+this.getHealers())>oppforsel.getAttackForce())
+		long timePassed = GameState.getTime();
+		if(timePassed>oppforsel.getAggro() && (this.getFighters()+this.getHealers())>oppforsel.getAttackForce() && ((this.getHealers()*oppforsel.getfighterPerHealer())/this.getFighters())>=1)
 		return true;
 		else return false;
 	}
@@ -67,8 +74,13 @@ public class AI {
 		// mÃ¥ ogsÃ¥ sjekke om han builder noe/eventuelt oppgraderer noe
 	}
 	public boolean willUpgrade() {//sjekker om AI vil upgrade
-		//if(GameState.getComputer().getResources()>) settes inn når upgradecost kommer
-		return true; 
+		long tid = GameState.getTime();
+//		if(GameState.getComputer().getResources()>GameState.getComputer().getMainBuilding().getUpgradeCost()) settes inn når upgradecost kommer
+			if(tid>oppforsel.getUpgrade() && !(GameState.getComputer().getMainBuilding().getBuildingLevel()>1)) {
+				return true;
+			}
+//		}
+		return false; 
 	}
 	
 	public int getFighters() { //henter antallet fighters

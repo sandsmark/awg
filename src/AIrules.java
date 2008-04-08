@@ -15,7 +15,14 @@ public class AIrules {
 	int fighterPerHealer; //healer/fighter ratio
 	int startGold; //start gull
 	long upgrade; // når han skal oppgradere hovedbygg i ms
+	int totalAttackForce; //hvor mange units AIen skal maks ha
 	
+	public int getTotalAttackForce() {
+		return totalAttackForce;
+	}
+	public void setTotalAttackForce(int totalAttackForce) {
+		this.totalAttackForce = totalAttackForce;
+	}
 	public AIrules() {
 		this.unitSenseRange=15;
 		this.attackForce = 6;
@@ -26,6 +33,7 @@ public class AIrules {
 		this.fighterPerHealer = 5;
 		this.startGold = 50000;
 		this.upgrade = 108000000; //i ms
+		this.totalAttackForce = 50;
 	}
 	public void setunitSenseRange(double d) {
 		this.unitSenseRange = d;
