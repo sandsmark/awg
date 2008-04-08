@@ -7,14 +7,15 @@ import javax.imageio.ImageIO;
 
 public class Building {
 	private Point position;
-	public int health; // How many HP the building has
+	public int maxHealth; // How many HP the building has
+	public int currentHealth;
 	public BufferedImage sprite;
 	private int buildingLevel; //1 == original, 2 == upgraded
 	private Player player; //The owner of the building
 	
 	public Building(Player player) {
 		buildingLevel = 1;
-		setHealth(1000);
+		setMaxHealth(1000);
 		setPlayer(player);
 		try {
 			if(player.isAI()){
@@ -43,12 +44,12 @@ public class Building {
 		this.position = position;
 	}
 
-	public int getHealth() {
-		return health;
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
+	public void setMaxHealth(int health) {
+		this.maxHealth = health;
 	}
 
 	public BufferedImage getSprite() {
@@ -93,4 +94,19 @@ public class Building {
 	}
 	
 
+	public void takeDamage(int damage){
+		this.currentHealth -= damage;
+		if(currentHealth <= 0){
+			System.out.println("OMG WIN");
+			setSprite(null);
+		}
+	}
+
+	public int getCurrentHealth() {
+		return currentHealth;
+	}
+
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+	}
 }
