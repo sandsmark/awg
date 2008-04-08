@@ -77,6 +77,7 @@ public class Unit {
 
 	public void setTargetUnit(Unit targetUnit) {
 		this.targetUnit = targetUnit;
+		this.goTo(this.targetUnit.position);
 	}
 
 
@@ -173,5 +174,7 @@ public class Unit {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public void setTargetResource(Resource r) {}
 }
 
