@@ -7,6 +7,7 @@ public class GameState {
 	private MainWindow mainWindow;
 	private Player human = new Player(false); // is not ai
 	private Player computer = new Player(true);
+	private long start = System.currentTimeMillis();
 	
 	
 	private GameState() {}
@@ -46,5 +47,9 @@ public class GameState {
 	
 	public static Player getComputer() {
 		return GameStateHolder.state.computer;
+	}
+	
+	public static long getTime() {
+		return (System.currentTimeMillis() - GameStateHolder.state.start) ;
 	}
 }
