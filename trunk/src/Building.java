@@ -12,6 +12,7 @@ public class Building {
 	public BufferedImage sprite;
 	private int buildingLevel; //1 == original, 2 == upgraded
 	private Player player; //The owner of the building
+	private static final int upgradeCost = 1000;
 	
 	public Building(Player player) {
 		buildingLevel = 1;
@@ -77,7 +78,7 @@ public class Building {
 	}
 	
 	public void upgradeBuilding(){
-		if(buildingLevel == 1){
+		if(buildingLevel == 1 && getPlayer().getResources()>upgradeCost){
 			try{
 				if(!player.isAI()){
 					GameState.getHuman().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end1.gif")));
@@ -85,6 +86,7 @@ public class Building {
 					GameState.getComputer().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end2.gif")));
 				}
 				buildingLevel = 2;
+				getPlayer().decreaseResources(upgradeCost);
 			}catch(IOException IOE){
 				System.out.println("Error loading updated building image");
 			}
@@ -109,4 +111,9 @@ public class Building {
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
 	}
+
+	public static int getUpgradeCost() {
+		return upgradeCost;
+	}
+
 }

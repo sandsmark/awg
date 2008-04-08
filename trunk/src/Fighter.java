@@ -3,7 +3,8 @@ import java.awt.Point;
 
 public class Fighter extends Unit {
 	
-	final static int attackPower = 5;
+	private final static int attackPower = 5;
+	
 
 	
 	public Fighter(Player player){
