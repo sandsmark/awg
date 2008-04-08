@@ -29,7 +29,7 @@ public class AIrules {
 		this.workers = 5;
 		this.baseSenseRange = 300;
 		this.aggro = 36000000; //i ms
-		this.defence = 5;
+		this.defence = 6;
 		this.fighterPerHealer = 5;
 		this.startGold = 50000;
 		this.upgrade = 108000000; //i ms

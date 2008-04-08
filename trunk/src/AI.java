@@ -9,12 +9,13 @@ import java.awt.Shape;
 public class AI {
 	//her skal oppfÃ¸rselen til AI legges til
 	AIrules oppforsel;
-	int fighters, workers, healers;
-
+	int fighters, workers, healers, fighersdef, healersdef;
+	Player AI = GameState.getComputer();
 	
 	public AI() {
 		oppforsel = new AIrules();
-
+//		workers = 1; //adde testing unit
+//		fighersdef = 1; //adde testing unit
 			
 	}
 //	FORELØPIG IKKE BRUK FOR DENNE METODEN	
@@ -32,11 +33,9 @@ public class AI {
 		double defParamRad = oppforsel.getBaseSenseRange();
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
-			if(!(unit.getPlayer().isAI()) ) {
-			if(mainb.distance(unit.getPosition())<defParamRad) {
+			if(unit.getPlayer()==GameState.getHuman() && mainb.distance(unit.getPosition())<defParamRad ) {
 				
 				return true;
-			}
 			}
 		}
 		
@@ -66,12 +65,68 @@ public class AI {
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
 		long timePassed = GameState.getTime();
-		if(timePassed>oppforsel.getAggro() && (this.getFighters()+this.getHealers())>oppforsel.getAttackForce() && ((this.getHealers()*oppforsel.getfighterPerHealer())/this.getFighters())>=1)
+		if(timePassed>oppforsel.getAggro() && ((this.getFighters()+this.getHealers())-oppforsel.getDefence())>oppforsel.getAttackForce() && ((this.getHealers()*oppforsel.getfighterPerHealer())/this.getFighters())>=1)
 		return true;
 		else return false;
 	}
+	public void attack() { //kjøres når willLaunchAttack er true
+		Point target = GameState.getHuman().getMainBuilding().getPosition();
+		int countH = 0; //teller healers
+		int countF = 0; //teller fighters
+		for (Unit unit : GameState.getUnits().getUnits()) {
+			if((countH<(oppforsel.getAttackForce()%oppforsel.getfighterPerHealer())) &&(unit instanceof Healer)) {
+				unit.goTo(target);
+				countH +=1;
+			}
+			if(countF<(oppforsel.getAttackForce()-countH) && (unit instanceof Fighter)) {
+				unit.goTo(target);
+				countF +=1;
+			}
+			if((countH+countF)==oppforsel.getAttackForce())
+				break;
+		}
+		
+	}
 	public void build() { //AI sjekker om han kan bygge en unit, og hvilken unit han skal bygge
 		// mÃ¥ ogsÃ¥ sjekke om han builder noe/eventuelt oppgraderer noe
+		long tid = GameState.getTime();
+		while(true) {
+		if(willUpgrade()) {
+			GameState.getComputer().getMainBuilding().upgradeBuilding();
+//			GameState.getUnits().upgradeUnits(GameState.getComputer());
+			break;
+		}
+		if(this.getWorkers()<oppforsel.getWorkers()) { //bygge workers
+			GameState.getUnits().addUnit(new Worker(AI));
+			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
+			unit.goTo(GameState.getMap().getClosestNodePos(GameState.getComputer().getMainBuilding().getPosition()));
+			unit.setTargetResource(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()));
+			workers +=1;
+			break;
+			
+		}
+		if(this.getFighersdef()<oppforsel.getfighterPerHealer() && this.getFighersdef()<oppforsel.getDefence()) { //bygge fighters til forsvar
+			GameState.getUnits().addUnit(new Fighter(AI));
+			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
+//			Point newPoint = unit.getPosition();
+//			newPoint.translate(10, 15);
+			unit.goTo(new Point(unit.getPosition().x-60, unit.getPosition().y-85));
+			fighersdef +=1;
+			break;
+		}
+		if(this.getHealersdef()<(oppforsel.getDefence()-this.getFighersdef())) {
+			GameState.getUnits().addUnit(new Healer(AI));
+			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
+//			Point newPoint = unit.getPosition();
+//			newPoint.translate(50, 75);
+			unit.goTo(new Point(unit.getPosition().x-60, unit.getPosition().y-85));
+			healersdef +=1;
+			break;
+		}
+		
+		
+		}
+		
 	}
 	public boolean willUpgrade() {//sjekker om AI vil upgrade
 		long tid = GameState.getTime();
@@ -103,6 +158,18 @@ public class AI {
 	}
 	public void setWorkers(int c) {
 		this.workers+=c;
+	}
+	public int getFighersdef() {
+		return fighersdef;
+	}
+	public void setFighersdef(int fighersdef) {
+		this.fighersdef = fighersdef;
+	}
+	public int getHealersdef() {
+		return healersdef;
+	}
+	public void setHealersdef(int healersdef) {
+		this.healersdef = healersdef;
 	}
 	
 	

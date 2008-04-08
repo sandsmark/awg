@@ -21,6 +21,8 @@ public class AIThread extends Thread {
 	public void run() {
 		try {
 			while (running) {
+				
+				ai.build();
 //				if(ai.willDefend()) ai.defend();
 		 		sleep(2000);
 			}
