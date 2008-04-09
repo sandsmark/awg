@@ -35,10 +35,11 @@ public class AI {
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(unit.getPlayer()==GameState.getHuman() && mainb.distance(unit.getPosition())<defParamRad ) {
 				
+				System.out.println("Derkaderka!");
 				return true;
 			}
 		}
-		
+		System.out.println("Harakiri");
 		return false;
 	}
 	public void defend() { //forsvarer seg
@@ -46,8 +47,8 @@ public class AI {
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		Unit target = null;
 		
-		for (Unit unit: GameState.getUnits().getUnits()) {
-				if(!(unit.getPlayer().isAI()) ) {
+		for (Unit unit: GameState.getUnits().getUnits()) { // hente humanplayer innenfor baseSenseRange
+				if(unit.getPlayer()==GameState.getHuman() ) {
 					if(mainb.distance(unit.getPosition())<defParamRad) {
 						target = unit;
 						break;
@@ -55,13 +56,15 @@ public class AI {
 				}
 				
 		}
-		for (Unit unit : GameState.getUnits().getUnits()) {
-			if(unit.getPlayer().isAI()) {
-				if(unit instanceof Fighter) {
+		for (Unit unit : GameState.getUnits().getUnits()) { //henter AI
+			if(unit.getPlayer()==GameState.getComputer()) {
+				if(unit instanceof Fighter || unit instanceof Healer) {
 					unit.setTargetUnit(target);
+					unit.goTo(target.getPosition());
 				}
 			}
 		}
+		System.out.println("Muhammed JIHAD");
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
 		long timePassed = GameState.getTime();

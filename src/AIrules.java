@@ -27,7 +27,7 @@ public class AIrules {
 		this.unitSenseRange=15;
 		this.attackForce = 6;
 		this.workers = 5;
-		this.baseSenseRange = 300;
+		this.baseSenseRange = 500;
 		this.aggro = 36000000; //i ms
 		this.defence = 6;
 		this.fighterPerHealer = 5;
