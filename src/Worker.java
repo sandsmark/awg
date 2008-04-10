@@ -48,7 +48,7 @@ public class Worker extends Unit {
 	}
 	
 	@Override
-	public int move() {
+	public void move() {
 		Point house = getPlayer().mainHouse.getPosition();
 		if (targetResource != null) {
 			if (this.getCarrying() > 0 && house.distance(position) < 25 && delivering) {
@@ -77,7 +77,7 @@ public class Worker extends Unit {
 			delivering = true;
 		}
 		
-		return super.move();
+		super.move();
 	}
 
 	public Resource getTargetResource() {

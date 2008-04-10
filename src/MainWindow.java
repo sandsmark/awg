@@ -117,9 +117,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		
 
 		// Add testing unit
-//		GameState.getUnits().addUnit(new Worker(GameState.getComputer())); AI gjør dette selv
+//		GameState.getUnits().addUnit(new Worker(GameState.getComputer())); AI gjï¿½r dette selv
 		GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
-//		GameState.getUnits().addUnit(new Fighter(GameState.getComputer())); AI gjør dette selv
+//		GameState.getUnits().addUnit(new Fighter(GameState.getComputer())); AI gjï¿½r dette selv
 		
 		canvas.updateInternal(); // Should be called whenever the map updates
 		splash.destroy();
@@ -220,7 +220,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	}
 
 	public void mousePressed(MouseEvent m) {
-		
 		if (m.getSource() == canvas){
 			int x = m.getX() + GameState.getMainWindow().canvas.getOffsetX();
 			int y = m.getY() + GameState.getMainWindow().canvas.getOffsetY();

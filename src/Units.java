@@ -36,6 +36,7 @@ public class Units {
 	
 	public void selectUnit(Unit u) {
 		if (selectedUnits.contains(u)) return;
+		if (u.getPlayer().isAI()) return;
 		selectedUnits.add(u);
 	}
 

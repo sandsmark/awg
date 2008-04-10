@@ -25,8 +25,8 @@ public class MovementThread extends Thread {
 			while (running) {
 				sleep(50);
 				for (int i = 0; i < units.getUnitNum(); i++) {
-					if (units.getUnit(i).move() != 0)
-						canvas.setDirty();
+					units.getUnit(i).move();
+
 				}
 				canvas.repaint();
 			}

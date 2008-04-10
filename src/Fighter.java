@@ -21,7 +21,7 @@ public class Fighter extends Unit {
 		GameState.getMainWindow().canvas.repaint();
 	}
 	
-	public int move(){
+	public void move(){
 		Unit unit;
 		if(this.getPlayer() == GameState.getHuman()){
 			System.out.println(targetUnit);
@@ -43,6 +43,6 @@ public class Fighter extends Unit {
 		}else if(position.distance(getTargetUnit().position)<35){
 			dealDamage();
 		}else if(targetUnit!= null)goTo(getTargetUnit().getPosition());
-		return super.move();
+		super.move();
 	}
 }

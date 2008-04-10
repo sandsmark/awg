@@ -41,26 +41,28 @@ public class Canvas extends JPanel implements Moveable {
 	
 	private static final long serialVersionUID = 1L; // Ignorer
 
-	int offsetX = 0;
-	int offsetY = 0;
+	private int offsetX = 0;
+	private int offsetY = 0;
 	
-	int width = 500;
-	int height = 500;
+	private int width = 500;
+	private int height = 500;
 
-	int step = 20;
+	private int step = 20;
 
 	BufferedImage internalMap;
 	
-	int bx, by, bw, bh = 0;
-	boolean showBox = false;
+	// Selectbox
+	private int bx, by, bw, bh = 0;
+	private boolean showBox = false;
 	
-	Point target;
-	int targetR = 20;
+	// Targetting circle
+	private Point target;
+	private int targetR = 20;
 
-	boolean dirty = false;
+	// Do we need to repaint the map before putting on screen?
+	private boolean dirty = true;
 
-	ReentrantLock lock = new ReentrantLock();
-	Condition updated = lock.newCondition();
+	public ReentrantLock lock = new ReentrantLock();
 
 	/**
 	 * This constructs a new canvas, and creates a new internal map.
@@ -80,22 +82,26 @@ public class Canvas extends JPanel implements Moveable {
 	@Override
 	public void paintComponent(Graphics g) {
 		try {
-			if (!lock.tryLock(500, TimeUnit.MILLISECONDS))
+			if (!lock.tryLock(2000, TimeUnit.MILLISECONDS)){
+				System.err.println("ERROR: Could not get lock on canvas in a timely manner.");
 				return;
+			}
+
 			if (dirty) {
 				updateInternal();
 				dirty = false;
 			}
-			Graphics g2 = g;
+			
 			width = getSize().width;
 			height = getSize().height;
-			g2.drawImage(internalMap, 0, 0, width, height, offsetX, offsetY,
-					offsetX + width, offsetY + height, null);
+			g.drawImage(internalMap, 0, 0, null);
+			
 			if (showBox)
-				g2.drawRect(bx, by, bw, bh);
+				g.drawRect(bx, by, bw, bh);
+			
 			if (target != null) {
-				g2.setColor(Color.RED);
-				g2.drawOval(target.x - targetR / 2, target.y - targetR / 2, targetR, targetR);
+				g.setColor(Color.RED);
+				g.drawOval(target.x - targetR / 2, target.y - targetR / 2, targetR, targetR);
 				targetR /= 1.5;
 				if (targetR < 2) target = null;
 			}
@@ -109,37 +115,45 @@ public class Canvas extends JPanel implements Moveable {
 	
 	/**
 	 * This method updates the internal map representation/cache, which
-	 * contains all layers.
+	 * contains the two lowest layers.
 	 */
 	public void updateInternal() {
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
-		
-		lock.lock();
-		Graphics2D ig2 = internalMap.createGraphics();
-		ig2.drawImage(GameState.getMap().getBaseMap(), null, 0, 0);
-		Unit unit;
-		Resource res;
-		
-		for (int i = 0; i < map.getResourceNum(); i++) {
-			res = map.getResource(i);
-			ig2.drawImage(res.getSprite(), null, res.getPosition().x, res.getPosition().y);
-		}
+		try {
+			lock.lock();
+			Graphics2D ig2 = internalMap.createGraphics();
+			ig2.drawImage(GameState.getMap().getBaseMap(), 0, 0, width, height, offsetX, offsetY,
+					offsetX + width, offsetY + height, null);
+			
+			for (Resource res : map.getResources()) {
+				if (!this.isInView(res.getPosition().x, res.getPosition().y)) continue;
+				ig2.drawImage(res.getSprite(), null, res.getPosition().x - offsetX, res.getPosition().y - offsetY);
+			}
+	
+			Building humanHouse = GameState.getHuman().mainHouse;
 
-		Building humanHouse = GameState.getHuman().mainHouse;
-		ig2.drawImage(humanHouse.getSprite(), null, humanHouse.getPosition().x, humanHouse.getPosition().y);
-		
-		Building computerHouse = GameState.getComputer().mainHouse;
-		ig2.drawImage(computerHouse.getSprite(), null, computerHouse.getPosition().x, computerHouse.getPosition().y);
-		
-		for (int i = 0; i < units.getUnitNum(); i++) {
-			unit = units.getUnit(i);
-			ig2.drawImage(unit.getSprite().pop(), null, unit.getPosition().x, unit.getPosition().y);
-			ig2.setColor(Color.BLUE);
-			if (units.isSelected(unit))
-				ig2.drawRect(unit.getPosition().x, unit.getPosition().y, unit.getCurrentHealth(), 2);
+			if (this.isInView(humanHouse.getPosition().x, humanHouse.getPosition().y)||
+					this.isInView(humanHouse.getPosition().x + humanHouse.getSprite().getWidth(), humanHouse.getPosition().y + humanHouse.getSprite().getHeight())) 
+				ig2.drawImage(humanHouse.getSprite(), null, humanHouse.getPosition().x - offsetX, humanHouse.getPosition().y - offsetY);
+			
+			Building computerHouse = GameState.getComputer().mainHouse;
+			if (this.isInView(computerHouse.getPosition().x, computerHouse.getPosition().y) ||
+					this.isInView(computerHouse.getPosition().x + computerHouse.getSprite().getWidth(), computerHouse.getPosition().y + computerHouse.getSprite().getHeight())) 
+				ig2.drawImage(computerHouse.getSprite(), null, computerHouse.getPosition().x - offsetX, computerHouse.getPosition().y - offsetY);
+			
+			for (Unit unit : units.getUnits()) {
+				if (!this.isInView(unit.getPosition().x, unit.getPosition().y)) continue;
+				ig2.drawImage(unit.getSprite().pop(), null, unit.getPosition().x - offsetX, unit.getPosition().y - offsetY);
+				ig2.setColor(Color.BLUE);
+				if (units.isSelected(unit))
+					ig2.drawRect(unit.getPosition().x - offsetX, unit.getPosition().y - offsetY, unit.getCurrentHealth(), 2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			lock.unlock();
 		}
-		lock.unlock();
 	}
 
 	/**
@@ -229,7 +243,8 @@ public class Canvas extends JPanel implements Moveable {
 		}
 		lock.unlock();
 		if (dir != Direction.NONE) {
-			repaint();
+			this.dirty = true;
+			this.repaint();
 		}
 	}
 
@@ -285,8 +300,18 @@ public class Canvas extends JPanel implements Moveable {
 	 * has moved), and that we need to update our internal representation.
 	 * This saves us some repaints.
 	 */
-	public void setDirty() {
-		dirty = true;
+	public void setDirty(int x, int y) {
+		dirty = isInView(x,y);
+	}
+
+	/**
+	 * This returns true if the coordinates supplied are currently in view. 
+	 * @param x
+	 * @param y
+	 * @return 
+	 */
+	private boolean isInView(int x, int y){
+		return (x >= offsetX && y >= offsetY && x <= offsetX + width && y <= offsetY + height);
 	}
 	
 	/**
