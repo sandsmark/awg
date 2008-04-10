@@ -120,12 +120,12 @@ public class Unit {
 	 * This moves the unit along it's path.
 	 * @return
 	 */
-	public int move() {
+	public void move() {
 		if (speed < 2) sprite.setMoving(false);
 		else sprite.setMoving(true);
 		
 		if (target == null) {
-			return 0;
+			return;
 		}
 		
 		
@@ -133,7 +133,7 @@ public class Unit {
 			if (path.isEmpty()) {
 				target = null;
 				speed = 0;
-				return 0;
+				return;
 			} else {
 				this.setTarget(path.getNext());
 			}
@@ -144,11 +144,10 @@ public class Unit {
 		int newX = position.x + Math.round(Math.round(Math.cos(orientation) * this.speed));
 		int newY = position.y + Math.round(Math.round(Math.sin(orientation) * this.speed));
 		
-//		if (GameState.getMap().canMove(newX, newY)) 
 		this.setPosition(new Point(newX, newY));
-//		else target = null;
+		GameState.getMainWindow().canvas.setDirty(newX, newY);
 		
-		return 1;
+		return;
 	}
 	
 	

@@ -32,7 +32,7 @@ public class Healer extends Unit {
 		this.mana = mana;
 	}
 	
-	public int move(){
+	public void move(){
 		Unit unit;
 		if(targetUnit == null){
 			for (int i = 0; i < GameState.getUnits().count(); i++) {
@@ -44,6 +44,6 @@ public class Healer extends Unit {
 				}
 			}
 		}
-		return super.move();
+		super.move();
 	}
 }
