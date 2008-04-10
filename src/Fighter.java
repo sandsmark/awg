@@ -24,10 +24,10 @@ public class Fighter extends Unit {
 	public void move(){
 		Unit unit;
 		if(this.getPlayer() == GameState.getHuman()){
-			System.out.println(targetUnit);
+//			System.out.println(targetUnit);
 		}
 		if(targetUnit == null){
-			System.out.println("Inside targetunit ==null");
+//			System.out.println("Inside targetunit ==null");
 			for (int i = 0; i < GameState.getUnits().count(); i++) {
 				unit = GameState.getUnits().getUnit(i);
 				if(unit.getPlayer() != this.getPlayer() && position.distance(unit.position) < 100){
