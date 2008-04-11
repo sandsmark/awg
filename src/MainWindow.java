@@ -44,6 +44,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	MainWindow() throws IOException {
 		frame = new JFrame();
+		frame.setUndecorated(true);
 //		new Intro(frame);
 		SplashScreen splash = new SplashScreen(frame);
 		
@@ -90,12 +91,12 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 		frame.pack();
 		frame.setTitle("Awesome WarGame is Awesome!");
+		frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
 		GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		
 		if (!graphics.isFullScreenSupported()){
-			System.err.println("Could not acquire fullscreen mode.");
-			frame.setAlwaysOnTop(true);
+			System.err.println("Could not acquire fullscreen mode, falling back to maximizing.");
 			frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-			frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
 		} else {
 			graphics.setFullScreenWindow(frame);
 		}
