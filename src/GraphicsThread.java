@@ -9,7 +9,7 @@ public class GraphicsThread extends Thread {
 	protected long sleeptime = 0;
 
 	GraphicsThread() {
-		this.sleeptime = GameState.getConfig().getSleeptime();
+		this.sleeptime = Config.getSleeptime();
 		this.running = true;
 		this.curdir = Moveable.Direction.NONE;
 	}

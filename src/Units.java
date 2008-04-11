@@ -77,7 +77,7 @@ public class Units {
 
 	public void select(int x, int y) {
 		selectedUnits.clear();
-		Point clicked = new Point(x - GameState.getConfig().getUnitWidth()/2, y - GameState.getConfig().getUnitHeight()/2);
+		Point clicked = new Point(x - Config.getUnitWidth()/2, y - Config.getUnitHeight()/2);
 		for (int i = 0; i < this.getUnitNum(); i++) {
 			if (this.getUnit(i).getPosition().distance(clicked) < 15){
 				selectUnit(this.getUnit(i));
