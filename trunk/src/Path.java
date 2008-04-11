@@ -119,32 +119,12 @@ public class Path implements Comparable<Path> {
 			
 			closed.add(point);	
 			
-			/**
-			 * TODO: Fix up and optimize.
-			 */
-			if (m.canMove((point.x - 1)*factor, point.y*factor))
-				queue.add(new Path(path, map[point.x - 1][point.y], target));
-			if (m.canMove((point.x - 1)*factor, (point.y - 1)*factor)) 
-					queue.add(new Path(path, map[point.x - 1][point.y - 1], target));
-			if (m.canMove((point.x - 1)*factor, (point.y + 1)*factor)) 
-					queue.add(new Path(path, map[point.x - 1][point.y + 1], target));
-			
-
-			if (m.canMove((point.x + 1)*factor, point.y*factor)) 
-				queue.add(new Path(path, map[point.x + 1][point.y], target));
-			if (m.canMove((point.x + 1)*factor, (point.y - 1)*factor)) 
-				queue.add(new Path(path, map[point.x + 1][point.y - 1], target));
-			if (m.canMove((point.x + 1)*factor, (point.y + 1)*factor))
-				queue.add(new Path(path, map[point.x + 1][point.y + 1], target));
-						
-			if (m.canMove(point.x*factor, (point.y - 1)*factor))
-				queue.add(new Path(path, map[point.x][point.y - 1], target));
-
-			if (m.canMove(point.x*factor, (point.y + 1)*factor))
-				queue.add(new Path(path, map[point.x][point.y + 1], target));
-
-			//Finished adding new points
-	
+			// Add neighouring points to the queue.
+			for (int dx = -1; dx <= 1; dx++)
+				for (int dy = -1; dy <= 1; dy ++)
+					if (!(dx == 0 && dy == 0)) 
+						if (m.canMove((point.x + dx) * factor, (point.y + dy) * factor))
+							queue.add(new Path(path, map[point.x + dx][point.y + dy], target));	
 		}
 		return null;
 	}
