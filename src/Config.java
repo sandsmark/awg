@@ -30,11 +30,15 @@ public class Config {
 			line = file.readLine();
 			String[] values = line.split("¤");
 			worldWidth = Integer.parseInt(values[0]);
+			if (worldWidth < 500 || worldWidth > 5000) throw new Exception();
 			worldHeight = Integer.parseInt(values[1]);
+			if (worldHeight < 500 || worldHeight > 5000) throw new Exception();
 			sleeptime = Integer.parseInt(values[2]);
+			if (sleeptime < 10 || sleeptime > 5000) throw new Exception();
 			maskSize = Integer.parseInt(values[3]);
+			if (maskSize < 1 || maskSize > 50) throw new Exception();
 			aiAggressiveness = Integer.parseInt(values[4]);
-			
+			if (aiAggressiveness < 1 || aiAggressiveness > 10) throw new Exception();
 			this.worldWidth = worldWidth;
 			this.worldHeight = worldHeight;
 			this.sleeptime = sleeptime;
