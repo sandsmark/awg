@@ -2,17 +2,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -27,11 +21,11 @@ public class Map {
 	Resource[] resources;
 	private ArrayList<Shape> waters = new ArrayList<Shape>();
 
-	public Map(int nWidth, int nHeight) {
-		sprite = new BufferedImage[4];
-		height = nHeight;
-		width = nWidth;
+	public Map() {
+		height = Config.getWorldHeight();
+		width = Config.getWorldWidth();
 
+		sprite = new BufferedImage[4];
 		try {
 			sprite[0] = ImageIO.read(getClass().getResource("/grass.png"));
 			sprite[1] = ImageIO.read(getClass().getResource("/water.png"));
@@ -125,8 +119,8 @@ public class Map {
 			String line;
 			String [] coords; 
 			Polygon poly;
-			Shape e = new Ellipse2D.Float(GameState.getConfig().getWorldWidth()/2,GameState.getConfig().getWorldHeight()/2,GameState.getConfig().getWorldWidth()/4,GameState.getConfig().getWorldHeight()/4);
-			waters.add(e);
+			waters.add(new Ellipse2D.Float(Config.getWorldWidth()/2,Config.getWorldHeight()/2,
+					Config.getWorldWidth()/4,Config.getWorldHeight()/4));
 			while ((line = file.readLine()) != null) {
 				coords = line.split(" ");
 				poly = new Polygon();
@@ -137,7 +131,8 @@ public class Map {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			waters.add(new Ellipse2D.Float(GameState.getConfig().getWorldWidth()/2,GameState.getConfig().getWorldHeight()/2,GameState.getConfig().getWorldWidth()/4,GameState.getConfig().getWorldHeight()/4));
+			waters.add(new Ellipse2D.Float(Config.getWorldWidth()/2,Config.getWorldHeight()/2,
+					Config.getWorldWidth()/4,Config.getWorldHeight()/4));
 		}
 	}
 	

@@ -1,8 +1,6 @@
 
 public class GameState {
-
-	private Config config = new Config();
-	private Map map;
+	private Map map = new Map();
 	private Units units = new Units();
 	private MainWindow mainWindow;
 	private Player human = new Player(false); // is not AI
@@ -26,14 +24,6 @@ public class GameState {
 	
 	public static Map getMap() {
 		return GameStateHolder.state.map;
-	}
-
-	public static void setMap(Map map) {
-		GameStateHolder.state.map = map;
-	}
-	
-	public static Config getConfig() {
-		return GameStateHolder.state.config;
 	}
 
 	public static Units getUnits() {
