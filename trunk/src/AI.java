@@ -102,7 +102,7 @@ public class AI {
 		if(this.getWorkers()<oppforsel.getWorkers()) { //bygge workers
 			GameState.getUnits().addUnit(new Worker(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
-			unit.goTo(GameState.getMap().getClosestNodePos(GameState.getComputer().getMainBuilding().getPosition()));
+			unit.goTo(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()).getPosition());
 			unit.setTargetResource(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()));
 			workers +=1;
 			break;
