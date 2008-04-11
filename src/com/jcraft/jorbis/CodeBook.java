@@ -25,7 +25,7 @@
 
 package com.jcraft.jorbis;
 
-import com.jcraft.jogg.*;
+import com.jcraft.jogg.Buffer;
 
 class CodeBook{
   int dim;            // codebook dimensions (elements per vector)

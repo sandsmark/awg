@@ -25,7 +25,7 @@
 
 package com.jcraft.jorbis;
 
-import com.jcraft.jogg.*;
+import com.jcraft.jogg.Buffer;
 
 class Mapping0 extends FuncMapping{
   static int seq=0;
