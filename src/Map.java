@@ -138,6 +138,7 @@ public class Map {
 			waters.add(new Ellipse2D.Float(GameState.getConfig().getWorldWidth()/2,GameState.getConfig().getWorldHeight()/2,GameState.getConfig().getWorldWidth()/4,GameState.getConfig().getWorldHeight()/4));
 		}
 	}
+	
 public Resource getClosestNode(Point p) {
 		double shortestDistance = 1000;
 		Resource closestResource = null;
@@ -151,17 +152,4 @@ public Resource getClosestNode(Point p) {
 		}
 		return closestResource;
 	}
-public Point getClosestNodePos(Point p) {
-	double shortestDistance = 1000;
-	Resource closestResource = null;
-	for (Resource res : GameState.getMap().getResources()) {
-		Point resLoc = res.getPosition();
-		double check = p.distance(resLoc);
-		if(check<shortestDistance) {
-			shortestDistance = check;
-			closestResource = res;
-		}
-	}
-	return closestResource.getPosition();
-}
 }
