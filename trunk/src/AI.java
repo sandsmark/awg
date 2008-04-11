@@ -2,7 +2,7 @@ import java.awt.Point;
 import java.awt.Shape;
 /**
  * 
- * @author Stian Veum Møllersen
+ * @author Stian Veum Mï¿½llersen
  * makur of awsoem AI
  *
  */
@@ -18,7 +18,7 @@ public class AI {
 //		fighersdef = 1; //adde testing unit
 			
 	}
-//	FORELØPIG IKKE BRUK FOR DENNE METODEN	
+//	FORELï¿½PIG IKKE BRUK FOR DENNE METODEN	
 //	public void checkAttackUnits() { //for units som senser andre units
 //		double senseRange = oppforsel.getUnitSenseRange();
 //		for (Unit unit : GameState.getUnits().getUnits()) {
@@ -48,13 +48,13 @@ public class AI {
 		Unit target = null;
 		
 		for (Unit unit: GameState.getUnits().getUnits()) { // hente humanplayer innenfor baseSenseRange
-				if(unit.getPlayer()==GameState.getHuman() ) {
+				if(unit.getPlayer().equals(GameState.getHuman())) {
+					System.out.println(mainb.distance(unit.getPosition()));
 					if(mainb.distance(unit.getPosition())<defParamRad) {
 						target = unit;
 						break;
 					}	
 				}
-				
 		}
 		for (Unit unit : GameState.getUnits().getUnits()) { //henter AI
 			if(unit.getPlayer()==GameState.getComputer()) {
@@ -72,7 +72,7 @@ public class AI {
 		return true;
 		else return false;
 	}
-	public void attack() { //kjøres når willLaunchAttack er true
+	public void attack() { //kjï¿½res nï¿½r willLaunchAttack er true
 		Point target = GameState.getHuman().getMainBuilding().getPosition();
 		int countH = 0; //teller healers
 		int countF = 0; //teller fighters
@@ -133,7 +133,7 @@ public class AI {
 	}
 	public boolean willUpgrade() {//sjekker om AI vil upgrade
 		long tid = GameState.getTime();
-//		if(GameState.getComputer().getResources()>GameState.getComputer().getMainBuilding().getUpgradeCost()) settes inn når upgradecost kommer
+//		if(GameState.getComputer().getResources()>GameState.getComputer().getMainBuilding().getUpgradeCost()) settes inn nï¿½r upgradecost kommer
 			if(tid>oppforsel.getUpgrade() && !(GameState.getComputer().getMainBuilding().getBuildingLevel()>1)) {
 				return true;
 			}

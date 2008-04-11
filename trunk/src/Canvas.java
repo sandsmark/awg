@@ -23,7 +23,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JPanel;
@@ -92,8 +91,14 @@ public class Canvas extends JPanel implements Moveable {
 				dirty = false;
 			}
 			
-			width = getSize().width;
-			height = getSize().height;
+			if (width != getSize().width) {
+				width = getSize().width;
+				dirty = true;
+			}
+			if (height != getSize().height) {
+				height = getSize().height;
+				dirty = true;
+			}
 			g.drawImage(internalMap, 0, 0, null);
 			
 			if (showBox)
@@ -301,7 +306,7 @@ public class Canvas extends JPanel implements Moveable {
 	 * This saves us some repaints.
 	 */
 	public void setDirty(int x, int y) {
-		dirty = isInView(x,y);
+		dirty = isInView(x,y) || dirty;
 	}
 
 	/**
@@ -324,4 +329,6 @@ public class Canvas extends JPanel implements Moveable {
 		target = new Point(x, y);
 		targetR = 50;
 	}
+	
+	
 }

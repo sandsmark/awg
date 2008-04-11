@@ -2,11 +2,11 @@
 public class GameState {
 
 	private Config config = new Config();
-	private Map map = new Map(1000,1000);
+	private Map map = new Map(config.getWorldWidth(), config.getWorldHeight());
 	private Units units = new Units();
 	private MainWindow mainWindow;
-	private Player human = new Player(false); // is not ai
-	private Player computer = new Player(true);
+	private Player human = new Player(false); // is not AI
+	private Player computer = new Player(true); // this, however, is AI
 	private long start = System.currentTimeMillis();
 	
 	

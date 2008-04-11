@@ -46,7 +46,7 @@ public class Sprite {
 	}
 	
 	public BufferedImage pop() {
-		if (!isMoving) return sprite[faction][direction.ordinal()][0];
+		if (!isMoving) return sprite[faction][direction.ordinal()][1];
 		cycle = (cycle+1) % 2;
 		return sprite[faction][direction.ordinal()][cycle];
 	}

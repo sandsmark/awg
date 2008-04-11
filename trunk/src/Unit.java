@@ -139,7 +139,7 @@ public class Unit {
 			}
 		} 
 		else if (position.distance(target) < 15) speed = speed / 1.5;
-		else if (speed < maxSpeed) speed = Math.abs(speed + accel);
+		else if (speed < maxSpeed) speed = Math.abs(speed + accel + Math.random());
 		
 		int newX = position.x + Math.round(Math.round(Math.cos(orientation) * this.speed));
 		int newY = position.y + Math.round(Math.round(Math.sin(orientation) * this.speed));

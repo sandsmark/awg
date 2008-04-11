@@ -28,7 +28,7 @@ public class Map {
 	private ArrayList<Shape> waters = new ArrayList<Shape>();
 
 	public Map(int nWidth, int nHeight) {
-		sprite = new BufferedImage[3];
+		sprite = new BufferedImage[4];
 		height = nHeight;
 		width = nWidth;
 
@@ -36,6 +36,7 @@ public class Map {
 			sprite[0] = ImageIO.read(getClass().getResource("/grass.png"));
 			sprite[1] = ImageIO.read(getClass().getResource("/water.png"));
 			sprite[2] = ImageIO.read(getClass().getResource("/trees.png"));
+			sprite[3] = ImageIO.read(getClass().getResource("/tree.png"));
 		} catch (IOException e) {
 			System.err.println("Could not load sprite!");
 			System.exit(1);
@@ -57,7 +58,13 @@ public class Map {
 		Graphics2D bg2 = baseMap.createGraphics();
 
 		bg2.setColor(Color.green);
-		bg2.fill(new Rectangle(0, 0, width, height));
+//		bg2.fill(new Rectangle(0, 0, width, height));
+		for (x=0; x<width / 30; x++) {
+			for (y=0; y<height / 30; y++) {
+				if (Math.random() > 0.1) bg2.drawImage(sprite[0], null, x*30, y*30);
+				else bg2.drawImage(sprite[3], null, x*30, y*30);
+			}
+		}
 		bg2.setColor(Color.blue);
 		for (Shape water : waters) {
 			bg2.draw(water);

@@ -466,7 +466,6 @@ class StaticCodeBook{
 
   static float float32_unpack(int val){
     float mant=val&0x1fffff;
-    float sign=val&0x80000000;
     float exp =(val&0x7fe00000)>>>VQ_FMAN;
 //System.err.println("mant="+mant+", sign="+sign+", exp="+exp);
     //if(sign!=0.0)mant= -mant;

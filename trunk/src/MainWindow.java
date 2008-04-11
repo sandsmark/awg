@@ -35,13 +35,12 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	AIThread aiThread;
 	WindowThread wThread;
 	MovementThread mThread;
-	Music music;
 	
 	Map map;
 
 	MainWindow() throws IOException {
 		frame = new JFrame();
-		new Intro(frame);
+//		new Intro(frame);
 		SplashScreen splash = new SplashScreen(frame);
 		
 		GameState.setMainWindow(this);
@@ -113,7 +112,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		mThread = new MovementThread();
 		mThread.start();
 		
-		music = new Music("/music.ogg");
+//		new Music("/music.ogg");
 		
 
 		// Add testing unit

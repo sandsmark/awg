@@ -983,12 +983,10 @@ public class VorbisFile{
     // discard samples until we reach the desired position. Crossing a
     // logical bitstream boundary with abandon is OK.
     while(pcm_offset<pos){
-      float[][] pcm;
       int target=(int)(pos-pcm_offset);
       float[][][] _pcm=new float[1][][];
       int[] _index=new int[getInfo(-1).channels];
       int samples=vd.synthesis_pcmout(_pcm, _index);
-      pcm=_pcm[0];
 
       if(samples>target)samples=target;
       vd.synthesis_read(samples);
@@ -1317,8 +1315,6 @@ public class VorbisFile{
   class SeekableInputStream extends InputStream {
     java.io.RandomAccessFile raf=null;
     final String mode="r";
-    private SeekableInputStream(){
-    }
     SeekableInputStream(String file) throws java.io.IOException{
       raf=new java.io.RandomAccessFile(file, mode);
     }

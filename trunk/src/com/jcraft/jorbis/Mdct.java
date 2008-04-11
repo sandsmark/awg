@@ -27,10 +27,6 @@ package com.jcraft.jorbis;
 
 class Mdct{
 
-  static private final float cPI3_8=0.38268343236508977175f;
-  static private final float cPI2_8=0.70710678118654752441f;
-  static private final float cPI1_8=0.92387953251128675613f;
-
   int n;
   int log2n;
   
@@ -43,7 +39,6 @@ class Mdct{
     bitrev=new int[n/4];
     trig=new float[n+n/4];
 
-    int n2=n>>>1;
     log2n=(int)Math.rint(Math.log(n)/Math.log(2));
     this.n=n;
 
