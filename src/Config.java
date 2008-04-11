@@ -1,7 +1,7 @@
 
 public class Config {
-	private int worldWidth = 5000; // x pixels wide
-	private int worldHeight = 5000; // y pixels high
+	private int worldWidth = 2000; // x pixels wide
+	private int worldHeight = 2000; // y pixels high
 	private int unitWidth = 25; //Ditto
 	private int unitHeight = 25;
 	private int sleeptime = 50; // in ms.
