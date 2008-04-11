@@ -10,6 +10,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.LayoutStyle;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
 /*
@@ -72,8 +73,8 @@ public class ConfigDialog extends javax.swing.JDialog implements ActionListener 
 		t_ai_aggressive = new JLabel();
 		separator = new JSeparator();
 
-		map_width = new JSpinner();
-		map_height = new JSpinner();
+		map_width = new JSpinner(new SpinnerNumberModel(1500, 500, 5000, 500));
+		map_height = new JSpinner(new SpinnerNumberModel(1500, 500, 5000, 500));
 		
 		path_masksize = new JSlider();
 		path_masksize.setMinimum(5);
@@ -446,22 +447,17 @@ public class ConfigDialog extends javax.swing.JDialog implements ActionListener 
 		if (e.getSource() == save) {
 			this.saveConfig();
 		} else if (e.getSource() == close){
-			this.saveConfig();
 			this.setVisible(false);
 		} else if (e.getSource() == reset) {
-			this.resetConfig();
+			Config.resetConfig();
+			this.loadConfig();
 		}
 		
 
 	}
 
-	private void resetConfig() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private void saveConfig() {
-		
+		Config.saveConfig(map_width.getValue().toString(), map_height.getValue().toString(), path_masksize.getValue(), thread_sleeptime.getValue(), ai_aggressiveness.getValue());
 	}
 	
 	public void setVisible(boolean visible){

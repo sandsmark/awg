@@ -11,7 +11,7 @@ public class Path implements Comparable<Path> {
 	/**
 	 * The factor of which to downscale, for optimization.
 	 */
-	private static int factor = 15;
+	private static int factor = Config.getMaskSize();
 	
 	/**
 	 * This should be used when creating a new path.
