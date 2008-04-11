@@ -32,7 +32,6 @@ import com.jcraft.jogg.*;
 public class Comment{
   private static byte[] _vorbis="vorbis".getBytes();
 
-  private static final int OV_EFAULT=-129;
   private static final int OV_EIMPL=-130;
 
   // unlimited user comment fields.  libvorbis writes 'libvorbis'

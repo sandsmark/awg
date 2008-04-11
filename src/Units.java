@@ -34,8 +34,9 @@ public class Units {
 		return units.size();
 	}
 	
-	public void selectUnit(Unit u) {
+	public synchronized void selectUnit(Unit u) {
 		if (selectedUnits.contains(u)) return;
+		System.out.println(u);
 		if (u.getPlayer().isAI()) return;
 		selectedUnits.add(u);
 	}
@@ -135,7 +136,7 @@ public class Units {
 		}
 	}
 
-	public void target(int x, int y) {
+	public synchronized void target(int x, int y) {
 		if (GameState.getUnits().selectedOnlyContains("worker"))
 			for (Resource resource : GameState.getMap().getResources()){
 				if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
