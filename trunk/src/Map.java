@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
@@ -53,10 +54,12 @@ public class Map {
 		Graphics2D bg2 = baseMap.createGraphics();
 
 		bg2.setColor(Color.green);
-//		bg2.fill(new Rectangle(0, 0, width, height));
+		bg2.fill(new Rectangle(0, 0, width, height));
+
+		//Draw grass, with trees here and there 
 		for (x=0; x<width / 30; x++) {
 			for (y=0; y<height / 30; y++) {
-				if (Math.random() > 0.1) bg2.drawImage(sprite[0], null, x*30, y*30);
+				if (Math.random() > 0.01) bg2.drawImage(sprite[0], null, x*30, y*30);
 				else bg2.drawImage(sprite[3], null, x*30, y*30);
 			}
 		}
@@ -65,7 +68,6 @@ public class Map {
 			bg2.draw(water);
 			bg2.fill(water);
 		}
-
 	}
 
 	public int getHeight() {
@@ -119,8 +121,9 @@ public class Map {
 			String line;
 			String [] coords; 
 			Polygon poly;
-			waters.add(new Ellipse2D.Float(Config.getWorldWidth()/2,Config.getWorldHeight()/2,
-					Config.getWorldWidth()/4,Config.getWorldHeight()/4));
+
+			waters.add(new Ellipse2D.Float(Config.getWorldWidth()/2 - Config.getWorldWidth()/6,Config.getWorldHeight()/2 - Config.getWorldHeight()/6,
+					Config.getWorldWidth()/3,Config.getWorldHeight()/3));
 			while ((line = file.readLine()) != null) {
 				coords = line.split(" ");
 				poly = new Polygon();
@@ -132,7 +135,7 @@ public class Map {
 		} catch (Exception e) {
 			e.printStackTrace();
 			waters.add(new Ellipse2D.Float(Config.getWorldWidth()/2,Config.getWorldHeight()/2,
-					Config.getWorldWidth()/4,Config.getWorldHeight()/4));
+					Config.getWorldWidth()/2,Config.getWorldHeight()/2));
 		}
 	}
 	
