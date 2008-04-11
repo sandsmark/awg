@@ -1,7 +1,7 @@
-import java.awt.Polygon;
-import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class Config {
@@ -25,7 +25,7 @@ public class Config {
 			int maskSize;
 			int aiAggressiveness;
 			
-			BufferedReader file = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("config.ini")));
+			BufferedReader file = new BufferedReader(new FileReader("config.ini"));
 			String line;
 			line = file.readLine();
 			String[] values = line.split("¤");
@@ -43,7 +43,6 @@ public class Config {
 			
 		} catch (Exception e) {
 			System.err.println("Could not load config.");
-			e.printStackTrace();
 		}
 
 	}
@@ -58,11 +57,17 @@ public class Config {
 	public static int getWorldWidth() {
 		return ConfigHolder.config.worldWidth;
 	}
+	public static void setWorldWidth(int w) {
+		ConfigHolder.config.worldWidth = w;
+	}
 	/**
 	 * @return the worldHeight
 	 */
 	public static int getWorldHeight() {
 		return ConfigHolder.config.worldHeight;
+	}
+	public static void setWorldHeight(int h){
+		ConfigHolder.config.worldHeight = h;
 	}
 	/**
 	 * @return the unitWidth
@@ -82,11 +87,45 @@ public class Config {
 	public static int getSleeptime() {
 		return ConfigHolder.config.sleeptime;
 	}
+	public static void setSleeptime(int sleeptime) {
+		ConfigHolder.config.sleeptime = sleeptime;
+	}
+	
 	
 	public static int getMaskSize() {
 		return ConfigHolder.config.maskSize;
 	}
+	public static void setMaskSize(int maskSize) {
+		ConfigHolder.config.maskSize = maskSize;
+	}
+	
 	public static int getAggressiveness() {
 		return ConfigHolder.config.aiAggressiveness;
+	}
+	public static void setAggressiveness(int a) {
+		ConfigHolder.config.aiAggressiveness = a;
+	}
+	public static void saveConfig(String width, String height, int masksize, int sleeptime, int aggressiveness) {	
+		try {
+			String output = width + "¤";
+			output += height + "¤";
+			output += masksize + "¤";
+			output += sleeptime + "¤";
+			output += aggressiveness;	
+			FileWriter file = new FileWriter("config.ini");
+			file.write(output);
+			file.close();
+			System.out.println(output);
+		} catch (IOException e) {
+			System.err.println("Error writing config file!");
+		}
+	}
+	
+	public static void resetConfig() {
+		ConfigHolder.config.worldWidth = 1500;
+		ConfigHolder.config.worldHeight = 1500;
+		ConfigHolder.config.sleeptime = 50;
+		ConfigHolder.config.maskSize = 15;
+		ConfigHolder.config.aiAggressiveness = 0;
 	}
 }
