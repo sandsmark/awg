@@ -20,6 +20,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	JPanel outer, menu;
 	Canvas canvas;
 	JButton close;
+	JButton config;
 	JLabel curUnitText; // Obsolete
 	JLabel curUnitIcon; // Obsolete
 	
@@ -28,7 +29,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	JButton upgradeBuilding, worker, fighter, healer;
 	
-	
+	ConfigDialog configDialog;
 	
 	GraphicsThread gThread;
 	SelectThread sThread;
@@ -56,21 +57,21 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		uPan.setMaximumSize(new Dimension(300,200));
 		menu.add(uPan);
 		
+		configDialog = new ConfigDialog(frame);
+		
 		setupBuildingGUI();
-		
-		
-		
-		curUnitIcon = new JLabel();
-		//menu.add(curUnitIcon);
 
-		curUnitText = new JLabel("[]");
-		//menu.add(curUnitText);
-
+		config = new JButton("Configure...");
+		config.addActionListener(this);
+		config.setMaximumSize(new Dimension(500,50));
+		menu.add(config);
+		
+		
 		close = new JButton("Close");
 		close.addActionListener(this);
+		close.setMaximumSize(new Dimension(500,50));
 		menu.add(close);
 		
-
 		menu.setPreferredSize(new Dimension(150,600));
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
@@ -140,15 +141,17 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			 * Upgrades units if the upgradeBuilding-button is pushed
 			 * as well as the unit sprite. Need to add costs for upgrades, but at a later point.
 			 */
-		}else if(e.getSource() == upgradeBuilding){
+		} else if(e.getSource() == upgradeBuilding){
 			GameState.getHuman().getMainBuilding().upgradeBuilding();
 			GameState.getUnits().upgradeUnits(GameState.getHuman());
-		}else if(e.getSource() == worker){
+		} else if(e.getSource() == worker){
 			GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
-		}else if(e.getSource() == fighter){
+		} else if(e.getSource() == fighter){
 			GameState.getUnits().addUnit(new Fighter(GameState.getHuman()));
-		}else if(e.getSource() == healer){
+		} else if(e.getSource() == healer){
 			GameState.getUnits().addUnit(new Healer(GameState.getHuman()));
+		} else if (e.getSource() == config) {
+			configDialog.setVisible(true);
 		}
 	}
 

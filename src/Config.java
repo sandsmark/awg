@@ -9,7 +9,6 @@ public class Config {
 	private int unitHeight = 25;
 	private int sleeptime = 50; // in ms.
 
-	
 	private static class ConfigHolder {
 		private final static Config config = new Config();
 	}

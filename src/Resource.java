@@ -26,7 +26,7 @@ public class Resource {
 	public int harvest(int max) {
 		if (resourcesLeft == 0)
 			return 0;
-		int harvested = (int) (Math.random() * max) + 1;
+		int harvested = (int) (Math.random() * max);
 		if (harvested > resourcesLeft) {
 			harvested = harvested % resourcesLeft;
 			resourcesLeft = 0;
