@@ -3,8 +3,8 @@
 
 = Taking Awesome to a Whole new Level =
 
-`Schøhesten {sic} Awesome har hørt at du liker mudkips, og det liker han dårlig. Han liker skilpadder. 
-Så etter langvarig utredning, har han kommet frem til at det eneste han kan gjøre, er å gå til krig mot deg.`
+ Schøhesten {sic} Awesome har hørt at du liker mudkips, og det liker han dårlig. Han liker skilpadder. 
+ Så etter langvarig utredning, har han kommet frem til at det eneste han kan gjøre, er å gå til krig mot deg.
 
 == Ide ==
 Vi hadde lyst til å lage et RTS, dvs. et strategispill hvor handlinger foregår i sanntid. Vi fokuserte først og fremst på å få til noe som var spillbart og som vi kunne ha det gøy med selv.
