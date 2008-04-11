@@ -43,6 +43,7 @@ public class Map {
 		}
 
 		loadWater("/water.map");
+
 		// Add resources to the map
 		resources = new Resource[(int) Math.random() * 5 + 5];
 		int x,y;
@@ -121,10 +122,11 @@ public class Map {
 	public void loadWater(String filename) {
 		try {
 			BufferedReader file = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filename)));
-			
 			String line;
 			String [] coords; 
 			Polygon poly;
+			Shape e = new Ellipse2D.Float(GameState.getConfig().getWorldWidth()/2,GameState.getConfig().getWorldHeight()/2,GameState.getConfig().getWorldWidth()/4,GameState.getConfig().getWorldHeight()/4);
+			waters.add(e);
 			while ((line = file.readLine()) != null) {
 				coords = line.split(" ");
 				poly = new Polygon();

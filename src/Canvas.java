@@ -316,7 +316,7 @@ public class Canvas extends JPanel implements Moveable {
 	 * @return 
 	 */
 	private boolean isInView(int x, int y){
-		return (x >= offsetX && y >= offsetY && x <= offsetX + width && y <= offsetY + height);
+		return (x >= offsetX - 25 && y >= offsetY - 25&& x <= offsetX + width && y <= offsetY + height);
 	}
 	
 	/**

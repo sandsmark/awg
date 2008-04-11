@@ -3,7 +3,7 @@ public class Config {
 	/*
 	 * 2000x2000 breaks the ai, for unknown reasons
 	 */
-	private int worldWidth = 3000; // x pixels wide
+	private static int worldWidth = 3000; // x pixels wide
 	private int worldHeight = 3000; // y pixels high
 	private int unitWidth = 25; //Ditto
 	private int unitHeight = 25;

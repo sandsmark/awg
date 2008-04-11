@@ -21,7 +21,7 @@ public class Building {
 		try {
 			if(player.isAI()){
 				setSprite(ImageIO.read(getClass().getResource("/buildings/start2.png")));
-				position = new Point(900,900); //Sette faste plasser bygningene starter?
+				position = new Point(GameState.getConfig().getWorldWidth() - 100, GameState.getConfig().getUnitHeight() - 100);
 			}
 			else{
 				setSprite(ImageIO.read(getClass().getResource("/buildings/start1.gif")));
@@ -31,10 +31,6 @@ public class Building {
 			e.printStackTrace();
 			return;
 		}
-		
-		
-		
-		
 	}
 	
 	public Point getPosition() {
