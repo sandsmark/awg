@@ -25,7 +25,7 @@
 
 package com.jcraft.jorbis;
 
-import com.jcraft.jogg.*;
+import com.jcraft.jogg.Buffer;
 
 abstract class FuncResidue{
   public static FuncResidue[] residue_P={new Residue0(),

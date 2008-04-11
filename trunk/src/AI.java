@@ -1,5 +1,4 @@
 import java.awt.Point;
-import java.awt.Shape;
 /**
  * 
  * @author Stian Veum M�llersen
