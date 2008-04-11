@@ -30,7 +30,9 @@ public class Fighter extends Unit {
 //			System.out.println("Inside targetunit ==null");
 			for (int i = 0; i < GameState.getUnits().count(); i++) {
 				unit = GameState.getUnits().getUnit(i);
+//				System.out.println(unit);
 				if(unit.getPlayer() != this.getPlayer() && position.distance(unit.position) < 100){
+//					System.out.println("Sat target" + unit);
 					setTargetUnit(unit);
 					goTo(unit.position);
 				}
