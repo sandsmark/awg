@@ -122,7 +122,7 @@ public class Canvas extends JPanel implements Moveable {
 	 * This method updates the internal map representation/cache, which
 	 * contains the two lowest layers.
 	 */
-	public void updateInternal() {
+	public synchronized void updateInternal() {
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
 		try {
