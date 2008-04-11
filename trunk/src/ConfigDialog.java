@@ -56,6 +56,7 @@ public class ConfigDialog extends javax.swing.JDialog implements ActionListener 
 	}
 
 	private void initComponents() {
+		this.setAlwaysOnTop(true);
 		t_low = new JLabel();
 		t_high = new JLabel();
 		t_configuration = new JLabel();
