@@ -1,4 +1,7 @@
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -86,12 +89,17 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		frame.setContentPane(outer);
 
 		frame.pack();
-//		frame.setAlwaysOnTop(true);
-//		frame.setUndecorated(false);
-//		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
-		
 		frame.setTitle("Awesome WarGame is Awesome!");
+		GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		if (!graphics.isFullScreenSupported()){
+			System.err.println("Could not acquire fullscreen mode.");
+			frame.setAlwaysOnTop(true);
+			frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+			frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
+		} else {
+			graphics.setFullScreenWindow(frame);
+		}
+		
 
 		canvas.repaint();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
