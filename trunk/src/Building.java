@@ -21,7 +21,7 @@ public class Building {
 		try {
 			if(player.isAI()){
 				setSprite(ImageIO.read(getClass().getResource("/buildings/start2.png")));
-				position = new Point(Config.getWorldWidth() - 100, Config.getUnitHeight() - 100);
+				position = new Point(Config.getWorldWidth() - 100, Config.getWorldHeight() - 100);
 			}
 			else{
 				setSprite(ImageIO.read(getClass().getResource("/buildings/start1.gif")));
