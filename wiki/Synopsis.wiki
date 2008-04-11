@@ -3,7 +3,7 @@
 
 = Taking Awesome to a Whole new Level =
 
-`Schøhesten [sic] Awesome har hørt at du liker mudkips, og det liker han dårlig. Han liker skilpadder. 
+`Schøhesten {sic} Awesome har hørt at du liker mudkips, og det liker han dårlig. Han liker skilpadder. 
 Så etter langvarig utredning, har han kommet frem til at det eneste han kan gjøre, er å gå til krig mot deg.`
 
 == Ide ==
