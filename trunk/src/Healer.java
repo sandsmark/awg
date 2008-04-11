@@ -11,6 +11,7 @@ public class Healer extends Unit {
 		setCurrentHealth(getMaxHealth());
 		setCurrentAction(0);
 		setDamage(3);
+		setPlayer(player);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
 		if (player.isAI()) sprite = new Sprite("healer", 1);
 		else sprite = new Sprite(type, 0);
