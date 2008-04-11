@@ -44,7 +44,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		SplashScreen splash = new SplashScreen(frame);
 		
 		GameState.setMainWindow(this);
-		
+		GameState.setMap(new Map(GameState.getConfig().getWorldWidth(), GameState.getConfig().getWorldHeight()));
 		map = GameState.getMap();
 		outer = new JPanel();
 		canvas = new Canvas();

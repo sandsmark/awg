@@ -2,7 +2,7 @@
 public class GameState {
 
 	private Config config = new Config();
-	private Map map = new Map(config.getWorldWidth(), config.getWorldHeight());
+	private Map map;
 	private Units units = new Units();
 	private MainWindow mainWindow;
 	private Player human = new Player(false); // is not AI
@@ -28,6 +28,9 @@ public class GameState {
 		return GameStateHolder.state.map;
 	}
 
+	public static void setMap(Map map) {
+		GameStateHolder.state.map = map;
+	}
 	
 	public static Config getConfig() {
 		return GameStateHolder.state.config;
