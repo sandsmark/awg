@@ -41,7 +41,7 @@ public class UnitPanel extends JPanel{
 		stats.add(new JLabel(new ImageIcon("resources/armor.png")));
 		stats.add(new JLabel(""+u.getDamage()));
 		stats.setVisible(true);
-		}
+	}
 }
 	
 	

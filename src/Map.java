@@ -17,7 +17,8 @@ public class Map {
 	public int[][] pathMap;
 	public int width;
 	public int height;
-	public BufferedImage[] sprite;
+	private BufferedImage tree;
+	private BufferedImage grass;
 	public BufferedImage baseMap;
 	Resource[] resources;
 	private ArrayList<Shape> waters = new ArrayList<Shape>();
@@ -26,12 +27,9 @@ public class Map {
 		height = Config.getWorldHeight();
 		width = Config.getWorldWidth();
 
-		sprite = new BufferedImage[4];
 		try {
-			sprite[0] = ImageIO.read(getClass().getResource("/grass.png"));
-			sprite[1] = ImageIO.read(getClass().getResource("/water.png"));
-			sprite[2] = ImageIO.read(getClass().getResource("/trees.png"));
-			sprite[3] = ImageIO.read(getClass().getResource("/tree.png"));
+			grass = ImageIO.read(getClass().getResource("/grass.png"));
+			tree = ImageIO.read(getClass().getResource("/tree.png"));
 		} catch (IOException e) {
 			System.err.println("Could not load sprite!");
 			System.exit(1);
@@ -52,15 +50,18 @@ public class Map {
 		baseMap = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D bg2 = baseMap.createGraphics();
-
+		
+		
+		
+		
 		bg2.setColor(Color.green);
 		bg2.fill(new Rectangle(0, 0, width, height));
 
 		//Draw grass, with trees here and there 
 		for (x=0; x<width / 30; x++) {
 			for (y=0; y<height / 30; y++) {
-				if (Math.random() > 0.01) bg2.drawImage(sprite[0], null, x*30, y*30);
-				else bg2.drawImage(sprite[3], null, x*30, y*30);
+				if (Math.random() > 0.01) bg2.drawImage(grass, null, x*30, y*30);
+				else bg2.drawImage(tree, null, x*30, y*30);
 			}
 		}
 		bg2.setColor(Color.blue);

@@ -15,7 +15,7 @@ public class ResourcePanel extends JPanel{
 	public ResourcePanel(){
 		setLayout(new GridLayout(1,2));
 		gold = new JLabel(""+GameState.getHuman().getResources());
-		add(new JLabel(new ImageIcon("resources/gull.png")));
+		add(new JLabel(new ImageIcon("resources/gold.png")));
 		add(gold);
 		//this.setBackground(Color.RED);
 		this.setMaximumSize(new Dimension(250,30));
