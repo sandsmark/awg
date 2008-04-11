@@ -36,7 +36,6 @@ public class Units {
 	
 	public synchronized void selectUnit(Unit u) {
 		if (selectedUnits.contains(u)) return;
-		System.out.println(u);
 		if (u.getPlayer().isAI()) return;
 		selectedUnits.add(u);
 	}

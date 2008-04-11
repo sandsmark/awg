@@ -56,7 +56,11 @@ public class Intro extends JWindow implements MouseListener {
 		} catch (Exception e) { e.printStackTrace(); }
 	}
 
-	public void mouseClicked(MouseEvent e) {	}
+	public void mouseClicked(MouseEvent e) {
+		lock.lock();
+		clicked.signal();
+		lock.unlock();
+	}
 
 	public void mouseEntered(MouseEvent e) { }
 

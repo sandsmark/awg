@@ -15,35 +15,43 @@ public class Config {
 	private int unitHeight = 25;
 	private int sleeptime = 50; // in ms.
 	private int maskSize = 15;
-	private int aiAggressiveness = 0; // How aggressive should the AI be?
+	private boolean intro = true;
+	private boolean music = true;
 	
 	private Config() {
 		try {
-			int worldWidth;
-			int worldHeight;
-			int sleeptime;
-			int maskSize;
-			int aiAggressiveness;
+			int worldWidth, worldHeight, maskSize;
+			boolean music, intro;
 			
 			BufferedReader file = new BufferedReader(new FileReader("config.ini"));
-			String line;
-			line = file.readLine();
+			String line = file.readLine();
+			
 			String[] values = line.split("¤");
+
 			worldWidth = Integer.parseInt(values[0]);
 			if (worldWidth < 500 || worldWidth > 5000) throw new Exception();
+			
 			worldHeight = Integer.parseInt(values[1]);
 			if (worldHeight < 500 || worldHeight > 5000) throw new Exception();
-			sleeptime = Integer.parseInt(values[2]);
-			if (sleeptime < 10 || sleeptime > 5000) throw new Exception();
-			maskSize = Integer.parseInt(values[3]);
+			
+			maskSize = Integer.parseInt(values[2]);
 			if (maskSize < 1 || maskSize > 50) throw new Exception();
-			aiAggressiveness = Integer.parseInt(values[4]);
-			if (aiAggressiveness < 1 || aiAggressiveness > 10) throw new Exception();
+			
+			if (values[3].equals("true")) music = true;
+			else if (values[3].equals("false")) music = false;
+			else throw new Exception();
+
+
+			if (values[4].equals("true")) intro = true;
+			else if (values[4].equals("false")) intro = false;
+			else throw new Exception();
+			
 			this.worldWidth = worldWidth;
 			this.worldHeight = worldHeight;
-			this.sleeptime = sleeptime;
 			this.maskSize = maskSize;
-			this.aiAggressiveness = aiAggressiveness;
+			this.music = music;
+			this.intro = intro;
+
 			
 		} catch (Exception e) {
 			System.err.println("Could not load config.");
@@ -103,23 +111,18 @@ public class Config {
 		ConfigHolder.config.maskSize = maskSize;
 	}
 	
-	public static int getAggressiveness() {
-		return ConfigHolder.config.aiAggressiveness;
-	}
-	public static void setAggressiveness(int a) {
-		ConfigHolder.config.aiAggressiveness = a;
-	}
-	public static void saveConfig(String width, String height, int masksize, int sleeptime, int aggressiveness) {	
-		try {
-			String output = width + "¤";
-			output += height + "¤";
-			output += masksize + "¤";
-			output += sleeptime + "¤";
-			output += aggressiveness;	
-			FileWriter file = new FileWriter("config.ini");
-			file.write(output);
-			file.close();
-			System.out.println(output);
+	public static void saveConfig(String width, String height, int maskSize,
+			boolean music, boolean intro) {
+			try {
+				String output = width + "¤";
+				output += height + "¤";
+				output += maskSize + "¤";
+				output += music + "¤";
+				output += intro;	
+				FileWriter file = new FileWriter("config.ini");
+				file.write(output);
+				file.close();
+				System.out.println(output);
 		} catch (IOException e) {
 			System.err.println("Error writing config file!");
 		}
@@ -128,8 +131,16 @@ public class Config {
 	public static void resetConfig() {
 		ConfigHolder.config.worldWidth = 1500;
 		ConfigHolder.config.worldHeight = 1500;
-		ConfigHolder.config.sleeptime = 50;
 		ConfigHolder.config.maskSize = 15;
-		ConfigHolder.config.aiAggressiveness = 0;
+		ConfigHolder.config.intro = true;
+		ConfigHolder.config.music = true;
+	}
+	
+	public static boolean getIntro() {
+		return ConfigHolder.config.intro;
+	}
+
+	public static boolean getMusic() {
+		return ConfigHolder.config.music;
 	}
 }
