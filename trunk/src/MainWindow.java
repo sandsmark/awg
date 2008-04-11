@@ -127,11 +127,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		
 
 		// Add testing unit
-//		GameState.getUnits().addUnit(new Worker(GameState.getComputer())); AI gj�r dette selv
 		GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
-//		GameState.getUnits().addUnit(new Fighter(GameState.getComputer())); AI gj�r dette selv
-		
-		canvas.updateInternal(); // Should be called whenever the map updates
+	
 		splash.destroy();
 		frame.setVisible(true);
 	}
