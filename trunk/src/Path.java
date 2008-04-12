@@ -56,7 +56,6 @@ public class Path implements Comparable<Path> {
 		length = 0;
 	}
 
-	@Override
 	public int compareTo(Path other) {
 		if (other.getWeight() > this.getWeight()) return -1;
 		else if (other.getWeight() < this.getWeight()) return 1;
@@ -72,7 +71,7 @@ public class Path implements Comparable<Path> {
 	}
 	
 	public Point getNext() {
-		if (!path.isEmpty()) return path.pop();
+		if (!path.isEmpty()) return path.remove();
 		return null;
 	}
 	

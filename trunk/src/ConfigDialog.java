@@ -1,19 +1,15 @@
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
