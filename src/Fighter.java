@@ -44,7 +44,13 @@ public class Fighter extends Unit {
 			}
 		}else if(position.distance(getTargetUnit().position)<35){
 			dealDamage();
-		}else if(targetUnit!= null)goTo(getTargetUnit().getPosition());
+		}else if(targetUnit!= null && position.distance(targetUnit.position)<200){
+			setTargetUnit(null);
+		}
+		else if	(targetUnit!= null ){
+			goTo(getTargetUnit().getPosition());
+		}
+			
 		super.move();
 	}
 }
