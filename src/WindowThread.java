@@ -22,7 +22,7 @@ public class WindowThread extends Thread {
 					GameState.getMainWindow().resPan.update();
 					units.lock.unlock();
 				}
-				Thread.sleep(250);
+				Thread.sleep(500);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

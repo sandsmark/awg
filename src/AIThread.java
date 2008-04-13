@@ -23,7 +23,7 @@ public class AIThread extends Thread {
 			while (running) {
 				
 				ai.build();
-//				if(ai.willDefend()) ai.defend();
+				if(ai.willDefend()) ai.defend();
 		 		sleep(2000);
 			}
 		} catch (InterruptedException e) {
