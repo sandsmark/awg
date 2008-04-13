@@ -79,7 +79,7 @@ public class Canvas extends JPanel implements Moveable {
 	 * actual screen. 
 	 */
 	@Override
-	public void paintComponent(Graphics g) {
+	public synchronized void paintComponent(Graphics g) {
 		try {
 			if (!lock.tryLock(2000, TimeUnit.MILLISECONDS)){
 				System.err.println("ERROR: Could not get lock on canvas in a timely manner.");
