@@ -34,9 +34,9 @@ public class Fighter extends Unit {
 				GameState.getHuman().getMainBuilding().takeDamage(this.getDamage());
 			}
 		}else if(position.distance(getTargetUnit().position)<35){
-			dealDamage();
-//		}else if(targetUnit!= null && position.distance(targetUnit.position)>200){
-//			setTargetUnit(null);
+			this.dealDamage();
+		}else if(targetUnit!= null && position.distance(targetUnit.position)>35){
+			this.goTo(targetUnit.position);
 		} else if	(targetUnit!= null ){
 			goTo(getTargetUnit().getPosition());
 		}

@@ -12,6 +12,7 @@ public class Sprite {
 	private Direction direction = Direction.FORWARD;
 	private int cycle = 0;
 	private boolean isMoving = false;
+	private long isHit = -1;
 	
 	/**
 	 * Faction this sprite belongs to, either 0 or 1.
@@ -23,9 +24,10 @@ public class Sprite {
 	 *  sprite[0-1] = faction 0, 1
 	 *  sprite[][0-3], direction forward,backward,right,left
 	 *  sprite[][][0-1], part of walk cycle
+	 *  sprite[][][][0-1], current action (normal, being attacked or attacking/harvesting/healing)
 	 */
-	private BufferedImage[][][] sprite = new BufferedImage[2][4][2];
-
+	private BufferedImage[][][][] sprite = new BufferedImage[2][4][2][2];
+	
 	public Sprite (String basename, int faction) { // Basename contains either "fighter", "healer" or "worker"
 		try {
 			for (int f=0; f<2; f++){
@@ -33,7 +35,13 @@ public class Sprite {
 					for (int c=0; c<2; c++){
 						String filename = "/" 
 							+ basename + "/" + f + "_" + directionNames[dir] + c + ".png";
-						sprite[f][dir][c] = ImageIO.read(getClass().getResource(filename)); 
+						sprite[f][dir][c][0] = ImageIO.read(getClass().getResource(filename));
+						sprite[f][dir][c][1] = new BufferedImage(sprite[f][dir][c][0].getWidth(), sprite[f][dir][c][0].getHeight(), BufferedImage.TYPE_INT_ARGB);
+						for (int x=0; x<sprite[f][dir][c][0].getWidth(); x++) {
+							for (int y=0; y<sprite[f][dir][c][0].getHeight(); y++){
+								sprite[f][dir][c][1].setRGB(x, y, sprite[f][dir][c][0].getRGB(x, y) & 0xffff00ff);
+							}
+						}
 					}
 				}
 			}
@@ -46,9 +54,10 @@ public class Sprite {
 	}
 	
 	public BufferedImage pop() {
-		if (!isMoving) return sprite[faction][direction.ordinal()][1];
-		cycle = (cycle+1) % 2;
-		return sprite[faction][direction.ordinal()][cycle];
+		if (!isMoving) cycle = 1;
+		else cycle = (cycle+1) % 2;
+		if (System.currentTimeMillis() - isHit > 1500) return sprite[faction][direction.ordinal()][cycle][0];
+		else return sprite[faction][direction.ordinal()][cycle][1];
 	}
 
 	public void setDirection(Direction direction) {
@@ -56,10 +65,14 @@ public class Sprite {
 	}
 
 	public BufferedImage get() {
-		return sprite[faction][direction.ordinal()][cycle];
+		return sprite[faction][direction.ordinal()][cycle][0];
 	}
 	
 	public void setMoving(boolean moving) {
 		this.isMoving = moving;
+	}
+	
+	public void hit() {
+		isHit = System.currentTimeMillis();
 	}
 }
