@@ -19,11 +19,13 @@ public class AIThread extends Thread {
 
 	@Override
 	public void run() {
+		Unit offender;
 		try {
 			while (running) {
-				
+				offender = ai.getOffender();
+				if (offender != null) ai.defendAgainst(offender);
 				ai.build();
-				if(ai.willDefend()) ai.defend();
+				
 		 		sleep(2000);
 			}
 		} catch (InterruptedException e) {

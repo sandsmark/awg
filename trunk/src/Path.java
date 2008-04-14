@@ -31,7 +31,7 @@ public class Path implements Comparable<Path> {
 	 * These variables are used for finding a path
 	 */
 	double left; // How much distance to target
-	double length; // How long this path is
+	int length; // How long this path is
 
 	/**
 	 * Used by the findPath-routine.
@@ -56,6 +56,10 @@ public class Path implements Comparable<Path> {
 		length = 0;
 	}
 
+	public int getLength() {
+		return length;
+	}
+	
 	public int compareTo(Path other) {
 		if (other.getWeight() > this.getWeight()) return -1;
 		else if (other.getWeight() < this.getWeight()) return 1;
@@ -123,7 +127,8 @@ public class Path implements Comparable<Path> {
 				for (int dy = -1; dy <= 1; dy ++)
 					if (!(dx == 0 && dy == 0)) 
 						if (m.canMove((point.x + dx) * factor, (point.y + dy) * factor))
-							queue.add(new Path(path, map[point.x + dx][point.y + dy], target));	
+							if (path.getLength() < Config.getWorldHeight() + Config.getWorldWidth())
+								queue.add(new Path(path, map[point.x + dx][point.y + dy], target));	
 		}
 		return null;
 	}
