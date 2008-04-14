@@ -33,8 +33,8 @@ public class AI {
 		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
-			if(unit.getPlayer()==GameState.getHuman() && mainb.distance(unit.getPosition())<defParamRad ) {
-				System.out.println("Derkaderka!");
+			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
+				System.out.println("Thou shalt defend!");
 				return true;
 			}
 		}
@@ -42,25 +42,27 @@ public class AI {
 		return false;
 	}
 	
-	public void defend() { //forsvarer seg
+	public Unit getOffender() {
 		double defParamRad = oppforsel.getBaseSenseRange();
+		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
-		Unit target = null;
-		
-		for (Unit unit: GameState.getUnits().getUnits()) { // hente humanplayer innenfor baseSenseRange
-				if(unit.getPlayer().equals(GameState.getHuman())) {
-					if(mainb.distance(unit.getPosition())<defParamRad) {
-						target = unit;
-						break;
-					}	
-				}
+		for(Unit unit: GameState.getUnits().getUnits()) {
+			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
+				System.out.println("Thou shalt defend!");
+				return unit;
+			}
 		}
+		System.out.println("Harakiri");
+		return null;
+	}
+	
+	public void defendAgainst(Unit offender) { //forsvarer seg		
 		for (Unit unit : GameState.getUnits().getUnits()) { //henter AI
 			if(unit.getPlayer().isAI()) {
 				if(unit instanceof Fighter || unit instanceof Healer) {
-					if (!target.equals(unit.getTargetUnit())) {
-						unit.setTargetUnit(target);
-						unit.goTo(target.getPosition());
+					if (!offender.equals(unit.getTargetUnit())) {
+						unit.setTargetUnit(offender);
+						unit.goTo(offender.getPosition());
 					}
 				}
 			}

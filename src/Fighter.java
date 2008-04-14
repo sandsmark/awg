@@ -22,19 +22,10 @@ public class Fighter extends Unit {
 	}
 	
 	public void move(){
-		Unit unit;
-		if(this.getPlayer() == GameState.getHuman()){
-//			System.out.println(targetUnit);
-		}
 		if(targetUnit == null){
-//			System.out.println("Inside targetunit ==null");
-			for (int i = 0; i < GameState.getUnits().count(); i++) {
-				unit = GameState.getUnits().getUnit(i);
-//				System.out.println(unit);
+			for (Unit unit : GameState.getUnits().getUnits()) {
 				if(unit.getPlayer() != this.getPlayer() && position.distance(unit.position) < 100){
-//					System.out.println("Sat target" + unit);
 					setTargetUnit(unit);
-					goTo(unit.position);
 				}
 			}
 			if(targetUnit == null && position.distance(GameState.getComputer().getMainBuilding().getPosition())<10 && getPlayer() != GameState.getComputer()){
@@ -44,10 +35,9 @@ public class Fighter extends Unit {
 			}
 		}else if(position.distance(getTargetUnit().position)<35){
 			dealDamage();
-		}else if(targetUnit!= null && position.distance(targetUnit.position)<200){
-			setTargetUnit(null);
-		}
-		else if	(targetUnit!= null ){
+//		}else if(targetUnit!= null && position.distance(targetUnit.position)>200){
+//			setTargetUnit(null);
+		} else if	(targetUnit!= null ){
 			goTo(getTargetUnit().getPosition());
 		}
 			
