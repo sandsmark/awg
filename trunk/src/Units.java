@@ -20,6 +20,7 @@ public class Units {
 	public void removeUnit(Unit unit) {
 		if (!units.contains(unit))	return;
 		units.remove(unit);
+		this.deselectUnit(unit);
 	}
 
 	public Unit getUnit(int i) {

@@ -145,9 +145,14 @@ public class Unit {
 		int newX = position.x + Math.round(Math.round(Math.cos(orientation) * this.speed));
 		int newY = position.y + Math.round(Math.round(Math.sin(orientation) * this.speed));
 		
+		if (newX < 0 || newX > Config.getWorldWidth() || newY < 0 || newY > Config.getWorldHeight())
+			this.goTo(target);
+		
 		this.setPosition(new Point(newX, newY));
 		GameState.getMainWindow().canvas.setDirty(newX, newY);
 		
+		
+		if (this.CurrentHealth < 0) GameState.getUnits().removeUnit(this);
 		return;
 	}
 	
@@ -160,7 +165,8 @@ public class Unit {
 	 */
 	
 	public void dealDamage(){
-		targetUnit.CurrentHealth -= damage;
+		targetUnit.hit(damage);
+		targetUnit.setTargetUnit(this); // Physician, defend thyself.
 		if(targetUnit.CurrentHealth<=0){
 			GameState.getUnits().removeUnit(targetUnit);
 			this.targetUnit = null;
@@ -176,5 +182,10 @@ public class Unit {
 	}
 	
 	public void setTargetResource(Resource r) {}
+	
+	public void hit(int damage) {
+		this.CurrentHealth -= damage;
+		this.sprite.hit();
+	}
 }
 
