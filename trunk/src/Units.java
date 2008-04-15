@@ -1,11 +1,14 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 
+
 public class Units {
-	ArrayList<Unit> units = new ArrayList<Unit>();
-	ArrayList<Unit> selectedUnits = new ArrayList<Unit>();
+	List<Unit> units = Collections.synchronizedList(new ArrayList<Unit>());
+	List<Unit> selectedUnits = Collections.synchronizedList(new ArrayList<Unit>());
 	public ReentrantLock lock = new ReentrantLock();
 	
 	public Units () {
@@ -27,7 +30,7 @@ public class Units {
 		return units.get(i);
 	}
 	
-	public ArrayList<Unit> getUnits() {
+	public synchronized List<Unit> getUnits() {
 		return units;
 	}
 
@@ -91,7 +94,7 @@ public class Units {
 			unit.goTo(new Point(tarX, tarY));
 	}
 
-	public ArrayList<Unit> getSelectedUnits() {
+	public List<Unit> getSelectedUnits() {
 		return selectedUnits;
 	}
 	
@@ -121,11 +124,11 @@ public class Units {
 					worker.setMaxHealth(worker.getMaxHealth() * 2);
 					worker.setDamage(worker.getDamage() *2);
 					worker.setHarvestMax(worker.getHarvestMax()*2);
-				}else if(unit instanceof Fighter){
+				} else if(unit instanceof Fighter) {
 					Fighter fighter = (Fighter)unit;
 					fighter.setDamage(fighter.getDamage() * 2);
 					fighter.setMaxHealth(fighter.getMaxHealth() *2);
-				}else if(unit instanceof Healer){
+				} else if(unit instanceof Healer) {
 					Healer healer = (Healer)unit;
 					healer.setMana(healer.getMana() * 2);
 					healer.setMaxHealth(healer.getMaxHealth() *2);

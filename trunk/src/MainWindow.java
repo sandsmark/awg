@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -16,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.text.BadLocationException;
 
 public class MainWindow implements ActionListener, MouseMotionListener,
 		MouseListener {
@@ -24,8 +27,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	Canvas canvas;
 	JButton close;
 	JButton config;
-	JLabel curUnitText; // Obsolete
-	JLabel curUnitIcon; // Obsolete
+	JTextArea console; 
 	
 	ResourcePanel resPan;
 	UnitPanel uPan;
@@ -82,13 +84,19 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
 
+		
 		canvas.addMouseMotionListener(this);
 		canvas.addMouseListener(this);
 
 		outer.add(canvas);
 		outer.add(menu);
 
-
+		console = new JTextArea();
+		console.setMaximumSize(new Dimension(150, 200));
+		console.setEditable(false);
+		console.setBackground(Color.GRAY);
+		menu.add(console);
+		
 		frame.setContentPane(outer);
 
 		frame.pack();
@@ -247,10 +255,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		return canvas;
 	}
 	
-	public void setMenu(JPanel menu){
-		this.menu = menu;
-	}
-	
 	private void setupBuildingGUI(){
 		upgradeBuilding = new JButton("Upgrade");
 		worker = new JButton("Worker");
@@ -278,4 +282,13 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.add(fighter);
 		menu.add(healer);
 	}
+	
+	public void writeConsole(String string) {
+		try {
+			console.setText(Math.round(GameState.getTime()/1000) + "::" + string + "\n" + console.getText(0, 50));
+		} catch (BadLocationException e) {	}
+		console.setColumns(5);
+		console.setRows(5);
+	}
+	
 }
