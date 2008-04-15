@@ -1,5 +1,7 @@
 import java.awt.Point;
 
+import javax.swing.JDialog;
+
 
 public class Fighter extends Unit {
 	
@@ -33,12 +35,13 @@ public class Fighter extends Unit {
 			}else if(targetUnit == null && position.distance(GameState.getHuman().getMainBuilding().getPosition())<10 && getPlayer() != GameState.getHuman()){
 				GameState.getHuman().getMainBuilding().takeDamage(this.getDamage());
 			}
-		}else if(position.distance(getTargetUnit().position)<35){
+		} else if (targetUnit.getCurrentHealth() <= 0){
+			targetUnit = null;
+			return;
+		} else if(position.distance(getTargetUnit().position)<=35){
 			this.dealDamage();
-		}else if(targetUnit!= null && position.distance(targetUnit.position)>35){
+		} else if(targetUnit!= null && position.distance(targetUnit.position)>35){
 			this.goTo(targetUnit.position);
-		} else if	(targetUnit!= null ){
-			goTo(getTargetUnit().getPosition());
 		}
 			
 		super.move();

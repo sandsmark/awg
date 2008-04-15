@@ -3,7 +3,7 @@ import java.awt.Point;
 public class Unit {
 	protected Point position;
 	protected int maxHealth; // The unit's max health
-	protected int CurrentHealth; // The unit's current HP
+	protected int currentHealth; // The unit's current HP
 	protected int damage; // The damage the unit deals
 	protected int range; // The unit's attack range
 	protected int currentAction; // 0=stand still, 1 = move to target, 2 = attack
@@ -40,11 +40,11 @@ public class Unit {
 	}
 
 	public int getCurrentHealth() {
-		return CurrentHealth;
+		return currentHealth;
 	}
 
 	public void setCurrentHealth(int currentHealth) {
-		CurrentHealth = currentHealth;
+		this.currentHealth = currentHealth;
 	}
 
 	public int getDamage() {
@@ -152,7 +152,7 @@ public class Unit {
 		GameState.getMainWindow().canvas.setDirty(newX, newY);
 		
 		
-		if (this.CurrentHealth < 0) GameState.getUnits().removeUnit(this);
+//		if (this.currentHealth < 0) GameState.getUnits().removeUnit(this);
 		return;
 	}
 	
@@ -167,7 +167,7 @@ public class Unit {
 	public void dealDamage(){
 		targetUnit.hit(damage);
 		targetUnit.setTargetUnit(this); // Physician, defend thyself.
-		if(targetUnit.CurrentHealth<=0){
+		if(targetUnit.currentHealth<=0){
 			GameState.getUnits().removeUnit(targetUnit);
 			this.targetUnit = null;
 		}
@@ -184,8 +184,12 @@ public class Unit {
 	public void setTargetResource(Resource r) {}
 	
 	public void hit(int damage) {
-		this.CurrentHealth -= damage;
+		this.currentHealth -= damage;
 		this.sprite.hit();
+	}
+
+	public double getCurrentHealthPercent() {
+		return currentHealth/maxHealth;
 	}
 }
 
