@@ -151,8 +151,6 @@ public class Unit {
 		this.setPosition(new Point(newX, newY));
 		GameState.getMainWindow().canvas.setDirty(newX, newY);
 		
-		
-//		if (this.currentHealth < 0) GameState.getUnits().removeUnit(this);
 		return;
 	}
 	

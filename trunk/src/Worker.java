@@ -51,7 +51,7 @@ public class Worker extends Unit {
 	public void move() {
 		Point house = getPlayer().mainHouse.getPosition();
 		if (targetResource != null) {
-			if (this.getCarrying() > 0 && house.distance(position) < 25 && delivering) {
+			if (this.getCarrying() > 0 && house.distance(position) < 55 && delivering) {
 				deliverResource();
 				this.goTo(targetResource.position);
 				delivering = false;
