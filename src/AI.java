@@ -30,29 +30,29 @@ public class AI {
 //	}
 	public boolean willDefend() { //om AI vil forsvare basen sin under angrep/range
 		double defParamRad = oppforsel.getBaseSenseRange();
-		System.out.println("to defend or not to DIEEDIEDIEDIE!");
+//		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
-				System.out.println("Thou shalt defend!");
+//				System.out.println("Thou shalt defend!");
 				return true;
 			}
 		}
-		System.out.println("Harakiri");
+//		System.out.println("Harakiri");
 		return false;
 	}
 	
 	public Unit getOffender() {
 		double defParamRad = oppforsel.getBaseSenseRange();
-		System.out.println("to defend or not to DIEEDIEDIEDIE!");
+//		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
-				System.out.println("Thou shalt defend!");
+//				System.out.println("Thou shalt defend!");
 				return unit;
 			}
 		}
-		System.out.println("Harakiri");
+//		System.out.println("Harakiri");
 		return null;
 	}
 	
@@ -67,7 +67,7 @@ public class AI {
 				}
 			}
 		}
-		System.out.println("Muhammed JIHAD");
+//		System.out.println("Muhammed JIHAD");
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
 		long timePassed = GameState.getTime();

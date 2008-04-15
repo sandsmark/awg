@@ -15,10 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.text.BadLocationException;
 
 public class MainWindow implements ActionListener, MouseMotionListener,
 		MouseListener {
@@ -27,7 +24,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	Canvas canvas;
 	JButton close;
 	JButton config;
-	JTextArea console; 
+//	JTextArea console; 
 	
 	ResourcePanel resPan;
 	UnitPanel uPan;
@@ -90,12 +87,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 		outer.add(canvas);
 		outer.add(menu);
-
-		console = new JTextArea();
-		console.setMaximumSize(new Dimension(150, 200));
-		console.setEditable(false);
-		console.setBackground(Color.GRAY);
-		menu.add(console);
 		
 		frame.setContentPane(outer);
 
@@ -267,11 +258,13 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		fighter.setMaximumSize(d);
 		healer.setMaximumSize(d);
 		
-		upgradeBuilding.setIcon(new ImageIcon("resources/buildings/end1.png"));
-		fighter.setIcon(new ImageIcon("resources/fighter/0_forward0.png"));
-		worker.setIcon(new ImageIcon("resources/worker/0_forward0.png"));
-		healer.setIcon(new ImageIcon("resources/healer/0_forward0.png"));
-		
+		try {
+			fighter.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/fighter/0_forward0.png"))));
+			worker.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/worker/0_forward0.png"))));
+			healer.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/healer/0_forward0.png"))));
+		} catch (IOException e) {
+			System.err.println("Could not load sprites for buttons.");
+		}
 		upgradeBuilding.addActionListener(GameState.getMainWindow());
 		worker.addActionListener(GameState.getMainWindow());
 		fighter.addActionListener(GameState.getMainWindow());
@@ -281,14 +274,5 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.add(worker);
 		menu.add(fighter);
 		menu.add(healer);
-	}
-	
-	public void writeConsole(String string) {
-		try {
-			console.setText(Math.round(GameState.getTime()/1000) + "::" + string + "\n" + console.getText(0, 50));
-		} catch (BadLocationException e) {	}
-		console.setColumns(5);
-		console.setRows(5);
-	}
-	
+	}	
 }
