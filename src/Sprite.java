@@ -34,8 +34,10 @@ public class Sprite {
 	
 	public Sprite (String basename, int faction) { // Basename contains either "fighter", "healer" or "worker"
 		try {
-			sprites[0] = ImageIO.read(getClass().getResource("/fighter/0.png"));
-			sprites[1] = ImageIO.read(getClass().getResource("/fighter/1.png"));
+			System.out.println("/"+basename + "/0.png");
+			sprites[0] = ImageIO.read(getClass().getResource("/"+basename + "/0.png"));
+			sprites[1] = ImageIO.read(getClass().getResource("/"+basename + "/1.png"));
+			
 			for (int f=0; f<2; f++){
 				for (int dir=0; dir<4; dir++) {
 					for (int c=0; c<2; c++){
