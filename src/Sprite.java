@@ -10,13 +10,14 @@ public class Sprite {
 	public enum Direction {
 		BACK, FORWARD, RIGHT, LEFT
 	}
+	int fps = 10;
 	
 	private Direction direction = Direction.FORWARD;
 	private int cycle = 0;
 	private boolean isMoving = false;
 	private long isHit = -1;
 	private double orientation = 0;
-	
+	private long lastShown = System.currentTimeMillis();
 	/**
 	 * Faction this sprite belongs to, either 0 or 1.
 	 */
@@ -67,7 +68,10 @@ public class Sprite {
 		Graphics2D g2 = ret.createGraphics();
 
 		if (!isMoving) cycle = 1;
-		else cycle = (cycle+1) % 2;
+		else if (System.currentTimeMillis() - this.lastShown > 1000/this.fps) {
+			this.lastShown = System.currentTimeMillis();
+			cycle = (cycle+1) % 2;
+		}
 		g2.drawImage(sprites[cycle], tx, null);
 //		if (System.currentTimeMillis() - isHit > 1500) return sprite[faction][direction.ordinal()][cycle][0];
 //		else return sprite[faction][direction.ordinal()][cycle][1];
