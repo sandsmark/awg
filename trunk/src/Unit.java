@@ -78,7 +78,7 @@ public class Unit {
 	public void setTargetUnit(Unit targetUnit) {
 		this.targetUnit = targetUnit;
 		if (targetUnit == null) return;
-		this.goTo(this.targetUnit.position);
+//		this.goTo(this.targetUnit.position);
 	}
 
 
@@ -166,10 +166,11 @@ public class Unit {
 	
 	public void dealDamage(){
 		targetUnit.hit(damage);
-		targetUnit.setTargetUnit(this); // Physician, defend thyself.
+//		targetUnit.setTargetUnit(this); // Physician, defend thyself.
 		if(targetUnit.currentHealth<=0){
 			GameState.getUnits().removeUnit(targetUnit);
 			this.targetUnit = null;
+			System.out.println("TargetUnit removed. Player is computer:" + this.getPlayer().isAI());
 		}
 	}
 
