@@ -1,3 +1,5 @@
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -13,6 +15,7 @@ public class Sprite {
 	private int cycle = 0;
 	private boolean isMoving = false;
 	private long isHit = -1;
+	private double orientation = 0;
 	
 	/**
 	 * Faction this sprite belongs to, either 0 or 1.
@@ -27,9 +30,12 @@ public class Sprite {
 	 *  sprite[][][][0-1], current action (normal, being attacked or attacking/harvesting/healing)
 	 */
 	private BufferedImage[][][][] sprite = new BufferedImage[2][4][2][2];
+	private BufferedImage[] sprites = new BufferedImage[2];
 	
 	public Sprite (String basename, int faction) { // Basename contains either "fighter", "healer" or "worker"
 		try {
+			sprites[0] = ImageIO.read(getClass().getResource("/fighter/0.png"));
+			sprites[1] = ImageIO.read(getClass().getResource("/fighter/1.png"));
 			for (int f=0; f<2; f++){
 				for (int dir=0; dir<4; dir++) {
 					for (int c=0; c<2; c++){
@@ -54,10 +60,17 @@ public class Sprite {
 	}
 	
 	public BufferedImage pop() {
+		BufferedImage ret = new BufferedImage(sprites[0].getWidth(), sprites[0].getHeight(), BufferedImage.TYPE_INT_ARGB);
+		AffineTransform tx = AffineTransform.getRotateInstance(orientation, sprites[0].getWidth()/2, sprites[0].getHeight()/2); 
+		Graphics2D g2 = ret.createGraphics();
+
 		if (!isMoving) cycle = 1;
 		else cycle = (cycle+1) % 2;
-		if (System.currentTimeMillis() - isHit > 1500) return sprite[faction][direction.ordinal()][cycle][0];
-		else return sprite[faction][direction.ordinal()][cycle][1];
+		g2.drawImage(sprites[cycle], tx, null);
+//		if (System.currentTimeMillis() - isHit > 1500) return sprite[faction][direction.ordinal()][cycle][0];
+//		else return sprite[faction][direction.ordinal()][cycle][1];
+		return ret;
+		
 	}
 
 	public void setDirection(Direction direction) {
@@ -74,5 +87,9 @@ public class Sprite {
 	
 	public void hit() {
 		isHit = System.currentTimeMillis();
+	}
+	
+	public void setOrientation(double orientation) {
+		this.orientation = orientation;
 	}
 }
