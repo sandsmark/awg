@@ -1,5 +1,7 @@
 import java.awt.GridLayout;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,8 +24,6 @@ public class UnitPanel extends JPanel{
 		stats.setLayout(new GridLayout(3,2));
 		this.add(icon);
 		this.add(stats);
-		//this.setBackground(Color.red);
-		
 	}
 	
 	public void deselect(){
@@ -34,12 +34,16 @@ public class UnitPanel extends JPanel{
 	public void select(Unit u){
 		stats.removeAll();
 		icon.setIcon(new ImageIcon(u.getSprite().get()));
-		stats.add(new JLabel(new ImageIcon("resources/hp.png")));
-		stats.add(new JLabel(""+u.getCurrentHealth()+" / "+u.getMaxHealth()));
-		stats.add(new JLabel(new ImageIcon("resources/dmg.png")));
-		stats.add(new JLabel(""+u.getDamage()));
-		stats.add(new JLabel(new ImageIcon("resources/armor.png")));
-		stats.add(new JLabel(""+u.getDamage()));
+		try {
+			stats.add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/hp.png")))));
+			stats.add(new JLabel(""+u.getCurrentHealth()+" / "+u.getMaxHealth()));
+			stats.add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/dmg.png")))));
+			stats.add(new JLabel(""+u.getDamage()));
+			stats.add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/armor.png")))));
+			stats.add(new JLabel(""+u.getDamage()));
+		} catch (IOException e) {
+			System.err.println("Couldn't load status icons");
+		}
 		stats.setVisible(true);
 	}
 }

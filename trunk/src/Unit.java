@@ -108,6 +108,7 @@ public class Unit {
 		float distX = target.x - position.x;
 		float distY = target.y - position.y;
 		orientation = Math.atan2(distY, distX);
+		sprite.setOrientation(orientation);
 		
 		orientation += Math.PI; // TODO: Ugly hack
 		if (orientation < Math.PI/4 || orientation > 7 * Math.PI / 4) sprite.setDirection(Sprite.Direction.LEFT);
@@ -115,6 +116,7 @@ public class Unit {
 		else if (orientation >  3 * Math.PI/4 && orientation < 5 * Math.PI / 4) sprite.setDirection(Sprite.Direction.RIGHT);
 		else if (orientation >  5 * Math.PI/4 && orientation < 7 * Math.PI / 4) sprite.setDirection(Sprite.Direction.FORWARD);
 		orientation -= Math.PI;
+		
 	}
 	
 	/**
