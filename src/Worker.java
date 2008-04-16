@@ -58,10 +58,12 @@ public class Worker extends Unit {
 			} else if (this.getCarrying() >= maxCarrying && !delivering) {
 				this.goTo(this.getPlayer().mainHouse.getPosition());
 				delivering = true;
+				sprite.setDoing(false);
 			} else if (this.targetResource.position.distance(this.position) < 55){
 				/**
 				 * Harvest!
 				 */
+				sprite.setDoing(true);
 				this.setCarrying(this.getCarrying() + targetResource.harvest(harvestMax));
 				if (targetResource.getRemaining() <= 0){
 					try{
@@ -70,10 +72,12 @@ public class Worker extends Unit {
 						System.err.println("Could not load empty resource sprite!");
 					}
 					targetResource = null;
+					sprite.setDoing(false);
 				}
 			}
 		} else if (this.getCarrying() != 0 && !delivering) {
 			this.goTo(this.getPlayer().mainHouse.getPosition());
+			sprite.setDoing(false);
 			delivering = true;
 		}
 		
