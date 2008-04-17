@@ -45,7 +45,11 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	MainWindow() throws IOException {
 		frame = new JFrame();
 		frame.setUndecorated(true);
-		if (Config.getIntro()) new Intro(frame);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
+		frame.setTitle("Awesome WarGame is Awesome!");
+		
+		
 		SplashScreen splash = new SplashScreen(frame);
 		
 		GameState.setMainWindow(this);
@@ -55,76 +59,66 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu = new JPanel();
 		
 		resPan = new ResourcePanel();
-		menu.add(resPan);
 		
 		uPan = new UnitPanel();
 		uPan.setMaximumSize(new Dimension(300,200));
-		menu.add(uPan);
 		
 		configDialog = new ConfigDialog(frame);
 		
 		setupBuildingGUI();
-
+		
 		config = new JButton("Configure...");
 		config.addActionListener(this);
 		config.setMaximumSize(new Dimension(500,50));
-		menu.add(config);
-		
 		
 		close = new JButton("Close");
 		close.addActionListener(this);
 		close.setMaximumSize(new Dimension(500,50));
+		
+		menu.add(resPan);
+		menu.add(uPan);
 		menu.add(close);
+		menu.add(config);
 		
 		menu.setPreferredSize(new Dimension(150,600));
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
 
-		
 		canvas.addMouseMotionListener(this);
 		canvas.addMouseListener(this);
 
 		outer.add(canvas);
 		outer.add(menu);
-		
-		frame.setContentPane(outer);
-
-		frame.pack();
-		frame.setTitle("Awesome WarGame is Awesome!");
-		frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
-		GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		
-		if (!graphics.isFullScreenSupported()){
-			System.err.println("Could not acquire fullscreen mode, falling back to maximizing.");
-			frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		} else {
-			graphics.setFullScreenWindow(frame);
-		}
-		
-
-		canvas.repaint();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Start threads
 		gThread = new GraphicsThread();
-		gThread.start();
-
 		sThread = new SelectThread();
-		sThread.start();
-
 		aiThread = new AIThread();
-		aiThread.start();
-
 		wThread = new WindowThread();
-		wThread.start();
-
 		mThread = new MovementThread();
-		mThread.start();
-		
-		if (Config.getMusic()) music = new Music("/music.ogg");
 		
 		splash.destroy();
 		frame.setVisible(true);
+		if (Config.getIntro()) {
+			frame.setVisible(true);
+			Intro intro = new Intro(frame);
+			frame.setContentPane(intro);
+			frame.pack();
+			this.fullscreen();
+			intro.play();
+		}
+		
+		frame.setContentPane(outer);
+		
+		frame.pack();
+		this.fullscreen();
+		
+		gThread.start();
+		sThread.start();
+		mThread.start();
+		wThread.start();
+		aiThread.start();		
+		if (Config.getMusic()) music = new Music("/music.ogg");
 	}
 
 	public static void main(String args[]) {
@@ -136,7 +130,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		canvas.repaint();
 		if (e.getSource() == close) {
 			exit();
 			/*
@@ -155,6 +148,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		} else if (e.getSource() == config) {
 			configDialog.setVisible(true);
 		}
+		canvas.repaint();
 	}
 
 	public void exit() {
@@ -270,5 +264,15 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.add(worker);
 		menu.add(fighter);
 		menu.add(healer);
-	}	
+	}
+	
+	private void fullscreen() {
+		GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		if (!graphics.isFullScreenSupported()){
+			System.err.println("Could not acquire fullscreen mode, falling back to maximizing.");
+			frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		} else {
+			graphics.setFullScreenWindow(frame);
+		}
+	}
 }
