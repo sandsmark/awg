@@ -55,11 +55,12 @@ public class Worker extends Unit {
 				deliverResource();
 				this.goTo(targetResource.position);
 				delivering = false;
+				sprite.setDoing(false);
 			} else if (this.getCarrying() >= maxCarrying && !delivering) {
+				sprite.setDoing(false);
 				this.goTo(this.getPlayer().mainHouse.getPosition());
 				delivering = true;
-				sprite.setDoing(false);
-			} else if (this.targetResource.position.distance(this.position) < 55){
+			} else if (this.targetResource.position.distance(this.position) < 55 && !delivering){
 				/**
 				 * Harvest!
 				 */
@@ -76,7 +77,7 @@ public class Worker extends Unit {
 				}
 			}
 		} else if (this.getCarrying() != 0 && !delivering) {
-			this.goTo(this.getPlayer().mainHouse.getPosition());
+			this.goTo(house);
 			sprite.setDoing(false);
 			delivering = true;
 		}
