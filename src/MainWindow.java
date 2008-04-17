@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -124,10 +123,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		
 		if (Config.getMusic()) music = new Music("/music.ogg");
 		
-
-		// Add testing unit
-		GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
-	
 		splash.destroy();
 		frame.setVisible(true);
 	}
@@ -265,6 +260,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		} catch (IOException e) {
 			System.err.println("Could not load sprites for buttons.");
 		}
+		
 		upgradeBuilding.addActionListener(GameState.getMainWindow());
 		worker.addActionListener(GameState.getMainWindow());
 		fighter.addActionListener(GameState.getMainWindow());
