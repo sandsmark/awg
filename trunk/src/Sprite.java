@@ -47,7 +47,7 @@ public class Sprite {
 						filename = "/" 
 							+ basename + "/" + f + "_" + directionNames[dir] +"w" + c + ".png";
 						//The following is hacked to work only for finished sprites
-						if (basename.equals("worker") && f == 0) sprite[f][dir][c][2] = ImageIO.read(getClass().getResource(filename)); 
+						if (f == 0) sprite[f][dir][c][2] = ImageIO.read(getClass().getResource(filename)); 
 					}
 				}
 			}

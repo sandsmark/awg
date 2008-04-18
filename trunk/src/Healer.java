@@ -42,7 +42,8 @@ public class Healer extends Unit {
 					targetUnit = unit;
 					heal();
 					targetUnit = null;
-				}
+					sprite.setDoing(true);
+				} else sprite.setDoing(false);
 			}
 		}
 		super.move();
