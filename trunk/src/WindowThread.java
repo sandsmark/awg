@@ -16,8 +16,12 @@ public class WindowThread extends Thread {
 		try {
 			while (running) {
 				if (units.lock.tryLock()) {
-					if (units.getSelectedUnits().size() > 0) window.setSelectedUnit(units.getSelectedUnits().get(0));
-					else window.delSeletectedUnit(); 
+					if (units.getSelectedUnits().size() > 0){
+						window.setSelectedUnit(units.getSelectedUnits().get(0));
+					}
+					else{
+						window.delSeletectedUnit(); 
+					}
 					GameState.getMainWindow().resPan.update();
 					units.lock.unlock();
 				}
