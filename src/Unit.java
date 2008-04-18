@@ -148,7 +148,8 @@ public class Unit {
 		
 		if (newX < 0 || newX > Config.getWorldWidth() || newY < 0 || newY > Config.getWorldHeight())
 			this.goTo(target);
-		
+		if (newX != position.x || newY != position.y)
+			GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 		this.setPosition(new Point(newX, newY));
 		GameState.getMainWindow().canvas.setDirty(newX, newY);
 		

@@ -65,7 +65,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		
 		configDialog = new ConfigDialog(frame);
 		
-		setupBuildingGUI();
+		
 		
 		config = new JButton("Configure...");
 		config.addActionListener(this);
@@ -77,6 +77,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		
 		menu.add(resPan);
 		menu.add(uPan);
+		setupBuildingGUI();
 		menu.add(close);
 		menu.add(config);
 		

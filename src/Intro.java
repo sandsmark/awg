@@ -28,29 +28,26 @@ public class Intro extends JPanel {
 	 * @author Martin T. Sandsmark
 	 */
 	private static final long serialVersionUID = 1L;
-	ReentrantLock lock = new ReentrantLock();
-	private Condition clicked = lock.newCondition();
 	private float alpha = 1f; 
 	private int x, y;
 	private BufferedImage img1, img2;
+	private boolean running = true;
 	
 	public Intro(Frame f) {
+		
 		try {
 			f.setBackground(Color.BLACK);
 		} catch (Exception e) { e.printStackTrace(); }
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		lock.lock();
-		clicked.signal();
-		lock.unlock();
+		this.running = false;
 	}
 
 	@Override
 	public synchronized void paintComponent(Graphics g) {
 		if (img1 == null || img2 == null) return;
 		BufferedImage output = new BufferedImage(img1.getWidth(), img1.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
 		Graphics2D g2d = output.createGraphics();
 		
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
@@ -110,9 +107,10 @@ public class Intro extends JPanel {
 	
 	private void fade() {
 		for (float a = 1f; a>0; a -= .01){
+			if (!this.running) return;
 			this.alpha = a;
 			this.repaint();	
-			try { Thread.sleep(10); } catch (InterruptedException e) { }
+			try { Thread.sleep(50); } catch (InterruptedException e) { }
 		}
 	}
 	
