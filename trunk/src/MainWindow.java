@@ -37,12 +37,14 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	AIThread aiThread;
 	WindowThread wThread;
 	MovementThread mThread;
+	private boolean canMaximize;
 	
 	Map map;
 	
 	Music music;
 
 	MainWindow() throws IOException {
+		this.canMaximize = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().isFullScreenSupported();
 		frame = new JFrame();
 		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +59,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer = new JPanel();
 		canvas = new Canvas();
 		menu = new JPanel();
-		
+		 
 		resPan = new ResourcePanel();
 		
 		uPan = new UnitPanel();
@@ -105,14 +107,17 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			Intro intro = new Intro(frame);
 			frame.setContentPane(intro);
 			frame.pack();
-			this.fullscreen();
+			if (canMaximize) GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+			else frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 			intro.play();
 		}
 		
 		frame.setContentPane(outer);
 		
 		frame.pack();
-		this.fullscreen();
+		
+		if (canMaximize) GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+		else frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		
 		gThread.start();
 		sThread.start();
@@ -264,15 +269,5 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.add(worker);
 		menu.add(fighter);
 		menu.add(healer);
-	}
-	
-	private void fullscreen() {
-		GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		if (!graphics.isFullScreenSupported()){
-			System.err.println("Could not acquire fullscreen mode, falling back to maximizing.");
-			frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		} else {
-			graphics.setFullScreenWindow(frame);
-		}
 	}
 }
