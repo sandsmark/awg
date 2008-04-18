@@ -23,7 +23,7 @@ public class MovementThread extends Thread {
 		Canvas canvas = GameState.getMainWindow().getCanvas(); // This holds the current canvas object
 		try {
 			while (running) {
-				sleep(50);
+				sleep(100);
 				for (int i = 0; i < units.getUnitNum(); i++) {
 					units.getUnit(i).move();
 
