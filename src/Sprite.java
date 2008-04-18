@@ -15,6 +15,7 @@ public class Sprite {
 	private boolean isMoving = false;
 	private long isHit = -1;
 	private boolean isDoing = false;
+	private double last;
 	
 	/**
 	 * Faction this sprite belongs to, either 0 or 1.
@@ -60,14 +61,15 @@ public class Sprite {
 	}
 	
 	public BufferedImage pop() {
-		if (!isMoving && !isDoing) cycle = 1;
-		else cycle = (cycle+1) % 2;
+		if (System.currentTimeMillis() - last > 1000/fps) {
+			if (!isMoving && !isDoing) cycle = 1;
+			else cycle = (cycle+1) % 2;
+			last = System.currentTimeMillis();
+		}
 		
 		if (isDoing) return sprite[faction][direction.ordinal()][cycle][2];
 		else if (System.currentTimeMillis() - isHit > 1500) return sprite[faction][direction.ordinal()][cycle][0];
 		else return sprite[faction][direction.ordinal()][cycle][1];
-
-		
 	}
 
 	public void setDirection(Direction direction) {
