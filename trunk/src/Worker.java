@@ -26,7 +26,7 @@ public class Worker extends Unit {
 		setPlayer(player);
 		if (player.isAI()) sprite = new Sprite(type, 1);
 		else sprite = new Sprite(type, 0);
-		GameState.getMainWindow().canvas.repaint();
+		GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 	}
 
 	public void deliverResource() {
@@ -65,6 +65,7 @@ public class Worker extends Unit {
 				 * Harvest!
 				 */
 				sprite.setDoing(true);
+				GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 				this.setCarrying(this.getCarrying() + targetResource.harvest(harvestMax));
 				if (targetResource.getRemaining() <= 0){
 					try{

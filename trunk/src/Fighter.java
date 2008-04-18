@@ -20,7 +20,7 @@ public class Fighter extends Unit {
 		setPlayer(player);
 		if (player.isAI()) sprite = new Sprite(type, 1);
 		else sprite = new Sprite(type, 0);
-		GameState.getMainWindow().canvas.repaint();
+		GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 	}
 	
 	public void move(){
@@ -38,9 +38,11 @@ public class Fighter extends Unit {
 
 		} else if (targetUnit.getCurrentHealth() <= 0){
 			targetUnit = null;
+			GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 			return;
 		} else if(position.distance(getTargetUnit().position)<=35){
 			this.dealDamage();
+			GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 		} else if(targetUnit!= null && position.distance(targetUnit.position)>35){
 			this.goTo(targetUnit.position);
 		}
