@@ -37,14 +37,17 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	AIThread aiThread;
 	WindowThread wThread;
 	MovementThread mThread;
-	private boolean canMaximize;
 	
 	Map map;
 	
 	Music music;
 
-	MainWindow() throws IOException {
-		this.canMaximize = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().isFullScreenSupported();
+	MainWindow() throws IOException { 
+		if (!GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().isFullScreenSupported()) { 
+			System.err.println("CANNOT ACQUIER FULLSKREIN!");
+			this.exit();
+		}
+		
 		frame = new JFrame();
 		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,7 +102,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		aiThread = new AIThread();
 		wThread = new WindowThread();
 		mThread = new MovementThread();
-		
 		splash.destroy();
 		frame.setVisible(true);
 		if (Config.getIntro()) {
@@ -107,17 +109,16 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			Intro intro = new Intro(frame);
 			frame.setContentPane(intro);
 			frame.pack();
-			if (canMaximize) GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
-			else frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);			
 			intro.play();
+			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
 		}
 		
 		frame.setContentPane(outer);
 		
 		frame.pack();
 		
-		if (canMaximize) GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
-		else frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
 		
 		gThread.start();
 		sThread.start();
