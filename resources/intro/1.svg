@@ -68,7 +68,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.77472528"
      inkscape:cx="111.84888"
-     inkscape:cy="173.21818"
+     inkscape:cy="221.95876"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      showgrid="false"
@@ -95,12 +95,12 @@
        xml:space="preserve"
        style="font-size:49.28335953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Balker;-inkscape-font-specification:Balker"
        x="54.162819"
-       y="157.77408"
+       y="84.199608"
        id="text2419"><tspan
          sodipodi:role="line"
          id="tspan2421"
          x="54.162819"
-         y="157.77408"
+         y="84.199608"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial Black;-inkscape-font-specification:Arial Black">Awesome WarGame</tspan></text>
     <text
        xml:space="preserve"
@@ -114,7 +114,7 @@
          y="330.31403" /></text>
     <g
        id="g3359"
-       transform="matrix(0.7763553,0,0,0.7763553,75.39365,-72.893438)">
+       transform="matrix(0.7763553,0,0,0.7763553,75.39365,-146.46791)">
       <g
          transform="matrix(1.7287839,0,0,1.7287839,-310.24079,-36.677837)"
          id="g3237">
@@ -152,17 +152,17 @@
     </g>
     <text
        id="text3164"
-       y="157.77408"
+       y="84.199608"
        x="54.162819"
-       style="font-size:49.28335952999999137px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Balker;-inkscape-font-specification:Balker;filter:url(#filter3220)"
+       style="font-size:49.28335953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter3220);font-family:Balker;-inkscape-font-specification:Balker"
        xml:space="preserve"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial Black;-inkscape-font-specification:Arial Black"
-         y="157.77408"
+         y="84.199608"
          x="54.162819"
          id="tspan3166"
          sodipodi:role="line">Awesome WarGame</tspan></text>
     <g
-       transform="matrix(0.7763553,0,0,0.7763553,75.39365,-72.893438)"
+       transform="matrix(0.7763553,0,0,0.7763553,75.39365,-146.46791)"
        id="g3224"
        style="filter:url(#filter3468)">
       <g
