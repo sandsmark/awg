@@ -23,7 +23,7 @@ import javax.swing.JWindow;
 
 
 
-public class Intro extends JPanel {
+public class Intro extends JPanel implements MouseListener{
 	/**
 	 * @author Martin T. Sandsmark
 	 */
@@ -34,7 +34,7 @@ public class Intro extends JPanel {
 	private boolean running = true;
 	
 	public Intro(Frame f) {
-		
+		this.addMouseListener(this);
 		try {
 			f.setBackground(Color.BLACK);
 		} catch (Exception e) { e.printStackTrace(); }
@@ -67,35 +67,31 @@ public class Intro extends JPanel {
 	
 	public void play() {
 		try {
-			img2 = ImageIO.read(getClass().getResource("/intro/soiheard.png"));
+			img2 = ImageIO.read(getClass().getResource("/intro/0.png"));
 			
 			x = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (img2.getWidth() / 2);
 			y = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (img2.getHeight() / 2);
 			BufferedImage blank = new BufferedImage(img2.getWidth(),img2.getHeight(), BufferedImage.TYPE_INT_ARGB);
-			blank.createGraphics().setColor(Color.BLACK);
-			blank.createGraphics().fill(new Rectangle(0,0,img2.getWidth(),img2.getHeight()));
+			Graphics2D graphics = blank.createGraphics();
+			graphics.setColor(Color.BLACK);
+			graphics.fill(new Rectangle(0,0,img2.getWidth(),img2.getHeight()));
+			
 			
 			img1 = blank;
 			
 			fade();
+			if (!this.running) return;
 			Thread.sleep(500);
-			img1 = ImageIO.read(getClass().getResource("/intro/soiheard.png"));
+			img1 = ImageIO.read(getClass().getResource("/intro/0.png"));
 			img2 = blank;
 			fade();
 			
-			img2 = ImageIO.read(getClass().getResource("/intro/iliketurtles.png"));
+			img2 = ImageIO.read(getClass().getResource("/intro/1.png"));
 			img1 = blank;
 			fade();
-			Thread.sleep(500);
-			img1 = ImageIO.read(getClass().getResource("/intro/iliketurtles.png"));
-			img2 = blank;
-			fade();
-			
-			img2 = ImageIO.read(getClass().getResource("/intro/diefoolishmortal.png"));
-			img1 = blank;
-			fade();
-			Thread.sleep(500);
-			img1 = ImageIO.read(getClass().getResource("/intro/diefoolishmortal.png"));
+			if (!this.running) return;
+			Thread.sleep(1000);
+			img1 = ImageIO.read(getClass().getResource("/intro/1.png"));
 			img2 = blank;
 			fade();
 			
@@ -106,7 +102,7 @@ public class Intro extends JPanel {
 	}
 	
 	private void fade() {
-		for (float a = 1f; a>0; a -= .01){
+		for (float a = 1f; a>0; a -= .05){
 			if (!this.running) return;
 			this.alpha = a;
 			this.repaint();	

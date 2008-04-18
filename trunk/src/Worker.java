@@ -17,7 +17,7 @@ public class Worker extends Unit {
 	
 	public Worker(Player player){
 		type = "worker";
-		setMaxHealth(50);
+		setMaxHealth(500);
 		setCurrentHealth(getMaxHealth());
 		setDamage(1);
 		setRange(25);

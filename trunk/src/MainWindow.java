@@ -149,7 +149,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		} else if (e.getSource() == config) {
 			configDialog.setVisible(true);
 		}
-		canvas.repaint();
 	}
 
 	public void exit() {
