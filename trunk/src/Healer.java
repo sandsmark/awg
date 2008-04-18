@@ -38,7 +38,7 @@ public class Healer extends Unit {
 		if(targetUnit == null){
 			for (int i = 0; i < GameState.getUnits().count(); i++) {
 				unit = GameState.getUnits().getUnit(i);
-				if(unit.getPlayer() == this.getPlayer() && position.distance(unit.position) < 100 && unit.getCurrentHealth() < (unit.getMaxHealth()-healPower)){
+				if(unit.getPlayer() == this.getPlayer() && position.distance(unit.position) < 100 && unit.getCurrentHealth() <= (unit.getMaxHealth()-healPower)){
 					targetUnit = unit;
 					heal();
 					targetUnit = null;

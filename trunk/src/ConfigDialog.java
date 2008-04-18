@@ -81,7 +81,7 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		options.add(size);
 		
 		JPanel music_panel = new JPanel();
-		JLabel music_text = new JLabel("Enable/disable music:");
+		JLabel music_text = new JLabel("Enable music:");
 		music = new JCheckBox();
 		music.addActionListener(this);
 		music_panel.add(music_text);
@@ -90,7 +90,7 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		
 		
 		JPanel intro_panel = new JPanel();
-		JLabel intro_text = new JLabel("Enable/disable intro:");
+		JLabel intro_text = new JLabel("Enable intro:");
 		intro = new JCheckBox();
 		intro_panel.add(intro_text);
 		intro_panel.add(intro);
