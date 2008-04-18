@@ -95,7 +95,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 		outer.add(canvas);
 		outer.add(menu);
-
+		
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+		
 		// Start threads
 		gThread = new GraphicsThread();
 		sThread = new SelectThread();
@@ -109,16 +111,10 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			Intro intro = new Intro(frame);
 			frame.setContentPane(intro);
 			frame.pack();
-			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);			
 			intro.play();
-			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
 		}
 		
 		frame.setContentPane(outer);
-		
-		frame.pack();
-		
-		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
 		
 		gThread.start();
 		sThread.start();
