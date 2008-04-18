@@ -25,6 +25,7 @@ public class Fighter extends Unit {
 	
 	public void move(){
 		if(targetUnit == null){
+			sprite.setDoing(false);
 			for (Unit unit : GameState.getUnits().getUnits()) {
 				if(unit.getPlayer() != this.getPlayer() && position.distance(unit.position) < 100){
 					setTargetUnit(unit);
@@ -37,13 +38,16 @@ public class Fighter extends Unit {
 			}
 
 		} else if (targetUnit.getCurrentHealth() <= 0){
+			sprite.setDoing(false);
 			targetUnit = null;
 			GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 			return;
 		} else if(position.distance(getTargetUnit().position)<=35){
+			sprite.setDoing(true);
 			this.dealDamage();
 			GameState.getMainWindow().canvas.setDirty(position.x, position.y);
 		} else if(targetUnit!= null && position.distance(targetUnit.position)>35){
+			sprite.setDoing(false);
 			this.goTo(targetUnit.position);
 		}
 			

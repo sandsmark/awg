@@ -96,8 +96,9 @@ public class Building {
 	public void takeDamage(int damage){
 		this.currentHealth -= damage;
 		if(currentHealth <= 0 && getSprite() != null){
-			System.out.println("OMG WIN");
 			setSprite(null);
+			System.out.println("you win");
+			GameState.getMainWindow().exit();
 		}
 	}
 
