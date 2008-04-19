@@ -159,14 +159,14 @@ public class Units implements ActionListener {
 		
 	}
 	
-	private synchronized void deselect() {
+	private synchronized void deselectAllUnits() {
 		selectedUnits.removeAll(selectedUnits);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 		if(ev.getSource() instanceof UnitButton){
-			deselect();
+			deselectAllUnits();
 			selectUnit(((UnitButton)ev.getSource()).getUnit());
 		}
 		
