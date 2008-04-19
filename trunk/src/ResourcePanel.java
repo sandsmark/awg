@@ -18,7 +18,7 @@ public class ResourcePanel extends JPanel{
 		setLayout(new GridLayout(1,2));
 		gold = new JLabel(""+GameState.getHuman().getResources());
 		try {
-			add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/gold.png")))));
+			add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/gull.png")))));
 		} catch (IOException e) {
 			System.err.println("Could not load gold icon.");
 		}

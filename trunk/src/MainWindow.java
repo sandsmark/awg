@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -171,11 +172,12 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		//curUnitIcon.setIcon(new ImageIcon());
 	}
 
-	public void setSelectedUnit(Unit u) {
-		uPan.select(u);
+	public void setSelectedUnit(List<Unit> selectedUnits) {
+		uPan.select(selectedUnits);
 		//curUnitText.setText(u.toString());
 		//curUnitIcon.setIcon(new ImageIcon(u.getSprite().get()));
 	}
+	
 
 	public void mouseMoved(MouseEvent e) {
 		int x = e.getX();

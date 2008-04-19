@@ -1,4 +1,6 @@
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -6,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 
 
-public class Units {
+public class Units implements ActionListener {
 	List<Unit> units = Collections.synchronizedList(new ArrayList<Unit>());
 	List<Unit> selectedUnits = Collections.synchronizedList(new ArrayList<Unit>());
 	public ReentrantLock lock = new ReentrantLock();
@@ -156,4 +158,19 @@ public class Units {
 		GameState.getUnits().moveSelectedTo(x, y);
 		
 	}
+	
+	private synchronized void deselect() {
+		selectedUnits.removeAll(selectedUnits);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ev) {
+		if(ev.getSource() instanceof UnitButton){
+			deselect();
+			selectUnit(((UnitButton)ev.getSource()).getUnit());
+		}
+		
+	}
+
+	
 }
