@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -28,6 +30,10 @@ public class UnitPanel extends JPanel{
 	private JLabel atkIcon;
 	private JLabel armorIcon;
 	
+	private boolean test;
+	
+	private List<Unit> currentlyDisplayed = Collections.synchronizedList(new ArrayList<Unit>());;
+		
 	
 	
 	
@@ -64,20 +70,23 @@ public class UnitPanel extends JPanel{
 		stats.setVisible(false);
 		group.setVisible(false);
 		icon.setVisible(false);
+		currentlyDisplayed.removeAll(currentlyDisplayed);
 	}
 	
 	public synchronized void select(List<Unit> selectedUnits){
+		if(!selectedUnits.equals(currentlyDisplayed)){
+			deselect();
+			for(Unit u : selectedUnits){
+				currentlyDisplayed.add(u);
+			}
 		if(selectedUnits.size()==1){
-			group.setVisible(false);
 			singleunitSetup(selectedUnits.get(0));
 		}else {
-			
-			icon.setVisible(false);
-			stats.setVisible(false);
 			groupSetup(selectedUnits);
 			
 		}
 		this.setVisible(true);
+		}
 		
 		
 	}
@@ -102,15 +111,10 @@ public class UnitPanel extends JPanel{
 		hp.setText(""+u.getCurrentHealth()+" / "+u.getMaxHealth());
 		atk.setText(""+u.getDamage());
 		armor.setText(""+u.getDamage());
-
 		stats.setVisible(true);
 		icon.setVisible(true);
 	}
 	
-	@Override
-	public void repaint(){
-		
-	}
 }
 	
 	
