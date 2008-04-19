@@ -24,7 +24,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	Canvas canvas;
 	JButton close;
 	JButton config;
-//	JTextArea console; 
+	
+	MiniMap miniMap;
 	
 	ResourcePanel resPan;
 	UnitPanel uPan;
@@ -63,7 +64,10 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer = new JPanel();
 		canvas = new Canvas();
 		menu = new JPanel();
-		 
+		
+		miniMap = new MiniMap();
+		miniMap.setMaximumSize(new Dimension(350, 300));
+		
 		resPan = new ResourcePanel();
 		
 		uPan = new UnitPanel();
@@ -81,6 +85,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		close.addActionListener(this);
 		close.setMaximumSize(new Dimension(500,50));
 		
+		menu.add(miniMap);
 		menu.add(resPan);
 		menu.add(uPan);
 		setupBuildingGUI();

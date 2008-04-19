@@ -23,6 +23,7 @@ public class WindowThread extends Thread {
 						window.delSeletectedUnit(); 
 					}
 					GameState.getMainWindow().resPan.update();
+					GameState.getMainWindow().miniMap.repaint();
 					units.lock.unlock();
 				}
 				Thread.sleep(500);
