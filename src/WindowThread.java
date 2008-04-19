@@ -17,7 +17,7 @@ public class WindowThread extends Thread {
 			while (running) {
 				if (units.lock.tryLock()) {
 					if (units.getSelectedUnits().size() > 0){
-						window.setSelectedUnit(units.getSelectedUnits().get(0));
+						window.setSelectedUnit(units.getSelectedUnits());
 					}
 					else{
 						window.delSeletectedUnit(); 
