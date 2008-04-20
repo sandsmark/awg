@@ -1,6 +1,8 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +22,7 @@ import javax.swing.JPanel;
 public class MainWindow implements ActionListener, MouseMotionListener,
 		MouseListener {
 	JFrame frame;
-	JPanel outer, menu;
+	JPanel outer, menu, buttons;
 	Canvas canvas;
 	JButton close;
 	JButton config;
@@ -64,35 +66,35 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer = new JPanel();
 		canvas = new Canvas();
 		menu = new JPanel();
+		menu.setBackground(Color.BLACK);
+		outer.setBackground(Color.BLACK);
 		
 		miniMap = new MiniMap();
-		miniMap.setMaximumSize(new Dimension(350, 300));
+		miniMap.setMaximumSize(new Dimension(200, 200));
+		miniMap.setMinimumSize(new Dimension(200, 200));
+		miniMap.setSize(new Dimension(200, 200));
 		
 		resPan = new ResourcePanel();
+		resPan.setBackground(Color.BLACK);
 		
 		uPan = new UnitPanel();
-		uPan.setMaximumSize(new Dimension(300,200));
+		uPan.setBackground(Color.BLACK);
+		uPan.setMaximumSize(new Dimension(200,250));
+		uPan.setMinimumSize(new Dimension(200,250));
+	
 		
-		configDialog = new ConfigDialog(frame);
 		
-		
-		
-		config = new JButton("Configure...");
-		config.addActionListener(this);
-		config.setMaximumSize(new Dimension(500,50));
-		
-		close = new JButton("Close");
-		close.addActionListener(this);
-		close.setMaximumSize(new Dimension(500,50));
+		buttons = new JPanel();
+		buttons.setMaximumSize(new Dimension(200,300));
+
 		
 		menu.add(miniMap);
 		menu.add(resPan);
 		menu.add(uPan);
-		setupBuildingGUI();
-		menu.add(close);
-		menu.add(config);
+		menu.add(buttons);
+		setupButtons();
 		
-		menu.setPreferredSize(new Dimension(150,600));
+		menu.setPreferredSize(new Dimension(200,600));
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
 
@@ -103,6 +105,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer.add(menu);
 		
 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+		
+		configDialog = new ConfigDialog(frame);
 		
 		// Start threads
 		gThread = new GraphicsThread();
@@ -244,13 +248,21 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		return canvas;
 	}
 	
-	private void setupBuildingGUI(){
+	private void setupButtons(){
+		buttons.setLayout(new GridLayout(6,1));
+		buttons.setBackground(Color.BLACK);
+		
 		upgradeBuilding = new JButton("Upgrade");
 		worker = new JButton("Worker");
 		fighter = new JButton("Fighter");
 		healer = new JButton("Healer");
 		
-		Dimension d = new Dimension(500,50);
+		buttons.add(upgradeBuilding);
+		buttons.add(worker);
+		buttons.add(fighter);
+		buttons.add(healer);
+		
+		Dimension d = new Dimension(300,50);
 		upgradeBuilding.setMaximumSize(d);
 		worker.setMaximumSize(d);
 		fighter.setMaximumSize(d);
@@ -269,9 +281,15 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		fighter.addActionListener(GameState.getMainWindow());
 		healer.addActionListener(GameState.getMainWindow());
 		
-		menu.add(upgradeBuilding);
-		menu.add(worker);
-		menu.add(fighter);
-		menu.add(healer);
+		config = new JButton("Configure...");
+		config.addActionListener(this);
+		config.setMaximumSize(new Dimension(200,50));
+		
+		close = new JButton("Close");
+		close.addActionListener(this);
+		close.setMaximumSize(new Dimension(200,50));
+		
+		buttons.add(close);
+		buttons.add(config);
 	}
 }

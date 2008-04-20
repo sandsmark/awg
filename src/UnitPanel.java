@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class UnitPanel extends JPanel{
 	private JPanel group = new JPanel();
 	
 	private JPanel stats = new JPanel();
+	private JPanel iconField = new JPanel();
 	//STATS CONTAINS:
 	private JLabel icon = new JLabel();
 	private JLabel hp = new JLabel();
@@ -39,12 +41,18 @@ public class UnitPanel extends JPanel{
 	
 	public UnitPanel(){
 		this.setLayout(null);
-		group.setBounds(10, 10, 150, 180);
+		group.setBounds(10, 10, 180, 230);
 		group.setLayout(new GridLayout(5,3));
+		group.setBackground(Color.WHITE);
 		
-		icon.setBounds(60, 10, 30, 30);
-		stats.setBounds(10, 40, 150, 150);
+		icon.setBounds(85, 10, 30, 30);
+		iconField.setBounds(10, 10, 180, 50);
+		iconField.setBackground(Color.WHITE);
+		iconField.add(icon);
+		
+		stats.setBounds(10, 60, 180, 180);
 		stats.setLayout(new GridLayout(3,2));
+		stats.setBackground(Color.WHITE);
 		try {
 			hpIcon=new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/hp.png"))));
 			atkIcon=new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/dmg.png"))));
@@ -60,9 +68,11 @@ public class UnitPanel extends JPanel{
 		stats.add(armorIcon);
 		stats.add(armor);
 		
-		this.add(icon);
+		
+		this.add(iconField);
 		this.add(stats);
 		this.add(group);
+		
 		
 	}
 	
@@ -70,6 +80,7 @@ public class UnitPanel extends JPanel{
 		stats.setVisible(false);
 		group.setVisible(false);
 		icon.setVisible(false);
+		iconField.setVisible(false);
 		currentlyDisplayed.removeAll(currentlyDisplayed);
 	}
 	
@@ -112,7 +123,10 @@ public class UnitPanel extends JPanel{
 		atk.setText(""+u.getDamage());
 		armor.setText(""+u.getDamage());
 		stats.setVisible(true);
+		iconField.setVisible(true);
 		icon.setVisible(true);
+		
+		
 	}
 	
 }

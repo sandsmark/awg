@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class ResourcePanel extends JPanel{
 	public ResourcePanel(){
 		setLayout(new GridLayout(1,2));
 		gold = new JLabel(""+GameState.getHuman().getResources());
+		gold.setForeground(Color.WHITE);
 		try {
 			add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/gull.png")))));
 		} catch (IOException e) {
