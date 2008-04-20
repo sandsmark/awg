@@ -331,4 +331,11 @@ public class Canvas extends JPanel implements Moveable {
 	}
 	
 	
+	public void setOffset(Point p){
+		offsetX=p.x;
+		offsetY=p.y;
+		updateInternal();
+	}
+	
+	
 }
