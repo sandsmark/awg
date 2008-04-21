@@ -1,9 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -48,7 +46,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	MainWindow() throws IOException { 
 		if (!GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().isFullScreenSupported()) { 
-			System.err.println("CANNOT ACQUIER FULLSKREIN!");
+			System.err.println("CANNOT ACQUIER FULLSKREIN11111");
 			this.exit();
 		}
 		
@@ -69,7 +67,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.setBackground(Color.BLACK);
 		outer.setBackground(Color.BLACK);
 		
-		miniMap = new MiniMap();
+		miniMap = new MiniMap(200,200);
 		miniMap.setMaximumSize(new Dimension(200, 200));
 		miniMap.setMinimumSize(new Dimension(200, 200));
 		miniMap.setSize(new Dimension(200, 200));
@@ -115,6 +113,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		wThread = new WindowThread();
 		mThread = new MovementThread();
 		splash.destroy();
+		
 		frame.setVisible(true);
 		if (Config.getIntro()) {
 			frame.setVisible(true);
@@ -167,26 +166,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		frame.dispose();
 		System.exit(0);
 	}
-
-	/* Problem: 
-	 * - Unit seems to be selected/deselected each "tick".
-	 * - If several different units is selected, the panel switches between them.
-	 * 
-	 */ 
-	
-	//These methods is now obsolete. uPan should be called directly
-	public void delSeletectedUnit() {
-		uPan.deselect();
-		//curUnitText.setText(".");
-		//curUnitIcon.setIcon(new ImageIcon());
-	}
-
-	public void setSelectedUnit(List<Unit> selectedUnits) {
-		uPan.select(selectedUnits);
-		//curUnitText.setText(u.toString());
-		//curUnitIcon.setIcon(new ImageIcon(u.getSprite().get()));
-	}
-	
 
 	public void mouseMoved(MouseEvent e) {
 		int x = e.getX();
