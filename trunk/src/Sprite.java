@@ -91,4 +91,12 @@ public class Sprite {
 	public void setDoing(boolean isDoing) {
 		this.isDoing = isDoing;
 	}
+	
+	public int getWidth() {
+		return sprite[0][0][0][0].getWidth(); 
+	}
+	
+	public int getHeight() {
+		return sprite[0][0][0][0].getHeight();
+	}
 }

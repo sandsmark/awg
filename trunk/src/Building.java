@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 
 public class Building {
@@ -97,7 +98,8 @@ public class Building {
 		this.currentHealth -= damage;
 		if(currentHealth <= 0 && getSprite() != null){
 			setSprite(null);
-			System.out.println("you win");			
+			JOptionPane.showMessageDialog(null, "You win.");
+			GameState.getMainWindow().exit();
 		}
 	}
 

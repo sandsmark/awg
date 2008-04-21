@@ -15,7 +15,7 @@ public class Healer extends Unit {
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
 		if (player.isAI()) sprite = new Sprite("healer", 1);
 		else sprite = new Sprite(type, 0);
-		GameState.getMainWindow().canvas.setDirty(position.x, position.y);
+		GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 	}
 
 	public void heal() {

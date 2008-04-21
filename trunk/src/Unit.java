@@ -149,9 +149,9 @@ public class Unit {
 		if (newX < 0 || newX > Config.getWorldWidth() || newY < 0 || newY > Config.getWorldHeight())
 			this.goTo(target);
 		if (newX != position.x || newY != position.y)
-			GameState.getMainWindow().canvas.setDirty(position.x, position.y);
+			GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 		this.setPosition(new Point(newX, newY));
-		GameState.getMainWindow().canvas.setDirty(newX, newY);
+//		GameState.getMainWindow().canvas.setDirty(newX, newY);
 		
 		return;
 	}
@@ -209,6 +209,11 @@ public class Unit {
 
 	public double getCurrentHealthPercent() {
 		return currentHealth/maxHealth;
+	}
+	
+	public boolean isTouching(int x, int y) {
+		return x > this.position.x && x < this.position.x + sprite.getWidth()&&
+		y > this.position.y && y < this.position.y + sprite.getHeight();
 	}
 }
 
