@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.ArrayList;
 /**
  * 
  * @author Stian Veum M�llersen
@@ -8,8 +9,13 @@ import java.awt.Point;
 public class AI {
 	//her skal oppførselen til AI legges til
 	AIrules oppforsel;
-	int fighters, workers, healers, fighersdef, healersdef;
+//	int fighters, workers, healers, fighersdef, healersdef;
 	Player AI;
+	ArrayList<Unit> fighters = new ArrayList<Unit>();
+	ArrayList<Unit> workers = new ArrayList<Unit>();
+	ArrayList<Unit> healers = new ArrayList<Unit>();
+	ArrayList<Unit> fightersdef = new ArrayList<Unit>();
+	ArrayList<Unit> healersdef = new ArrayList<Unit>();
 	
 	public AI() {
 		oppforsel = new AIrules();
@@ -35,7 +41,7 @@ public class AI {
 //		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
-			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
+			if(!(unit.getPlayer().isAI()) && mainb.distance(unit.getPosition())<defParamRad ) {
 				System.out.println("Thou shalt defend!");
 				return true;
 			}
@@ -50,7 +56,7 @@ public class AI {
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
-				System.out.println("Thou shalt defend!");
+				System.out.println("Thou shalt defend! Against"+unit);
 				return unit;
 			}
 		}
@@ -59,24 +65,25 @@ public class AI {
 	}
 	
 	public void defendAgainst(Unit offender) { //forsvarer seg		
-		for (Unit unit : GameState.getUnits().getUnits()) { //henter AI
-			if(unit.getPlayer().isAI()) {
-				if(unit instanceof Fighter || unit instanceof Healer) {
-					if (!offender.equals(unit.getTargetUnit())) {
+		for (Unit unit : this.getFightersdef()) { //henter AI
+//			if(unit.getPlayer().isAI()) {
+//				if(unit instanceof Fighter || unit instanceof Healer) {
+//					if (!offender.equals(unit.getTargetUnit())) {
 						unit.setTargetUnit(offender);
 						unit.goTo(offender.getPosition());
 						System.out.println("I R DEFENDOR");
-					}
-				}
-			}
+//					}
+//				}
+//			}
 		}
 //		System.out.println("Muhammed JIHAD");
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
 		long timePassed = GameState.getTime();
-		if(timePassed>oppforsel.getAggro() && ((this.getFighters()+this.getHealers())-oppforsel.getDefence())>oppforsel.getAttackForce() && ((this.getHealers()*oppforsel.getfighterPerHealer())/this.getFighters())>=1)
+//		TODO: Fix
+//		if(timePassed>oppforsel.getAggro() && ((this.getFighters()+this.getHealers())-oppforsel.getDefence())>oppforsel.getAttackForce() && ((this.getHealers()*oppforsel.getfighterPerHealer())/this.getFighters())>=1)
 		return true;
-		else return false;
+//		else return false;
 	}
 	public void attack() { //kj�res n�r willLaunchAttack er true
 		Point target = GameState.getHuman().getMainBuilding().getPosition();
@@ -105,31 +112,31 @@ public class AI {
 //			GameState.getUnits().upgradeUnits(GameState.getComputer());
 			break;
 		}
-		if(this.getWorkers()<oppforsel.getWorkers()) { //bygge workers
+		if(this.getWorkers().size()<oppforsel.getWorkers()) { //bygge workers
 			GameState.getUnits().addUnit(new Worker(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 			unit.goTo(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()).getPosition());
 			unit.setTargetResource(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()));
-			workers +=1;
+			workers.add(unit);
 			break;
 			
 		}
-		if(this.getFighersdef()<oppforsel.getfighterPerHealer() && this.getFighersdef()<oppforsel.getDefence()) { //bygge fighters til forsvar
+		if(this.getFightersdef().size()<oppforsel.getFightersInDefence()) { //bygge fighters til forsvar
 			GameState.getUnits().addUnit(new Fighter(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
 //			newPoint.translate(10, 15);
 			unit.goTo(new Point(unit.getPosition().x-60, unit.getPosition().y-85));
-			fighersdef +=1;
+			fightersdef.add(unit);
 			break;
 		}
-		if(this.getHealersdef()<(oppforsel.getDefence()-this.getFighersdef())) {
+		if(this.getHealerssdef().size()<(oppforsel.getHealersInDefence())) {
 			GameState.getUnits().addUnit(new Healer(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
 //			newPoint.translate(50, 75);
 			unit.goTo(new Point(unit.getPosition().x-60, unit.getPosition().y-85));
-			healersdef +=1;
+			healersdef.add(unit);
 			break;
 		}
 		
@@ -147,39 +154,44 @@ public class AI {
 		return false; 
 	}
 	
-	public int getFighters() { //henter antallet fighters
+	public ArrayList<Unit> getFighters() { //henter antallet fighters
 			return fighters;
 	}
-	public int getWorkers() { // henter antallet workers
+	public ArrayList<Unit> getWorkers() { // henter antallet workers
 		return workers;
 	}
-	public int getHealers() { //henter antallet healers
+	public ArrayList<Unit> getHealers() { //henter antallet healers
 		return healers;
 	}
-	public int getUnits() { //henter totale antallet units
-		return this.getFighters() + this.getWorkers() + this.getHealers();
+	public ArrayList<Unit> getFightersdef() {
+		return fightersdef;
 	}
-	public void setFighters(int c) {
-		this.fighters+=c;
-	}
-	public void setHealers(int c) {
-		this.healers+=c;
-	}
-	public void setWorkers(int c) {
-		this.workers+=c;
-	}
-	public int getFighersdef() {
-		return fighersdef;
-	}
-	public void setFighersdef(int fighersdef) {
-		this.fighersdef = fighersdef;
-	}
-	public int getHealersdef() {
+	public ArrayList<Unit> getHealerssdef() {
 		return healersdef;
 	}
-	public void setHealersdef(int healersdef) {
-		this.healersdef = healersdef;
-	}
+
+//	public void setFighters(int c) {
+//		if(c<0)
+//			fighters.remove;
+//	}
+//	public void setHealers(int c) {
+//		this.healers+=c;
+//	}
+//	public void setWorkers(int c) {
+//		this.workers+=c;
+//	}
+//	public int getFighersdef() {
+//		return fighersdef;
+//	}
+//	public void setFighersdef(int fighersdef) {
+//		this.fighersdef = fighersdef;
+//	}
+//	public int getHealersdef() {
+//		return healersdef;
+//	}
+//	public void setHealersdef(int healersdef) {
+//		this.healersdef = healersdef;
+//	}
 	
 	
 	

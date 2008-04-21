@@ -16,6 +16,9 @@ public class AIrules {
 	int startGold; //start gull
 	long upgrade; // når han skal oppgradere hovedbygg i ms
 	int totalAttackForce; //hvor mange units AIen skal maks ha
+	int healersInDefence;
+	int fightersInDefence;
+	
 	
 	public int getTotalAttackForce() {
 		return totalAttackForce;
@@ -32,8 +35,10 @@ public class AIrules {
 		this.defence = 6;
 		this.fighterPerHealer = 5;
 		this.startGold = 50000;
-		this.upgrade = 108000000; //i ms
+		this.upgrade = 600000; //i ms
 		this.totalAttackForce = 50;
+		this.healersInDefence = 1;
+		this.fightersInDefence = 5;
 	}
 	public void setunitSenseRange(double d) {
 		this.unitSenseRange = d;
@@ -88,6 +93,18 @@ public class AIrules {
 	}
 	public void setUpgrade(long upgrade) {
 		this.upgrade = upgrade;
+	}
+	public int getHealersInDefence() {
+		return healersInDefence;
+	}
+	public void setHealersInDefence(int healersInDefence) {
+		this.healersInDefence = healersInDefence;
+	}
+	public int getFightersInDefence() {
+		return fightersInDefence;
+	}
+	public void setFightersInDefence(int fightersInDefence) {
+		this.fightersInDefence = fightersInDefence;
 	}
 	
 	
