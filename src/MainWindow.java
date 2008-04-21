@@ -121,6 +121,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			Intro intro = new Intro(frame);
 			frame.setContentPane(intro);
 			frame.pack();
+			frame.setBackground(Color.BLACK);
 			intro.play();
 		}
 		
