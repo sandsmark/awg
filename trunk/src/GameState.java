@@ -6,8 +6,11 @@ public class GameState {
 	private Player human = new Player(false); // is not AI
 	private Player computer = new Player(true); // this, however, is AI
 	private long start = System.currentTimeMillis();
+	private AI ai;
 	
 	
+
+
 	private GameState() {}
 
 	private static class GameStateHolder {
@@ -45,4 +48,12 @@ public class GameState {
 	public static long getTime() {
 		return (System.currentTimeMillis() - GameStateHolder.state.start) ;
 	}
+	public AI getAi() {
+		return GameStateHolder.state.ai;
+	}
+	public void setAi(AI ai) {
+		GameStateHolder.state.ai=ai;
+	}
+
+
 }

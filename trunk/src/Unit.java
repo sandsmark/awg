@@ -169,8 +169,26 @@ public class Unit {
 //		targetUnit.setTargetUnit(this); // Physician, defend thyself.
 		if(targetUnit.currentHealth<=0){
 			GameState.getUnits().removeUnit(targetUnit);
+			if(this.targetUnit.getPlayer().isAI()) {
+				
+				if(this.targetUnit instanceof Worker)
+					GameState.getState().getAi().setWorkers(-1);
+				if(this.targetUnit instanceof Fighter) {
+					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500)
+						GameState.getState().getAi().setFighersdef(-1);
+					GameState.getState().getAi().setFighters(-1);
+				}
+				if(this.targetUnit instanceof Healer) {
+					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500)
+						GameState.getState().getAi().setHealersdef(-1);
+					GameState.getState().getAi().setHealers(-1);
+				}
+					
+			}
 			this.targetUnit = null;
+			this.target = null;
 			System.out.println("TargetUnit removed. Player is computer:" + this.getPlayer().isAI());
+			
 		}
 	}
 
