@@ -6,11 +6,11 @@ public class AIThread extends Thread {
 	protected Condition update = lock.newCondition();
 	protected boolean running = false;
 	protected Unit[] units; // units that this AI owns
-	AI ai;
+	AI ai = new AI();
 	
 	public AIThread() {
 		running = true;
-		ai = new AI();
+		
 	}
 
 	public void stopThread() {
@@ -22,8 +22,10 @@ public class AIThread extends Thread {
 		Unit offender;
 		try {
 			while (running) {
+				if(ai.willDefend()) {
 				offender = ai.getOffender();
 				if (offender != null) ai.defendAgainst(offender);
+				}
 				ai.build();
 				
 		 		sleep(2000);

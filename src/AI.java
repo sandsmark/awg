@@ -9,10 +9,12 @@ public class AI {
 	//her skal oppførselen til AI legges til
 	AIrules oppforsel;
 	int fighters, workers, healers, fighersdef, healersdef;
-	Player AI = GameState.getComputer();
+	Player AI;
 	
 	public AI() {
 		oppforsel = new AIrules();
+		AI = GameState.getComputer();
+		GameState.getState().setAi(this);
 //		workers = 1; //adde testing unit
 //		fighersdef = 1; //adde testing unit
 			
@@ -34,7 +36,7 @@ public class AI {
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
-//				System.out.println("Thou shalt defend!");
+				System.out.println("Thou shalt defend!");
 				return true;
 			}
 		}
@@ -48,7 +50,7 @@ public class AI {
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
-//				System.out.println("Thou shalt defend!");
+				System.out.println("Thou shalt defend!");
 				return unit;
 			}
 		}
@@ -63,6 +65,7 @@ public class AI {
 					if (!offender.equals(unit.getTargetUnit())) {
 						unit.setTargetUnit(offender);
 						unit.goTo(offender.getPosition());
+						System.out.println("I R DEFENDOR");
 					}
 				}
 			}
