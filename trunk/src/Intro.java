@@ -27,10 +27,7 @@ public class Intro extends JPanel implements MouseListener{
 	
 	public Intro(Frame f) {
 		this.addMouseListener(this);
-		try {
-			f.setBackground(Color.BLACK);
-			this.setBackground(Color.BLACK);
-		} catch (Exception e) { e.printStackTrace(); }
+		this.setBackground(Color.BLACK);
 	}
 
 	public void mouseClicked(MouseEvent e) {
