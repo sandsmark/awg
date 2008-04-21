@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class AI {
 	//her skal oppførselen til AI legges til
 	AIrules oppforsel;
-//	int fighters, workers, healers, fighersdef, healersdef;
+	int HealersInDefence, FightersInDefence, WorkersActive;
 	Player AI;
 	ArrayList<Unit> fighters = new ArrayList<Unit>();
 	ArrayList<Unit> workers = new ArrayList<Unit>();
@@ -23,8 +23,12 @@ public class AI {
 		GameState.getState().setAi(this);
 //		workers = 1; //adde testing unit
 //		fighersdef = 1; //adde testing unit
+		HealersInDefence = oppforsel.getHealersInDefence();
+		FightersInDefence = oppforsel.getFightersInDefence();
+		WorkersActive = oppforsel.getWorkers();
 			
 	}
+
 //	FOREL�PIG IKKE BRUK FOR DENNE METODEN	
 //	public void checkAttackUnits() { //for units som senser andre units
 //		double senseRange = oppforsel.getUnitSenseRange();
@@ -112,7 +116,7 @@ public class AI {
 //			GameState.getUnits().upgradeUnits(GameState.getComputer());
 			break;
 		}
-		if(this.getWorkers().size()<oppforsel.getWorkers()) { //bygge workers
+		if(this.getWorkers().size()<WorkersActive) { //bygge workers
 			GameState.getUnits().addUnit(new Worker(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 			unit.goTo(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()).getPosition());
@@ -121,7 +125,7 @@ public class AI {
 			break;
 			
 		}
-		if(this.getFightersdef().size()<oppforsel.getFightersInDefence()) { //bygge fighters til forsvar
+		if(this.getFightersdef().size()<FightersInDefence) { //bygge fighters til forsvar
 			GameState.getUnits().addUnit(new Fighter(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
@@ -130,7 +134,7 @@ public class AI {
 			fightersdef.add(unit);
 			break;
 		}
-		if(this.getHealerssdef().size()<(oppforsel.getHealersInDefence())) {
+		if(this.getHealerssdef().size()<(HealersInDefence)) {
 			GameState.getUnits().addUnit(new Healer(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
