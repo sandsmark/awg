@@ -5,20 +5,33 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
 
 public class MiniMap extends JPanel implements MouseListener{
-	public MiniMap(){
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private BufferedImage cache;
+	public boolean dirty = false;
+	private int width, height;
+	
+	public MiniMap(int width, int height){
+		this.width = width;
+		this.height = height;
 		this.setBackground(Color.green);
 		this.addMouseListener(this);
-		
+		this.updateCache();
 	}
 	
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		Graphics2D g2d =(Graphics2D)g;
+	private void updateCache() {
+		this.dirty=false;
+		cache = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = cache.createGraphics();
 		g2d.setColor(Color.RED);
 		
 		//BUILDINGS
@@ -29,8 +42,8 @@ public class MiniMap extends JPanel implements MouseListener{
 		
 		//UNITS
 		for(Unit u : GameState.getUnits().getUnits()){
-			int posX = u.getPosition().x*200/Config.getWorldHeight();
-			int posY = u.getPosition().x*200/Config.getWorldWidth();
+			int posY = u.getPosition().y*200/Config.getWorldHeight();
+			int posX = u.getPosition().x*200/Config.getWorldWidth();
 			g2d.draw(new Ellipse2D.Double(posX, posY, 2,2));
 		}
 		
@@ -41,6 +54,13 @@ public class MiniMap extends JPanel implements MouseListener{
 		int width = GameState.getMainWindow().getCanvas().getWidth()*200/Config.getWorldWidth();
 		int height = GameState.getMainWindow().getCanvas().getHeight()*200/Config.getWorldHeight();
 		g2d.drawRect(x,y , width , height);
+	}
+
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		if (dirty) this.updateCache();
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.drawImage(cache, null, 0, 0);
 	}
 	
 	@Override
@@ -53,7 +73,6 @@ public class MiniMap extends JPanel implements MouseListener{
 			if(y<0)y=0;
 			else if(y+GameState.getMainWindow().getCanvas().getHeight()>Config.getWorldWidth())y=Config.getWorldWidth()-GameState.getMainWindow().getCanvas().getHeight();
 			GameState.getMainWindow().getCanvas().setOffset(new Point(x, y));
-			
 		}
 		
 	}
@@ -69,5 +88,4 @@ public class MiniMap extends JPanel implements MouseListener{
 
 
 	public void mouseReleased(MouseEvent arg0) {}
-	
 }
