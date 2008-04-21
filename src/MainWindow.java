@@ -54,6 +54,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
+		frame.setBackground(Color.BLACK);
 		frame.setTitle("Awesome WarGame is Awesome!");
 		
 		
