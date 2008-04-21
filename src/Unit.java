@@ -172,16 +172,16 @@ public class Unit {
 			if(this.targetUnit.getPlayer().isAI()) {
 				
 				if(this.targetUnit instanceof Worker)
-					GameState.getState().getAi().setWorkers(-1);
+					GameState.getState().getAi().getWorkers().remove(this.targetUnit);
 				if(this.targetUnit instanceof Fighter) {
 					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500)
-						GameState.getState().getAi().setFighersdef(-1);
-					GameState.getState().getAi().setFighters(-1);
+						GameState.getState().getAi().getFightersdef().remove(this.targetUnit);
+					GameState.getState().getAi().getFighters().remove(this.targetUnit);
 				}
 				if(this.targetUnit instanceof Healer) {
 					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500)
-						GameState.getState().getAi().setHealersdef(-1);
-					GameState.getState().getAi().setHealers(-1);
+						GameState.getState().getAi().getHealerssdef().remove(this.targetUnit);
+					GameState.getState().getAi().getHealers().remove(this.targetUnit);
 				}
 					
 			}
