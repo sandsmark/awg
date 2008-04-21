@@ -32,8 +32,6 @@ public class UnitPanel extends JPanel{
 	private JLabel atkIcon;
 	private JLabel armorIcon;
 	
-	private boolean test;
-	
 	private List<Unit> currentlyDisplayed = Collections.synchronizedList(new ArrayList<Unit>());;
 		
 	

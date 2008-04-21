@@ -27,7 +27,6 @@ public class AIThread extends Thread {
 				if (offender != null) ai.defendAgainst(offender);
 				}
 				ai.build();
-				
 		 		sleep(2000);
 			}
 		} catch (InterruptedException e) {

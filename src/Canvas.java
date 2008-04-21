@@ -21,7 +21,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -60,6 +62,7 @@ public class Canvas extends JPanel implements Moveable {
 
 	// Do we need to repaint the map before putting on screen?
 	private boolean dirty = true;
+	private ArrayList<Rectangle2D> dirtmap = new ArrayList<Rectangle2D>();
 
 	public ReentrantLock lock = new ReentrantLock();
 
@@ -305,8 +308,13 @@ public class Canvas extends JPanel implements Moveable {
 	 * has moved), and that we need to update our internal representation.
 	 * This saves us some repaints.
 	 */
-	public void setDirty(int x, int y) {
-		dirty = isInView(x,y) || dirty;
+	public void setDirty(int x1, int y1, int x2, int y2) {
+		GameState.getMainWindow().miniMap.dirty = true;
+		if ((isInView(x1,y1) && isInView(x2,y2))){ 
+			dirty =  true;
+			dirtmap.add(new Rectangle2D.Double(x1, y1, x2-x1, y2-y1));
+		}
+		
 	}
 
 	/**

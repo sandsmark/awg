@@ -12,15 +12,14 @@ public class WindowThread extends Thread {
 	@Override
 	public void run() {
 		Units units = GameState.getUnits();
-		MainWindow window = GameState.getMainWindow();
 		try {
 			while (running) {
 				if (units.lock.tryLock()) {
 					if (units.getSelectedUnits().size() > 0){
-						window.setSelectedUnit(units.getSelectedUnits());
+						GameState.getMainWindow().uPan.select(units.getSelectedUnits());
 					}
 					else{
-						window.delSeletectedUnit(); 
+						GameState.getMainWindow().uPan.deselect();
 					}
 					GameState.getMainWindow().resPan.update();
 					GameState.getMainWindow().miniMap.repaint();

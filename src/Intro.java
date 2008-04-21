@@ -82,7 +82,7 @@ public class Intro extends JPanel implements MouseListener{
 			img1 = blank;
 			fade();
 			if (!this.running) return;
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			img1 = ImageIO.read(getClass().getResource("/intro/1.png"));
 			img2 = blank;
 			fade();
