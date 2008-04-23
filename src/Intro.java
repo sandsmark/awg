@@ -57,31 +57,33 @@ public class Intro extends JPanel implements MouseListener{
 	
 	public void play() {
 		try {
-			img2 = ImageIO.read(getClass().getResource("/intro/0.png"));
+			x = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 320;
+			y = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 240;
 			
-			x = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (img2.getWidth() / 2);
-			y = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (img2.getHeight() / 2);
-			BufferedImage blank = new BufferedImage(img2.getWidth(),img2.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			BufferedImage blank = new BufferedImage(640, 480, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D graphics = blank.createGraphics();
 			graphics.setColor(Color.BLACK);
-			graphics.fill(new Rectangle(0,0,img2.getWidth(),img2.getHeight()));
+			graphics.fill(new Rectangle(0, 0, 640, 480));
 			
+			for (int i=0; i<3; i++) {
+				img1 = blank;
+				img2 = ImageIO.read(getClass().getResource("/intro/" + i + ".png"));
+				fade();
+				Thread.sleep(500);
+				img1 = ImageIO.read(getClass().getResource("/intro/" + i + ".png"));
+				img2 = blank;
+				fade();
+				if (!this.running) return;
+			}
 			
+			img2 = ImageIO.read(getClass().getResource("/intro/3.png"));
 			img1 = blank;
-			
-			fade();
-			if (!this.running) return;
-			Thread.sleep(500);
-			img1 = ImageIO.read(getClass().getResource("/intro/0.png"));
-			img2 = blank;
 			fade();
 			
-			img2 = ImageIO.read(getClass().getResource("/intro/1.png"));
-			img1 = blank;
-			fade();
 			if (!this.running) return;
+			
 			Thread.sleep(2000);
-			img1 = ImageIO.read(getClass().getResource("/intro/1.png"));
+			img1 = ImageIO.read(getClass().getResource("/intro/3.png"));
 			img2 = blank;
 			fade();
 			
@@ -96,7 +98,7 @@ public class Intro extends JPanel implements MouseListener{
 			if (!this.running) return;
 			this.alpha = a;
 			this.repaint();	
-			try { Thread.sleep(50); } catch (InterruptedException e) { }
+			try { Thread.sleep(100); } catch (InterruptedException e) { }
 		}
 	}
 	

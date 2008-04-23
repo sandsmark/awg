@@ -21,6 +21,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Canvas extends JPanel implements Moveable {
 	
 	private int width = 500;
 	private int height = 500;
-
+	
 	private int step = 20;
 
 	BufferedImage internalMap;
@@ -62,7 +63,6 @@ public class Canvas extends JPanel implements Moveable {
 
 	// Do we need to repaint the map before putting on screen?
 	private boolean dirty = true;
-	private ArrayList<Rectangle2D> dirtmap = new ArrayList<Rectangle2D>();
 
 	public ReentrantLock lock = new ReentrantLock();
 
@@ -129,7 +129,7 @@ public class Canvas extends JPanel implements Moveable {
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
 		try {
-			lock.lock();
+//			lock.lock();
 			Graphics2D ig2 = internalMap.createGraphics();
 			ig2.drawImage(GameState.getMap().getBaseMap(), 0, 0, width, height, offsetX, offsetY,
 					offsetX + width, offsetY + height, null);
@@ -138,7 +138,7 @@ public class Canvas extends JPanel implements Moveable {
 				if (!this.isInView(res.getPosition().x, res.getPosition().y)) continue;
 				ig2.drawImage(res.getSprite(), null, res.getPosition().x - offsetX, res.getPosition().y - offsetY);
 			}
-	
+			
 			Building humanHouse = GameState.getHuman().mainHouse;
 
 			if (this.isInView(humanHouse.getPosition().x, humanHouse.getPosition().y)||
@@ -158,9 +158,16 @@ public class Canvas extends JPanel implements Moveable {
 					ig2.drawRect(unit.getPosition().x - offsetX, unit.getPosition().y - offsetY, (int)(unit.getCurrentHealthPercent() * 25), 2);
 			}
 		} catch (Exception e) {
+			
+			
+			
+			
+			
+			
+			
 			e.printStackTrace();
 		} finally {
-			lock.unlock();
+//			lock.unlock();
 		}
 	}
 
@@ -207,53 +214,65 @@ public class Canvas extends JPanel implements Moveable {
 		case UP:
 			if (offsetY > 0) {
 				offsetY -= step;
+				this.moveInternal(0, -step);
 			}
 			break;
 		case UP_RIGHT:
 			if (offsetY > 0 && width + offsetX < mapWidth) {
 				offsetY -= step;
 				offsetX += step;
+				this.moveInternal(step, -step);
 			}
 			break;
 		case UP_LEFT:
 			if (offsetY > 0 && offsetX > 0) {
 				offsetY -= step;
 				offsetX -= step;
+				this.moveInternal(-step, -step);
 			}
 			break;
 		case DOWN:
 			if (height + offsetY < mapHeight) {
 				offsetY += step;
+				this.moveInternal(0, step);
 			}
 			break;
 		case DOWN_RIGHT:
 			if (height + offsetY < mapHeight && width + offsetX < mapWidth) {
 				offsetY += step;
 				offsetX += step;
+				this.moveInternal(step, step);
 			}
 			break;
 		case DOWN_LEFT:
 			if (height + offsetY < mapHeight && offsetX > 0) {
 				offsetY += step;
 				offsetX -= step;
+				this.moveInternal(-step, step);
 			}
 			break;
 		case LEFT:
 			if (offsetX > 0) {
 				offsetX -= step;
+				this.moveInternal(-step, step);
 			}
 			break;
 		case RIGHT:
 			if (width + offsetX < mapWidth) {
 				offsetX += step;
+				this.moveInternal(step, 0);
 			}
 			break;
 		}
 		lock.unlock();
 		if (dir != Direction.NONE) {
 			this.dirty = true;
-			this.repaint();
 		}
+	}
+
+	private void moveInternal(int dx, int dy) {
+		Graphics2D g2d = this.internalMap.createGraphics();
+		g2d.drawImage(internalMap, dx, dy, null);
 	}
 
 	/**
@@ -310,11 +329,7 @@ public class Canvas extends JPanel implements Moveable {
 	 */
 	public void setDirty(int x1, int y1, int x2, int y2) {
 		GameState.getMainWindow().miniMap.dirty = true;
-		if ((isInView(x1,y1) && isInView(x2,y2))){ 
-			dirty =  true;
-			dirtmap.add(new Rectangle2D.Double(x1, y1, x2-x1, y2-y1));
-		}
-		
+		this.dirty = this.dirty || this.isInView(x1, y1) || this.isInView(x2, y2);
 	}
 
 	/**
@@ -338,12 +353,12 @@ public class Canvas extends JPanel implements Moveable {
 		targetR = 50;
 	}
 	
-	
 	public void setOffset(Point p){
 		offsetX=p.x;
 		offsetY=p.y;
 		updateInternal();
 	}
-	
-	
 }
+
+
+

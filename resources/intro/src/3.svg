@@ -6,6 +6,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="640px"
@@ -13,19 +14,31 @@
    id="svg2383"
    sodipodi:version="0.32"
    inkscape:version="0.46"
-   sodipodi:docname="1.svg"
+   sodipodi:docname="2.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="/home/sandsmark/prosjekter/jspill/awg/resources/loading.png"
+   inkscape:export-filename="/home/sandsmark/prosjekter/awg/awg/resources/intro/2.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
      id="defs2385">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4720">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0"
+         id="stop4722" />
+      <stop
+         style="stop-color:#ff0000;stop-opacity:0;"
+         offset="1"
+         id="stop4724" />
+    </linearGradient>
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 240 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="640 : 240 : 1"
-       inkscape:persp3d-origin="320 : 160 : 1"
+       inkscape:vp_x="-77.446808 : 158.68085 : 1"
+       inkscape:vp_y="6.1230318e-14 : 1000 : 0"
+       inkscape:vp_z="616.76596 : 153.51773 : 1"
+       inkscape:persp3d-origin="242.55319 : 78.680852 : 1"
        id="perspective2391" />
     <inkscape:perspective
        id="perspective2418"
@@ -36,28 +49,100 @@
        sodipodi:type="inkscape:persp3d" />
     <filter
        inkscape:collect="always"
-       id="filter3220"
-       x="-0.037111346"
-       width="1.0742227"
-       y="-0.54589906"
-       height="2.0917981">
+       id="filter4087"
+       x="-0.10332225"
+       width="1.2066445"
+       y="-0.14442297"
+       height="1.2888459">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="8.2979471"
-         id="feGaussianBlur3222" />
+         stdDeviation="12.046122"
+         id="feGaussianBlur4089" />
     </filter>
     <filter
        inkscape:collect="always"
-       id="filter3468"
-       x="-0.21614304"
-       width="1.4322861"
-       y="-0.29697725"
-       height="1.5939545">
+       id="filter4153"
+       x="-0.13380231"
+       width="1.2676046"
+       y="-0.18702774"
+       height="1.3740555">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="43.564765"
-         id="feGaussianBlur3470" />
+         stdDeviation="15.599728"
+         id="feGaussianBlur4155" />
     </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4195"
+       x="-0.1828009"
+       width="1.3656018"
+       y="-0.25551756"
+       height="1.5110351">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="21.31237"
+         id="feGaussianBlur4197" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4313"
+       x="-0.13511371"
+       width="1.2702274"
+       y="-0.1888608"
+       height="1.3777216">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="15.752621"
+         id="feGaussianBlur4315" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4393"
+       x="-0.035227468"
+       width="1.0704549"
+       y="-0.4087649"
+       height="1.8175298">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="7.7749937"
+         id="feGaussianBlur4395" />
+    </filter>
+    <inkscape:perspective
+       id="perspective4412"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <filter
+       inkscape:collect="always"
+       id="filter4668"
+       x="-0.38455598"
+       width="1.769112"
+       y="-0.26683476"
+       height="1.5336695">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="5.4478764"
+         id="feGaussianBlur4670" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4714">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="7.4932252"
+         id="feGaussianBlur4716" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4720"
+       id="linearGradient4726"
+       x1="101.97163"
+       y1="316.07092"
+       x2="105.84397"
+       y2="316.07092"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -67,8 +152,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.77472528"
-     inkscape:cx="111.84888"
-     inkscape:cy="221.95876"
+     inkscape:cx="387.20752"
+     inkscape:cy="203.87854"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      showgrid="false"
@@ -95,13 +180,13 @@
        xml:space="preserve"
        style="font-size:49.28335953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Balker;-inkscape-font-specification:Balker"
        x="54.162819"
-       y="84.199608"
+       y="115.77408"
        id="text2419"><tspan
          sodipodi:role="line"
          id="tspan2421"
          x="54.162819"
-         y="84.199608"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial Black;-inkscape-font-specification:Arial Black">Awesome WarGame</tspan></text>
+         y="115.77408"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial Black;-inkscape-font-specification:Arial Black">Awesome Wargame</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Balker;-inkscape-font-specification:Balker"
@@ -114,9 +199,9 @@
          y="330.31403" /></text>
     <g
        id="g3359"
-       transform="matrix(0.7763553,0,0,0.7763553,75.39365,-146.46791)">
+       transform="matrix(0.7763553,0,0,0.7763553,75.39365,-72.893438)">
       <g
-         transform="matrix(1.7287839,0,0,1.7287839,-310.24079,-36.677837)"
+         transform="matrix(1.7287839,0,0,1.7287839,-310.24079,-90.776777)"
          id="g3237">
         <text
            xml:space="preserve"
@@ -139,66 +224,53 @@
              x="275.81696"
              y="413.45328">A</tspan></text>
       </g>
-      <text
-         id="text3243"
-         y="678.36639"
-         x="138.20201"
-         style="font-size:468.86123657px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
-         xml:space="preserve"><tspan
-           y="678.36639"
-           x="138.20201"
-           id="tspan3245"
-           sodipodi:role="line">G</tspan></text>
-    </g>
-    <text
-       id="text3164"
-       y="84.199608"
-       x="54.162819"
-       style="font-size:49.28335953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter3220);font-family:Balker;-inkscape-font-specification:Balker"
-       xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial Black;-inkscape-font-specification:Arial Black"
-         y="84.199608"
-         x="54.162819"
-         id="tspan3166"
-         sodipodi:role="line">Awesome WarGame</tspan></text>
-    <g
-       transform="matrix(0.7763553,0,0,0.7763553,75.39365,-146.46791)"
-       id="g3224"
-       style="filter:url(#filter3468)">
       <g
-         id="g3226"
-         transform="matrix(1.7287839,0,0,1.7287839,-310.24079,-36.677837)">
+         id="g4199"
+         transform="matrix(1.7287839,0,0,1.7287839,-310.24079,-90.776777)"
+         style="filter:url(#filter4313)">
         <text
-           id="text3228"
+           id="text4201"
            y="413.37149"
            x="231.03693"
            style="font-size:279.53793335px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial Black;-inkscape-font-specification:Arial Black"
            xml:space="preserve"><tspan
              y="413.37149"
              x="231.03693"
-             id="tspan3230"
+             id="tspan4203"
              sodipodi:role="line">W</tspan></text>
         <text
-           id="text3232"
+           id="text4205"
            y="413.45328"
            x="275.81696"
            style="font-size:244.49533081px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial Black;-inkscape-font-specification:Arial Black"
            xml:space="preserve"><tspan
              y="413.45328"
              x="275.81696"
-             id="tspan3234"
+             id="tspan4207"
              sodipodi:role="line">A</tspan></text>
       </g>
-      <text
-         xml:space="preserve"
-         style="font-size:468.86123657px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
-         x="138.20201"
-         y="678.36639"
-         id="text3236"><tspan
-           sodipodi:role="line"
-           id="tspan3238"
-           x="138.20201"
-           y="678.36639">G</tspan></text>
     </g>
+    <text
+       id="text4317"
+       y="115.77408"
+       x="54.162819"
+       style="font-size:49.28335952999999137px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Balker;-inkscape-font-specification:Balker;filter:url(#filter4393)"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial Black;-inkscape-font-specification:Arial Black"
+         y="115.77408"
+         x="54.162819"
+         id="tspan4319"
+         sodipodi:role="line">Awesome Wargame</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial Black;-inkscape-font-specification:Arial Black"
+       x="544.70923"
+       y="-152.58746"
+       id="text4401"
+       transform="scale(1,-1)"><tspan
+         sodipodi:role="line"
+         id="tspan4403"
+         x="544.70923"
+         y="-152.58746">TM</tspan></text>
   </g>
 </svg>

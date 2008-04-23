@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -55,9 +54,18 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
 		frame.setTitle("Awesome WarGame is Awesome!");
+
+		frame.setVisible(true);
+		if (Config.getIntro()) {
+			Intro intro = new Intro(frame);
+			frame.setContentPane(intro);
+			frame.pack();
+			frame.setBackground(Color.BLACK);
+			intro.play();
+		}
 		
 		
-		SplashScreen splash = new SplashScreen(frame);
+//		SplashScreen splash = new SplashScreen(frame);
 		
 		GameState.setMainWindow(this);
 		map = GameState.getMap();
@@ -102,6 +110,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer.add(canvas);
 		outer.add(menu);
 		
+		frame.setContentPane(outer);
+		
 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
 		
 		configDialog = new ConfigDialog(frame);
@@ -112,19 +122,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		aiThread = new AIThread();
 		wThread = new WindowThread();
 		mThread = new MovementThread();
-		splash.destroy();
+//		splash.destroy();
 		
-		frame.setVisible(true);
-		if (Config.getIntro()) {
-			frame.setVisible(true);
-			Intro intro = new Intro(frame);
-			frame.setContentPane(intro);
-			frame.pack();
-			frame.setBackground(Color.BLACK);
-			intro.play();
-		}
-		
-		frame.setContentPane(outer);
 		
 		gThread.start();
 		sThread.start();
