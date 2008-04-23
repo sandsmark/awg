@@ -114,5 +114,10 @@ public class Building {
 	public static int getUpgradeCost() {
 		return upgradeCost;
 	}
+	
+	public boolean isTouching(int x, int y) {
+		return x > position.x && x < position.x + sprite.getWidth() &&
+		y > position.y && y < position.y + sprite.getHeight(); 
+	}
 
 }

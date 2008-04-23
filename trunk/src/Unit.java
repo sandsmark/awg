@@ -166,7 +166,7 @@ public class Unit {
 	
 	public void dealDamage(){
 		targetUnit.hit(damage);
-//		targetUnit.setTargetUnit(this); // Physician, defend thyself.
+		targetUnit.setTargetUnit(this); // Physician, defend thyself.
 		if(targetUnit.currentHealth<=0){
 			GameState.getUnits().removeUnit(targetUnit);
 			if(this.targetUnit.getPlayer().isAI()) {
@@ -183,7 +183,6 @@ public class Unit {
 						GameState.getState().getAi().getHealerssdef().remove(this.targetUnit);
 					GameState.getState().getAi().getHealers().remove(this.targetUnit);
 				}
-					
 			}
 			this.targetUnit = null;
 			this.target = null;
@@ -209,11 +208,6 @@ public class Unit {
 
 	public double getCurrentHealthPercent() {
 		return currentHealth/maxHealth;
-	}
-	
-	public boolean isTouching(int x, int y) {
-		return x > this.position.x && x < this.position.x + sprite.getWidth()&&
-		y > this.position.y && y < this.position.y + sprite.getHeight();
 	}
 }
 
