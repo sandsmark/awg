@@ -165,9 +165,14 @@ public class Units implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
+		
 		if(ev.getSource() instanceof UnitButton){
-			deselectAllUnits();
-			selectUnit(((UnitButton)ev.getSource()).getUnit());
+			if ((ev.getModifiers()&ActionEvent.CTRL_MASK) == ActionEvent.CTRL_MASK) this.deselectUnit(((UnitButton)ev.getSource()).getUnit());
+			else {
+				System.out.println("deselect");
+				deselectAllUnits();
+				selectUnit(((UnitButton)ev.getSource()).getUnit());
+			}
 		}
 		
 	}
