@@ -8,7 +8,10 @@ public class MovementThread extends Thread {
 														// things nicely
 	protected boolean running = false; // This is true while this thread is
 										// running
-
+	
+	protected int sleeptime = 1000 / Config.getFPS(); // Sleeptime in milliseconds
+	protected long lastSlept = System.currentTimeMillis();
+	
 	public MovementThread() {
 		running = true;
 	}
@@ -23,7 +26,8 @@ public class MovementThread extends Thread {
 		Canvas canvas = GameState.getMainWindow().getCanvas(); // This holds the current canvas object
 		try {
 			while (running) {
-				sleep(100);
+				if (sleeptime - (System.currentTimeMillis() - lastSlept) > 0) sleep(sleeptime - (System.currentTimeMillis() - lastSlept));
+				this.lastSlept = System.currentTimeMillis();
 				for (int i = 0; i < units.getUnitNum(); i++) {
 					units.getUnit(i).move();
 
