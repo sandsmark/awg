@@ -33,7 +33,7 @@ public class ConfigDialog extends JDialog implements ActionListener {
 	JButton close, reset, save;
 	JSpinner height, width;
 	
-	JSlider masksize;
+	JSlider masksize, fps;
 	
 	JPanel bottom;
 	JPanel options;
@@ -49,6 +49,9 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		options = new JPanel();
 		content = new JPanel();
 		
+		/*
+		 * Buttons at the bottom
+		 */
 		close = new JButton("Close");
 		close.addActionListener(this);
 		bottom.add(close);
@@ -61,6 +64,9 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		save.addActionListener(this);
 		bottom.add(save);
 	
+		/*
+		 * Mask size for pathfinding
+		 */
 		JPanel masksize_panel = new JPanel();
 		JLabel masksize_text = new JLabel("Mask-size for pathfinding (smaller=slower):");
 		masksize = new JSlider(1, 50, Config.getMaskSize());
@@ -68,7 +74,9 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		masksize_panel.add(masksize);
 		options.add(masksize_panel);
 		
-		
+		/*
+		 * Map size.
+		 */
 		JPanel size = new JPanel();
 		JLabel size_textH = new JLabel("Height:");
 		height = new JSpinner(new SpinnerNumberModel(Config.getWorldHeight(), 500, 5000, 500));
@@ -80,6 +88,9 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		size.add(width);
 		options.add(size);
 		
+		/*
+		 * Enable/disable music checkbox
+		 */
 		JPanel music_panel = new JPanel();
 		JLabel music_text = new JLabel("Enable music:");
 		music = new JCheckBox();
@@ -89,12 +100,26 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		options.add(music_panel);
 		
 		
+		/*
+		 * Enable/disable Intro checkbox 
+		 */
 		JPanel intro_panel = new JPanel();
 		JLabel intro_text = new JLabel("Enable intro:");
 		intro = new JCheckBox();
 		intro_panel.add(intro_text);
 		intro_panel.add(intro);
 		options.add(intro_panel);
+		
+		
+		/*
+		 * FPS slider 
+		 */
+		JPanel fps_panel = new JPanel();
+		JLabel fps_text = new JLabel("Try FPS:");
+		fps = new JSlider(1,100, Config.getFPS());
+		fps_panel.add(fps_text);
+		fps_panel.add(fps);
+		options.add(fps_panel);
 		
 		options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
 		
@@ -125,7 +150,7 @@ public class ConfigDialog extends JDialog implements ActionListener {
 	}
 
 	private void saveConfig() {
-		Config.saveConfig(width.getValue().toString(), height.getValue().toString(), masksize.getValue(), music.isSelected(), intro.isSelected());
+		Config.saveConfig(width.getValue().toString(), height.getValue().toString(), masksize.getValue(), music.isSelected(), intro.isSelected(), fps.getValue());
 	}
 	
 	public void setVisible(boolean visible){

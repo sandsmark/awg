@@ -17,10 +17,11 @@ public class Config {
 	private int maskSize = 15;
 	private boolean intro = true;
 	private boolean music = true;
+	private int fps = 15;
 	
 	private Config() {
 		try {
-			int worldWidth, worldHeight, maskSize;
+			int worldWidth, worldHeight, maskSize, fps;
 			boolean music, intro;
 			
 			BufferedReader file = new BufferedReader(new FileReader("config.ini"));
@@ -45,6 +46,9 @@ public class Config {
 			if (values[4].equals("true")) intro = true;
 			else if (values[4].equals("false")) intro = false;
 			else throw new Exception();
+			
+			fps = Integer.parseInt(values[5]);
+			if (fps < 1 || fps > 100) throw new Exception();
 			
 			this.worldWidth = worldWidth;
 			this.worldHeight = worldHeight;
@@ -112,13 +116,14 @@ public class Config {
 	}
 	
 	public static void saveConfig(String width, String height, int maskSize,
-			boolean music, boolean intro) {
+			boolean music, boolean intro, int fps) {
 			try {
 				String output = width + "¤";
 				output += height + "¤";
 				output += maskSize + "¤";
 				output += music + "¤";
-				output += intro;	
+				output += intro + "¤";
+				output += fps;
 				FileWriter file = new FileWriter("config.ini");
 				file.write(output);
 				file.close();
@@ -134,6 +139,7 @@ public class Config {
 		ConfigHolder.config.maskSize = 15;
 		ConfigHolder.config.intro = true;
 		ConfigHolder.config.music = true;
+		ConfigHolder.config.fps = 15;
 	}
 	
 	public static boolean getIntro() {
@@ -142,5 +148,9 @@ public class Config {
 
 	public static boolean getMusic() {
 		return ConfigHolder.config.music;
+	}
+	
+	public static int getFPS() {
+		return ConfigHolder.config.fps;
 	}
 }

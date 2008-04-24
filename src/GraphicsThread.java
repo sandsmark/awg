@@ -2,7 +2,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class GraphicsThread extends Thread {
-	protected Moveable.Direction curdir;
+	protected Moveable.Direction curdir = Moveable.Direction.NONE;
 	protected boolean running;
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition updated = lock.newCondition();

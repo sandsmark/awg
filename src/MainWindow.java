@@ -104,9 +104,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
 
-		canvas.addMouseMotionListener(this);
-		canvas.addMouseListener(this);
-
 		outer.add(canvas);
 		outer.add(menu);
 		
@@ -122,6 +119,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		aiThread = new AIThread();
 		wThread = new WindowThread();
 		mThread = new MovementThread();
+		canvas.addMouseMotionListener(this);
+		canvas.addMouseListener(this);
 //		splash.destroy();
 		
 		
