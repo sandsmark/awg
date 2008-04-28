@@ -5,6 +5,12 @@ public class Fighter extends Unit {
 	protected static double damageMultiplier = 2;
 	public static int cost = 500;
 	
+	
+	/**
+	 * Constructor setting values to variables and adding the unit to the game.
+	 * Sets the owner of the unit to the player given as parameter
+	 * @param player
+	 */
 	public Fighter(Player player){
 		player.decreaseResources(cost);
 		
