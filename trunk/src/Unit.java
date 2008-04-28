@@ -14,6 +14,8 @@ public class Unit {
 	protected double orientation;
 	protected Path path;
 	
+	protected static double damageMultiplier = 1;
+	
 	protected double speed = 0; //How many pixels the unit moves in 1 tick
 	protected double maxSpeed = 5;
 	protected double accel = 1.5;
@@ -48,7 +50,7 @@ public class Unit {
 	}
 
 	public int getDamage() {
-		return damage;
+		return (int)(getPlayer().getDamage() * damageMultiplier);
 	}
 
 	public void setDamage(int damage) {

@@ -3,8 +3,12 @@ public class Healer extends Unit {
 
 	private int mana;
 	final static int healPower = 50; //Sette denne etter hvor mye den skal heale
+	protected static double damageMultiplier = 0.5;
+	public static int cost = 750;
 
 	public Healer(Player player) {
+		player.decreaseResources(cost);
+		
 		type = "healer";
 		setMana(100);
 		setMaxHealth(75);

@@ -6,10 +6,12 @@ public class Player {
 	Building mainHouse;
 	private boolean isAI;
 	private int resources;
+	private int damage = 5;
 	
-	public Player(boolean isAI) {
+	public Player(boolean isAI, int resources) {
 		this.isAI = isAI;
 		mainHouse = new Building(this);
+		this.resources = resources;
 	}
 	
 	
@@ -42,5 +44,18 @@ public class Player {
 	
 	public Building getMainBuilding(){
 		return mainHouse;
+	}
+	
+	public void attacked() {
+		return;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 }

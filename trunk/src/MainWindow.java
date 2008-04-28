@@ -64,8 +64,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			intro.play();
 		}
 		
-		
-//		SplashScreen splash = new SplashScreen(frame);
+		frame.setContentPane(new SplashScreen(frame));
 		
 		GameState.setMainWindow(this);
 		map = GameState.getMap();
@@ -141,6 +140,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		int resources = GameState.getHuman().getResources();
 		if (e.getSource() == close) {
 			exit();
 			/*
@@ -150,11 +150,11 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		} else if(e.getSource() == upgradeBuilding){
 			GameState.getHuman().getMainBuilding().upgradeBuilding();
 			GameState.getUnits().upgradeUnits(GameState.getHuman());
-		} else if(e.getSource() == worker){
+		} else if(e.getSource() == worker && resources >= Worker.cost){
 			GameState.getUnits().addUnit(new Worker(GameState.getHuman()));
-		} else if(e.getSource() == fighter){
+		} else if(e.getSource() == fighter && resources >= Fighter.cost){
 			GameState.getUnits().addUnit(new Fighter(GameState.getHuman()));
-		} else if(e.getSource() == healer){
+		} else if(e.getSource() == healer && resources >= Healer.cost){
 			GameState.getUnits().addUnit(new Healer(GameState.getHuman()));
 		} else if (e.getSource() == config) {
 			configDialog.setVisible(true);

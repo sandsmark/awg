@@ -14,8 +14,12 @@ public class Worker extends Unit {
 	private int maxCarrying = 500;
 	private int harvestMax = 5;
 	private boolean delivering = false;
+	protected static double damageMultiplier = 1;
+	public static int cost = 200;
 	
 	public Worker(Player player){
+		player.decreaseResources(cost);
+		
 		type = "worker";
 		setMaxHealth(500);
 		setCurrentHealth(getMaxHealth());

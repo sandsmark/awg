@@ -3,8 +3,8 @@ public class GameState {
 	private Map map = new Map();
 	private Units units = new Units();
 	private MainWindow mainWindow;
-	private Player human = new Player(false); // is not AI
-	private Player computer = new Player(true); // this, however, is AI
+	private Player human = new Player(false, 200); // is not AI
+	private Player computer = new Player(true, 200); // this, however, is AI
 	private long start = System.currentTimeMillis();
 	private AI ai;
 	
