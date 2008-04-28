@@ -106,9 +106,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		outer.add(canvas);
 		outer.add(menu);
 		
-		frame.setContentPane(outer);
-		
-		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
 		
 		configDialog = new ConfigDialog(frame);
 		
@@ -120,7 +117,6 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		mThread = new MovementThread();
 		canvas.addMouseMotionListener(this);
 		canvas.addMouseListener(this);
-//		splash.destroy();
 		
 		
 		gThread.start();
@@ -128,6 +124,12 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		mThread.start();
 		wThread.start();
 		aiThread.start();		
+		
+		frame.setContentPane(outer);
+		
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
+		
+		
 		if (Config.getMusic()) music = new Music("/music.ogg");
 	}
 
@@ -231,9 +233,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		buttons.setBackground(Color.BLACK);
 		
 		upgradeBuilding = new JButton("Upgrade");
-		worker = new JButton("Worker");
-		fighter = new JButton("Fighter");
-		healer = new JButton("Healer");
+		worker = new JButton("Worker (" + Worker.cost + ")");
+		fighter = new JButton("Fighter (" + Fighter.cost + ")");
+		healer = new JButton("Healer (" + Healer.cost + ")");
 		
 		buttons.add(upgradeBuilding);
 		buttons.add(worker);

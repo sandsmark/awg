@@ -20,7 +20,7 @@ public class ResourcePanel extends JPanel{
 		gold = new JLabel(""+GameState.getHuman().getResources());
 		gold.setForeground(Color.WHITE);
 		try {
-			add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/gull.png")))));
+			add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/gold.png")))));
 		} catch (IOException e) {
 			System.err.println("Could not load gold icon.");
 		}
