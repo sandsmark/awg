@@ -23,7 +23,7 @@ public class MiniMap extends JPanel implements MouseListener{
 	public MiniMap(int width, int height){
 		this.width = width;
 		this.height = height;
-		this.setBackground(Color.green);
+//		this.setBackground(Color.green);
 		this.addMouseListener(this);
 		this.updateCache();
 	}
@@ -33,6 +33,8 @@ public class MiniMap extends JPanel implements MouseListener{
 		cache = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = cache.createGraphics();
 		g2d.setColor(Color.RED);
+		
+		g2d.drawImage(GameState.getMap().getBaseMap(), 0, 0, width, height, 0, 0, GameState.getMap().getBaseMap().getWidth(), GameState.getMap().getBaseMap().getWidth(), null);
 		
 		//BUILDINGS
 		Point p1 = GameState.getHuman().getMainBuilding().getPosition();
