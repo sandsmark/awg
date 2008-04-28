@@ -14,8 +14,14 @@ public class Building {
 	public BufferedImage sprite;
 	private int buildingLevel; //1 == original, 2 == upgraded
 	private Player player; //The owner of the building
-	private static final int upgradeCost = 1000;
+	private static final int upgradeCost = 10000;
 	
+	/**
+	 * The constructor for Building, setting values to variables
+	 * and adds the building to the game.
+	 * Sets the player given as parameter as owner.
+	 * @param player
+	 */
 	public Building(Player player) {
 		buildingLevel = 1;
 		setMaxHealth(10000);
@@ -75,6 +81,9 @@ public class Building {
 		this.player = player;
 	}
 	
+	/**
+	 * Used by a building when it upgrades
+	 */
 	public void upgradeBuilding(){
 		if(buildingLevel == 1 && getPlayer().getResources()>upgradeCost){
 			try{
@@ -95,6 +104,10 @@ public class Building {
 	}
 	
 
+	/**
+	 * used by a building when it takes damage
+	 * @param damage
+	 */
 	public void takeDamage(int damage){
 		this.currentHealth -= damage;
 		if(currentHealth <= 0 && getSprite() != null){

@@ -9,6 +9,11 @@ public class Healer extends Unit {
 	public static int cost = 750;
 
 
+	/**
+	 * Constructor setting values to variables and adding the unit to the game.
+	 * Sets the owner of the unit to the player given as parameter
+	 * @param player
+	 */
 	public Healer(Player player) {
 		player.decreaseResources(cost);
 		type = "healer";

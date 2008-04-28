@@ -78,9 +78,8 @@ public class Unit {
 	}
 
 	public void setTargetUnit(Unit targetUnit) {
-		this.targetUnit = targetUnit;
 		if (targetUnit == null) return;
-//		this.goTo(this.targetUnit.position);
+		this.targetUnit = targetUnit;
 	}
 
 

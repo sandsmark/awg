@@ -5,8 +5,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Worker extends Unit {
-	// Bevegelses- og idrettsvitenskap for Dragvoll
-	// Bygg og milj�teknikk for Dragvoll
 
 	private int carrying; // How much resources the worker is carrying, when
 							// == 10, go home or something
@@ -17,6 +15,11 @@ public class Worker extends Unit {
 	protected static double damageMultiplier = 1;
 	public static int cost = 200;
 	
+	/**
+	 * Constructor setting values to variables and adding the unit to the game.
+	 * Sets the owner of the unit to the player given as parameter
+	 * @param player
+	 */
 	public Worker(Player player){
 		player.decreaseResources(cost);
 		
@@ -33,6 +36,9 @@ public class Worker extends Unit {
 		GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 	}
 
+	/**
+	 * Used by the worker when he delivers resources at the mainbuilding
+	 */
 	public void deliverResource() {
 		this.getPlayer().increaseResources(carrying);
 		carrying = 0;
@@ -46,12 +52,16 @@ public class Worker extends Unit {
 		this.carrying = carrying;
 	}
 
-	@Override
+	
 	public String toString() {
 		return "Worker(x:" + getPosition().x + ",y" + getPosition().y + ")";
 	}
 	
-	@Override
+	/**
+	 * The move method specific to Worker
+	 * Harvests the resource node sat as targetResource
+	 * and delivers when full
+	 */
 	public void move() {
 		Point house = getPlayer().mainHouse.getPosition();
 		if (targetResource != null) {
