@@ -18,7 +18,7 @@ public class Building {
 	
 	public Building(Player player) {
 		buildingLevel = 1;
-		setMaxHealth(1000);
+		setMaxHealth(10000);
 		setPlayer(player);
 		try {
 			if(player.isAI()){
