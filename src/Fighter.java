@@ -1,19 +1,16 @@
 import java.awt.Point;
 
-import javax.swing.JDialog;
-
 
 public class Fighter extends Unit {
-	
-	private final static int attackPower = 5;
-	
-
+	protected static double damageMultiplier = 2;
+	public static int cost = 500;
 	
 	public Fighter(Player player){
+		player.decreaseResources(cost);
+		
 		type = "fighter";
 		setMaxHealth(100);
 		setCurrentHealth(getMaxHealth());
-		setDamage(attackPower);
 		setRange(25);
 		setCurrentAction(0);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5)); // FIXX martin :P
@@ -45,6 +42,7 @@ public class Fighter extends Unit {
 		} else if(position.distance(getTargetUnit().position)<=35){
 			sprite.setDoing(true);
 			this.dealDamage();
+			if (targetUnit.getPlayer() != null) targetUnit.getPlayer().attacked();
 			GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 		} else {
 			sprite.setDoing(false);

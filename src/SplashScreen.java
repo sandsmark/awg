@@ -1,40 +1,60 @@
-import java.awt.BorderLayout;
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JWindow;
+import javax.swing.JPanel;
 
 
-public class SplashScreen extends JWindow {
+
+public class SplashScreen extends JPanel {
 	/**
 	 * @author Martin T. Sandsmark
 	 */
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 1L; 
+	private int x, y;
+	private BufferedImage img;
+	
 	public SplashScreen(Frame f) {
-		super(f);
-		try {
-			JLabel image;
-			image = new JLabel(new ImageIcon(ImageIO.read(getClass().getResource("/loading.png"))));
-			getContentPane().add(image, BorderLayout.CENTER);
-			this.pack();
-			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			Dimension imageSize = image.getPreferredSize();
-			this.setLocation(screenSize.width/2 - imageSize.width/2, screenSize.height/2 - imageSize.height/2);
-			this.setVisible(true);
+		x = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 320;
+		y = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 240;
+
+		this.setBackground(Color.BLACK);
+		try { img = ImageIO.read(getClass().getResource("/loading.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
+		this.repaint();
+	}
 
+	@Override
+	public synchronized void paintComponent(Graphics g) {
+		if (img == null) return;
+		g.drawImage(img, x, y, null);
 	}
 	
-	public void destroy() {
-		this.setVisible(false);
-		this.dispose();
+	/**
+	 * This returns the minimum size for this component.
+	 */
+	@Override
+	public Dimension getMinimumSize() {
+		return Toolkit.getDefaultToolkit().getScreenSize();
+	}
+
+	/**
+	 * This returns the preferred size for this component.
+	 */
+	@Override
+	public Dimension getPreferredSize() {
+		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 }

@@ -21,10 +21,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -129,7 +126,6 @@ public class Canvas extends JPanel implements Moveable {
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
 		try {
-//			lock.lock();
 			Graphics2D ig2 = internalMap.createGraphics();
 			ig2.drawImage(GameState.getMap().getBaseMap(), 0, 0, width, height, offsetX, offsetY,
 					offsetX + width, offsetY + height, null);
@@ -150,24 +146,17 @@ public class Canvas extends JPanel implements Moveable {
 					this.isInView(computerHouse.getPosition().x + computerHouse.getSprite().getWidth(), computerHouse.getPosition().y + computerHouse.getSprite().getHeight())) 
 				ig2.drawImage(computerHouse.getSprite(), null, computerHouse.getPosition().x - offsetX, computerHouse.getPosition().y - offsetY);
 			
-			for (Unit unit : units.getUnits()) {
-				if (!this.isInView(unit.getPosition().x, unit.getPosition().y)) continue;
-				ig2.drawImage(unit.getSprite().pop(), null, unit.getPosition().x - offsetX, unit.getPosition().y - offsetY);
-				ig2.setColor(Color.BLUE);
-				if (units.isSelected(unit))
-					ig2.drawRect(unit.getPosition().x - offsetX, unit.getPosition().y - offsetY, (int)(unit.getCurrentHealthPercent() * 25), 2);
+			if (units.getUnitNum() > 0) { 
+				for (Unit unit : units.getUnits()) {
+					if (!this.isInView(unit.getPosition().x, unit.getPosition().y)) continue;
+					ig2.drawImage(unit.getSprite().pop(), null, unit.getPosition().x - offsetX, unit.getPosition().y - offsetY);
+					ig2.setColor(Color.BLUE);
+					if (units.isSelected(unit))
+						ig2.drawRect(unit.getPosition().x - offsetX, unit.getPosition().y - offsetY, (int)(unit.getCurrentHealthPercent() * 25), 2);
+				}
 			}
 		} catch (Exception e) {
-			
-			
-			
-			
-			
-			
-			
 			e.printStackTrace();
-		} finally {
-//			lock.unlock();
 		}
 	}
 

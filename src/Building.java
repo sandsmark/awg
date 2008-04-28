@@ -84,6 +84,7 @@ public class Building {
 					GameState.getComputer().getMainBuilding().setSprite(ImageIO.read(new File("resources/buildings/end2.gif")));
 				}
 				buildingLevel = 2;
+				getPlayer().setDamage(getPlayer().getDamage() * 2);
 				getPlayer().decreaseResources(upgradeCost);
 			}catch(IOException IOE){
 				System.out.println("Error loading updated building image");

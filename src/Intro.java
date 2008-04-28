@@ -98,7 +98,7 @@ public class Intro extends JPanel implements MouseListener{
 			if (!this.running) return;
 			this.alpha = a;
 			this.repaint();	
-			try { Thread.sleep(100); } catch (InterruptedException e) { }
+			try { Thread.sleep(50); } catch (InterruptedException e) { }
 		}
 	}
 	
