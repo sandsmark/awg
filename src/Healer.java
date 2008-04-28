@@ -2,15 +2,19 @@ import java.awt.Point;
 public class Healer extends Unit {
 
 	private int mana;
+	private int maxMana;
 	final static int healPower = 50; //Sette denne etter hvor mye den skal heale
+	private double timer = System.currentTimeMillis();
 	protected static double damageMultiplier = 0.5;
 	public static int cost = 750;
 
+
 	public Healer(Player player) {
 		player.decreaseResources(cost);
-		
 		type = "healer";
+		timer = System.currentTimeMillis();
 		setMana(100);
+		setMaxMana(getMana());
 		setMaxHealth(75);
 		setCurrentHealth(getMaxHealth());
 		setCurrentAction(0);
@@ -22,6 +26,9 @@ public class Healer extends Unit {
 		GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 	}
 
+	/**
+	 * Used when a healer heals
+	 */
 	public void heal() {
 		if (mana >= 10) {
 			targetUnit.setCurrentHealth(targetUnit.getCurrentHealth() + healPower);
@@ -34,11 +41,28 @@ public class Healer extends Unit {
 	}
 
 	public void setMana(int mana) {
+		if(this.mana + mana >= getMaxMana()){
+			this.mana = getMaxMana();
+			return;
+		}else if (mana <=0){
+			this.mana = 0;
+			return;
+		}
+		
 		this.mana = mana;
 	}
 	
+	/**
+	 * The move method special for healer. Regens mana, and searches for units to heal
+	 */
 	public void move(){
 		Unit unit;
+		
+		if(timer +1000 < System.currentTimeMillis() ){
+			setMana(getMana() + 1);
+			timer = System.currentTimeMillis();
+		}
+		
 		if(targetUnit == null){
 			for (int i = 0; i < GameState.getUnits().count(); i++) {
 				unit = GameState.getUnits().getUnit(i);
@@ -51,5 +75,13 @@ public class Healer extends Unit {
 			}
 		}
 		super.move();
+	}
+
+	public int getMaxMana() {
+		return maxMana;
+	}
+
+	public void setMaxMana(int maxMana) {
+		this.maxMana = maxMana;
 	}
 }

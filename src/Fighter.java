@@ -20,6 +20,11 @@ public class Fighter extends Unit {
 		GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 	}
 	
+	
+	/**
+	 * The move method specific for Fighter. Searches for units to attack,
+	 * and attacks the mainbuilding of the opponent if there are no enemy units nearby
+	 */
 	public void move(){
 		if(targetUnit == null){
 			sprite.setDoing(false);

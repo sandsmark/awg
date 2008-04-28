@@ -96,6 +96,10 @@ public class Unit {
 		return sprite;
 	}
 	
+	/**
+	 * This uses the path-finding algorithm to find a path to the Point given as parameter.
+	 * @param target
+	 */
 	public void goTo(Point target) { 
 		this.path = new Path(this.position, target);
 		this.target = path.getNext();
@@ -158,38 +162,34 @@ public class Unit {
 		return;
 	}
 	
-	
-
-	/*
-	 * Skal brukes p� en unit som har funnet et target. 
-	 * Kan kj�res hver gang den beveger seg, og se om den er innenfor range,
-	 * om den er det, gj�r den skade p� uniten den har som targetUnit
+	/**
+	 * Used by a unit when it deals damage to another unit.
 	 */
-	
+
 	public void dealDamage(){
 		targetUnit.hit(damage);
 		targetUnit.setTargetUnit(this); // Physician, defend thyself.
 		if(targetUnit.currentHealth<=0){
 			GameState.getUnits().removeUnit(targetUnit);
 			if(this.targetUnit.getPlayer().isAI()) {
-				
-				if(this.targetUnit instanceof Worker)
+				if(this.targetUnit instanceof Worker){
 					GameState.getState().getAi().getWorkers().remove(this.targetUnit);
+				}
 				if(this.targetUnit instanceof Fighter) {
-					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500)
+					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500){
 						GameState.getState().getAi().getFightersdef().remove(this.targetUnit);
+					}
 					GameState.getState().getAi().getFighters().remove(this.targetUnit);
 				}
 				if(this.targetUnit instanceof Healer) {
-					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500)
+					if(this.targetUnit.position.distance(GameState.getComputer().getMainBuilding().getPosition())>500){
 						GameState.getState().getAi().getHealerssdef().remove(this.targetUnit);
+					}
 					GameState.getState().getAi().getHealers().remove(this.targetUnit);
 				}
 			}
 			this.targetUnit = null;
-			this.target = null;
-			System.out.println("TargetUnit removed. Player is computer:" + this.getPlayer().isAI());
-			
+			this.target = null;			
 		}
 	}
 
@@ -202,6 +202,12 @@ public class Unit {
 	}
 	
 	public void setTargetResource(Resource r) {}
+	
+	/**
+	 * Used by a Unit when it deals damage to a target.
+	 * Deals amount damage given as parameter to this unit.
+	 * @param damage
+	 */
 	
 	public void hit(int damage) {
 		this.currentHealth -= damage;
