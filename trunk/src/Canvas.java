@@ -22,8 +22,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JPanel;
 
@@ -34,58 +32,67 @@ import javax.swing.JPanel;
  */
 public class Canvas extends JPanel implements Moveable {
 
-	/**
-	 * TODO: Optimize drawing, "dirty" rectangles. Split up into several "sub-maps", which are re-drawn only when necessary.
-	 */
+	private static final long serialVersionUID = -8405062922089886955L;
 	
-	private static final long serialVersionUID = 1L; // Ignorer
-
+	/*
+	 * Offsets inside the map.
+	 */
 	private int offsetX = 0;
 	private int offsetY = 0;
 	
+	/*
+	 * Dimensions of this widget.
+	 */
 	private int width = 500;
 	private int height = 500;
 	
-	private int step = 20;
+	/*
+	 * How much to scroll in each direction.
+	 */
+	private int scrollStep = 20;
 
-	BufferedImage internalMap;
+	/*
+	 * Internal cache of the current view of the map.
+	 */
+	BufferedImage mapCache;
 	
-	// Selectbox
+	/*
+	 * This is for the selection box that is drawn on screen.
+	 */
 	private int bx, by, bw, bh = 0;
 	private boolean showBox = false;
 	
-	// Targetting circle
-	private Point target;
-	private int targetR = 20;
+	/*
+	 * This is for the targeting circle shown on screen. 
+	 */
+	private Point targetPosition;
+	private int targetRadius = 20;
 
-	// Do we need to repaint the map before putting on screen?
+	/*
+	 * This decides if the internal map cache needs to be updated.
+	 */
 	private boolean dirty = true;
 
-	public ReentrantLock lock = new ReentrantLock();
-
 	/**
-	 * This constructs a new canvas, and creates a new internal map.
+	 * This constructs a new canvas, and creates a new internal map cache.
 	 */
 	public Canvas() {
 		int mapHeight = GameState.getMap().getHeight();
 		int mapWidth = GameState.getMap().getWidth();
 		
-		internalMap = new BufferedImage(mapHeight, mapWidth, BufferedImage.TYPE_INT_ARGB); // Overwrite the old internal map
+		mapCache = new BufferedImage(mapHeight, mapWidth, BufferedImage.TYPE_INT_ARGB); // Overwrite the old internal map
 		updateInternal();
 	}
 
 	/**
 	 * This overrides the JPanel paintComponent(), and renders what is on the
-	 * actual screen. 
+	 * actual screen, using the internal map cache, so we don't have to redraw
+	 * everything manually.
+	 * @param g Graphicsobject to be drawn on.
 	 */
 	@Override
 	public synchronized void paintComponent(Graphics g) {
 		try {
-			if (!lock.tryLock(500, TimeUnit.MILLISECONDS)){
-				System.err.println("ERROR: Could not get lock on canvas in a timely manner.");
-				return;
-			}
-
 			if (dirty) {
 				updateInternal();
 				dirty = false;
@@ -99,34 +106,33 @@ public class Canvas extends JPanel implements Moveable {
 				height = getSize().height;
 				dirty = true;
 			}
-			g.drawImage(internalMap, 0, 0, null);
+			g.drawImage(mapCache, 0, 0, null);
 			
 			if (showBox)
 				g.drawRect(bx, by, bw, bh);
 			
-			if (target != null) {
+			if (targetPosition != null) {
 				g.setColor(Color.RED);
-				g.drawOval(target.x - targetR / 2, target.y - targetR / 2, targetR, targetR);
-				targetR /= 1.5;
-				if (targetR < 2) target = null;
+				g.drawOval(targetPosition.x - targetRadius / 2, targetPosition.y - targetRadius / 2, targetRadius, targetRadius);
+				targetRadius /= 1.5;
+				if (targetRadius < 2) targetPosition = null;
 			}
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
+			/*
+			 * Exceptions happening here should not affect the overall gamestate.
+			 */
 			e.printStackTrace();
-		} finally {
-			lock.unlock();
 		}
-
 	}
 	
 	/**
-	 * This method updates the internal map representation/cache, which
-	 * contains the two lowest layers.
+	 * This method updates the internal map cache.
 	 */
 	public synchronized void updateInternal() {
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
 		try {
-			Graphics2D ig2 = internalMap.createGraphics();
+			Graphics2D ig2 = mapCache.createGraphics();
 			ig2.drawImage(GameState.getMap().getBaseMap(), 0, 0, width, height, offsetX, offsetY,
 					offsetX + width, offsetY + height, null);
 			
@@ -156,6 +162,9 @@ public class Canvas extends JPanel implements Moveable {
 				}
 			}
 		} catch (Exception e) {
+			/*
+			 * Exceptions happening here are not fatal.
+			 */
 			e.printStackTrace();
 		}
 	}
@@ -194,74 +203,80 @@ public class Canvas extends JPanel implements Moveable {
 
 	/**
 	 * This moves the offset of the internal map, in a given direction.
+	 * This code is a bit hairy, but necessary, and it should be rather clean.
+	 * @param dir Which direction to move in. 
 	 */
 	public void move(Direction dir) {
 		int mapHeight = GameState.getMap().getHeight();
 		int mapWidth = GameState.getMap().getWidth();
-		lock.lock();
 		switch (dir) {
 		case UP:
 			if (offsetY > 0) {
-				offsetY -= step;
-				this.moveInternal(0, -step);
+				offsetY -= scrollStep;
+				this.moveInternal(0, -scrollStep);
 			}
 			break;
 		case UP_RIGHT:
 			if (offsetY > 0 && width + offsetX < mapWidth) {
-				offsetY -= step;
-				offsetX += step;
-				this.moveInternal(step, -step);
+				offsetY -= scrollStep;
+				offsetX += scrollStep;
+				this.moveInternal(scrollStep, -scrollStep);
 			}
 			break;
 		case UP_LEFT:
 			if (offsetY > 0 && offsetX > 0) {
-				offsetY -= step;
-				offsetX -= step;
-				this.moveInternal(-step, -step);
+				offsetY -= scrollStep;
+				offsetX -= scrollStep;
+				this.moveInternal(-scrollStep, -scrollStep);
 			}
 			break;
 		case DOWN:
 			if (height + offsetY < mapHeight) {
-				offsetY += step;
-				this.moveInternal(0, step);
+				offsetY += scrollStep;
+				this.moveInternal(0, scrollStep);
 			}
 			break;
 		case DOWN_RIGHT:
 			if (height + offsetY < mapHeight && width + offsetX < mapWidth) {
-				offsetY += step;
-				offsetX += step;
-				this.moveInternal(step, step);
+				offsetY += scrollStep;
+				offsetX += scrollStep;
+				this.moveInternal(scrollStep, scrollStep);
 			}
 			break;
 		case DOWN_LEFT:
 			if (height + offsetY < mapHeight && offsetX > 0) {
-				offsetY += step;
-				offsetX -= step;
-				this.moveInternal(-step, step);
+				offsetY += scrollStep;
+				offsetX -= scrollStep;
+				this.moveInternal(-scrollStep, scrollStep);
 			}
 			break;
 		case LEFT:
 			if (offsetX > 0) {
-				offsetX -= step;
-				this.moveInternal(-step, step);
+				offsetX -= scrollStep;
+				this.moveInternal(-scrollStep, scrollStep);
 			}
 			break;
 		case RIGHT:
 			if (width + offsetX < mapWidth) {
-				offsetX += step;
-				this.moveInternal(step, 0);
+				offsetX += scrollStep;
+				this.moveInternal(scrollStep, 0);
 			}
 			break;
 		}
-		lock.unlock();
 		if (dir != Direction.NONE) {
 			this.dirty = true;
 		}
 	}
 
+	/**
+	 * This moves the internal map cache in the direction specified 
+	 * by the supplied delta x/y-coordinates.
+	 * @param dx How far to move in the X-plane.
+	 * @param dy How far to move in the Y-plane.
+	 */
 	private void moveInternal(int dx, int dy) {
-		Graphics2D g2d = this.internalMap.createGraphics();
-		g2d.drawImage(internalMap, dx, dy, null);
+		Graphics2D g2d = this.mapCache.createGraphics();
+		g2d.drawImage(mapCache, dx, dy, null);
 	}
 
 	/**
@@ -282,11 +297,11 @@ public class Canvas extends JPanel implements Moveable {
 
 	/**
 	 * This sets the coordinates for the selection box used for selecting units.
-	 * These coordinates are used by the paintComponent()-function. 
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
+	 * These coordinates are used by the paintComponent()-function.
+	 * @param x1 Corner one, x coordinate.
+	 * @param y1 Corner one, y coordinate.
+	 * @param x2 Corner two, x coordinate. 
+	 * @param y2 Corner two, y coordinate.
 	 */
 	public void drawSelectBox(int x1, int y1, int x2, int y2) {
 		if (x1 < x2)
@@ -304,48 +319,61 @@ public class Canvas extends JPanel implements Moveable {
 	}
 
 	/**
-	 * This hides the selection box.
+	 * This hides the selection box if it is currently displayed,
+	 * and forces an update of the internal map cache.
 	 */
 	public void hideSelectBox() {
+		if (!showBox) return;
 		showBox = false;
-		repaint();
+		this.dirty = true;
 	}
 
 	/**
 	 * This specifies that the map has been updated somehow (for example a unit
 	 * has moved), and that we need to update our internal representation.
-	 * This saves us some repaints.
+	 * @param x1 First corner, X coordinate.
+	 * @param y1 First corner, Y coordinate.
+	 * @param x2 Second corner, X coordinate.
+	 * @param y2 Second corner, Y coordinate. 
 	 */
 	public void setDirty(int x1, int y1, int x2, int y2) {
 		GameState.getMainWindow().miniMap.dirty = true;
-		this.dirty = this.dirty || this.isInView(x1, y1) || this.isInView(x2, y2);
+		this.dirty = this.dirty || 
+		this.isInView(x1, y1) || 
+		this.isInView(x2, y2) ||
+		this.isInView(x1, y2) || 
+		this.isInView(x2, y1) ;
 	}
 
 	/**
 	 * This returns true if the coordinates supplied are currently in view. 
-	 * @param x
-	 * @param y
-	 * @return 
+	 * @param x X coordinate to be checked.
+	 * @param y Y coordinate to be checked.
+	 * @return true if supplied x and y coordinates are in view.
 	 */
 	private boolean isInView(int x, int y){
 		return (x >= offsetX - 25 && y >= offsetY - 25&& x <= offsetX + width && y <= offsetY + height);
 	}
 	
 	/**
-	 * This sets up the coordinates and radius for the target-circle, and
+	 * This sets up the coordinates and radius for the target circle, and
 	 * therefore makes it be displayed.
-	 * @param x
-	 * @param y
+	 * @param x X coordinate where the target circle should be shown.
+	 * @param y Y coordinate where the target circle should be shown.
 	 */
 	public void showTarget (int x, int y) {
-		target = new Point(x, y);
-		targetR = 50;
+		targetPosition = new Point(x, y);
+		targetRadius = 50;
 	}
 	
+	/**
+	 * This manually sets the offset to the X and Y coordinates specified.
+	 * @param p This contains the X and Y coordinates.
+	 */
 	public void setOffset(Point p){
-		offsetX=p.x;
-		offsetY=p.y;
-		updateInternal();
+		offsetX = p.x;
+		offsetY = p.y;
+		this.dirty = true;
 	}
 }
 
