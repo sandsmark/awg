@@ -1,6 +1,6 @@
 /**
  * 
- * @author Stian Veum Møllersen
+ * @author Stian Veum MÃ¸llersen
  * makur of awsoem AI
  *
  */

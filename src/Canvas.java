@@ -22,13 +22,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPanel;
 
 
 /**
- * Epic and great canvas, for drawing things (the central graphics thingy...)
- *  @author Martin Sandsmark
+ * This is the central graphics widget on screen.
+ *  @author Martin T. Sandsmark
  */
 public class Canvas extends JPanel implements Moveable {
 

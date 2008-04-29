@@ -1,24 +1,74 @@
+/*
+Copyright (C) 2008 Martin T. Sandsmark
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
+/**
+ * This is the central configuration storage. It is a singleton, 
+ * with mechanisms for saving and loading the configuration from file.
+ *  @author Martin T. Sandsmark
+ */
 public class Config {
+	/*
+	 * Size of the map. 
+	 */
+	private int worldWidth = 1500;
+	private int worldHeight = 1500;
 	
 	/*
-	 * 2000x2000 breaks the ai, for unknown reasons
+	 * Size of individual units.
 	 */
-	private int worldWidth = 1500; // x pixels wide
-	private int worldHeight = 1500; // y pixels high
-	private int unitWidth = 25; //Ditto
+	private int unitWidth = 25;
 	private int unitHeight = 25;
-	private int sleeptime = 50; // in ms.
+	
+	/*
+	 * Generic sleeptime for threads.
+	 */
+	private int sleeptime = 50;
+	
+	/*
+	 * This defines the crudeness of the path finding algorithm.
+	 */
 	private int maskSize = 15;
+	
+	/*
+	 * This decides if we should play the intro.
+	 */
 	private boolean intro = true;
+	
+	/*
+	 * This decides if music should be turned on or off.
+	 */
 	private boolean music = true;
+	
+	/*
+	 * Frames per seconds that should be tried to be forced (through the MovementThread).
+	 */
 	private int fps = 15;
 	
+	/**
+	 * This constructor tries to load in configured values from a file.
+	 * If it fails, the values are not saved into the object, and the default values
+	 * specified above are used.  
+	 */
 	private Config() {
 		try {
 			int worldWidth, worldHeight, maskSize, fps;
@@ -42,7 +92,6 @@ public class Config {
 			else if (values[3].equals("false")) music = false;
 			else throw new Exception();
 
-
 			if (values[4].equals("true")) intro = true;
 			else if (values[4].equals("false")) intro = false;
 			else throw new Exception();
@@ -56,65 +105,104 @@ public class Config {
 			this.music = music;
 			this.intro = intro;
 
-			
 		} catch (Exception e) {
-			System.err.println("Could not load config.");
+			/*
+			 * This is not fatal, and could happen for any number of reasons.
+			 * When this occurs, the default values should be used.
+			 */
+			System.err.println("Could not load config from file.");
 		}
 
 	}
 	
+	/**
+	 * This is the base for the configuration singleton.
+	 * This static class only contains one Config object, which is the 
+	 * config that should be used at all times.
+	 * @author Martin T. Sandsmark
+	 *
+	 */
 	private static class ConfigHolder {
 		private final static Config config = new Config();
 	}
 	
 	/**
-	 * @return the worldWidth
+	 * @return the map width
 	 */
 	public static int getWorldWidth() {
 		return ConfigHolder.config.worldWidth;
 	}
+	/**
+	 * @param w the new map width
+	 */
 	public static void setWorldWidth(int w) {
 		ConfigHolder.config.worldWidth = w;
 	}
+	
+	
 	/**
-	 * @return the worldHeight
+	 * @return the map height.
 	 */
 	public static int getWorldHeight() {
 		return ConfigHolder.config.worldHeight;
 	}
+	/**
+	 * @param h the new map height. 
+	 */
 	public static void setWorldHeight(int h){
 		ConfigHolder.config.worldHeight = h;
 	}
+	
+	
 	/**
-	 * @return the unitWidth
+	 * @return the unit width
 	 */
 	public static int getUnitWidth() {
 		return ConfigHolder.config.unitWidth;
 	}
+	
 	/**
-	 * @return the unitHeight
+	 * @return the unit height
 	 */
 	public static int getUnitHeight() {
 		return ConfigHolder.config.unitHeight;
 	}
+	
 	/**
-	 * @return the sleeptime
+	 * @return the sleeptime.
 	 */
 	public static int getSleeptime() {
 		return ConfigHolder.config.sleeptime;
 	}
+	/**
+	 * @param sleeptime Generic thread sleep time.
+	 */
 	public static void setSleeptime(int sleeptime) {
 		ConfigHolder.config.sleeptime = sleeptime;
 	}
 	
-	
+	/**
+	 * @return Crudeness of the path finding algorithm.
+	 */
 	public static int getMaskSize() {
 		return ConfigHolder.config.maskSize;
 	}
+	/**
+	 * @param maskSize The new crudeness of the path finding algorithm.
+	 */
 	public static void setMaskSize(int maskSize) {
 		ConfigHolder.config.maskSize = maskSize;
 	}
 	
+	/**
+	 * This saves the new config to the config file.
+	 * @param width The new map width.
+	 * @param height The new map height.
+	 * @param maskSize The new mask size/crudeness for the path finding algorithm.
+	 * @param music This decides if music should be played.
+	 * @param intro This sets if the intro should be played.
+	 * @param fps This is the frames per second that should be tried for.
+	 */
 	public static void saveConfig(String width, String height, int maskSize,
 			boolean music, boolean intro, int fps) {
 			try {
@@ -133,6 +221,9 @@ public class Config {
 		}
 	}
 	
+	/**
+	 * This resets the configuration to more or less sane values.
+	 */
 	public static void resetConfig() {
 		ConfigHolder.config.worldWidth = 1500;
 		ConfigHolder.config.worldHeight = 1500;
@@ -142,14 +233,23 @@ public class Config {
 		ConfigHolder.config.fps = 15;
 	}
 	
+	/**
+	 * @return this returns true if the intro should be played.
+	 */
 	public static boolean getIntro() {
 		return ConfigHolder.config.intro;
 	}
 
+	/**
+	 * @return this returns true if music should be played.
+	 */
 	public static boolean getMusic() {
 		return ConfigHolder.config.music;
 	}
 	
+	/**
+	 * @return this returns the frames per second that should be tried for.
+	 */
 	public static int getFPS() {
 		return ConfigHolder.config.fps;
 	}
