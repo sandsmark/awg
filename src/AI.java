@@ -16,6 +16,7 @@ public class AI {
 	ArrayList<Unit> healers = new ArrayList<Unit>();
 	ArrayList<Unit> fightersdef = new ArrayList<Unit>();
 	ArrayList<Unit> healersdef = new ArrayList<Unit>();
+	Resource firstClosestResource = GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition());
 	
 	public AI() {
 		oppforsel = new AIrules();
@@ -117,16 +118,16 @@ public class AI {
 //			GameState.getUnits().upgradeUnits(GameState.getComputer());
 			break;
 		}
-		if(this.getWorkers().size()<WorkersActive && AI.getResources()>=200) { //bygge workers
+		if(this.getWorkers().size()<WorkersActive && AI.getResources()>=Worker.cost) { //bygge workers
 			GameState.getUnits().addUnit(new Worker(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
-			unit.goTo(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()).getPosition());
-			unit.setTargetResource(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()));
+			unit.goTo(firstClosestResource.getPosition());
+			unit.setTargetResource(firstClosestResource);
 			workers.add(unit);
 			break;
 			
 		}
-		if(this.getFightersdef().size()<FightersInDefence && AI.getResources()>=500) { //bygge fighters til forsvar
+		if(this.getFightersdef().size()<FightersInDefence && AI.getResources()>=Fighter.cost) { //bygge fighters til forsvar
 			GameState.getUnits().addUnit(new Fighter(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
@@ -135,7 +136,7 @@ public class AI {
 			fightersdef.add(unit);
 			break;
 		}
-		if(this.getHealerssdef().size()<(HealersInDefence) && AI.getResources()>=750) {
+		if(this.getHealerssdef().size()<(HealersInDefence) && AI.getResources()>=Healer.cost) {
 			GameState.getUnits().addUnit(new Healer(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
@@ -175,28 +176,20 @@ public class AI {
 		return healersdef;
 	}
 
-//	public void setFighters(int c) {
-//		if(c<0)
-//			fighters.remove;
-//	}
-//	public void setHealers(int c) {
-//		this.healers+=c;
-//	}
-//	public void setWorkers(int c) {
-//		this.workers+=c;
-//	}
-//	public int getFighersdef() {
-//		return fighersdef;
-//	}
-//	public void setFighersdef(int fighersdef) {
-//		this.fighersdef = fighersdef;
-//	}
-//	public int getHealersdef() {
-//		return healersdef;
-//	}
-//	public void setHealersdef(int healersdef) {
-//		this.healersdef = healersdef;
-//	}
+	public void idleWorkers() {
+		Resource wasClosest = firstClosestResource;
+		System.out.println(wasClosest.getRemaining());
+		if(wasClosest.getRemaining()<1){
+			Resource newClosest = GameState.getMap().getClosestNode(wasClosest.getPosition());
+			firstClosestResource = newClosest;
+			System.out.println("Its empty! :|");
+			for (Unit unit : workers) {
+				unit.goTo(newClosest.getPosition());
+				unit.setTargetResource(newClosest);
+				System.out.println("Work work");
+			}
+		}
+	}
 	
 	
 	
