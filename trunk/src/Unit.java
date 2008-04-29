@@ -114,13 +114,10 @@ public class Unit {
 		float distY = target.y - position.y;
 		orientation = Math.atan2(distY, distX);
 		
-		orientation += Math.PI; // TODO: Ugly hack
-		if (orientation < Math.PI/4 || orientation > 7 * Math.PI / 4) sprite.setDirection(Sprite.Direction.LEFT);
-		else if (orientation > Math.PI/4 && orientation < 3 * Math.PI / 4) sprite.setDirection(Sprite.Direction.BACK);
-		else if (orientation >  3 * Math.PI/4 && orientation < 5 * Math.PI / 4) sprite.setDirection(Sprite.Direction.RIGHT);
-		else if (orientation >  5 * Math.PI/4 && orientation < 7 * Math.PI / 4) sprite.setDirection(Sprite.Direction.FORWARD);
-		orientation -= Math.PI;
-		
+		if (orientation < -3*Math.PI/4 || orientation > 3*Math.PI/4) sprite.setDirection(Sprite.Direction.LEFT);
+		else if (orientation < -Math.PI/4) sprite.setDirection(Sprite.Direction.UP);
+		else if (orientation < Math.PI/4) sprite.setDirection(Sprite.Direction.RIGHT);
+		else sprite.setDirection(Sprite.Direction.DOWN);
 	}
 	
 	/**
@@ -135,8 +132,7 @@ public class Unit {
 			return;
 		}
 		
-		
-		else if (position.distance(target) <25) {
+		else if (position.distance(target) < 35) {
 			if (path.isEmpty()) {
 				target = null;
 				speed = 0;
@@ -144,21 +140,20 @@ public class Unit {
 			} else {
 				this.setTarget(path.getNext());
 			}
-		} 
-		else if (position.distance(target) < 15) speed = speed / 1.5;
+		}
 		else if (speed < maxSpeed) speed = Math.abs(speed + accel + Math.random());
-		
 		int newX = position.x + Math.round(Math.round(Math.cos(orientation) * this.speed));
 		int newY = position.y + Math.round(Math.round(Math.sin(orientation) * this.speed));
 		
+		/*
+		 * Are we lost?
+		 */
 		if (newX < 0 || newX > Config.getWorldWidth() || newY < 0 || newY > Config.getWorldHeight())
 			this.goTo(target);
+		
 		if (newX != position.x || newY != position.y)
 			GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 		this.setPosition(new Point(newX, newY));
-//		GameState.getMainWindow().canvas.setDirty(newX, newY);
-		
-		return;
 	}
 	
 	/**
