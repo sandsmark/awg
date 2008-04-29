@@ -22,6 +22,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
 import javax.swing.JPanel;
 
 
@@ -32,6 +35,8 @@ import javax.swing.JPanel;
 public class Canvas extends JPanel implements Moveable {
 
 	private static final long serialVersionUID = -8405062922089886955L;
+	
+	private ReentrantLock lock = new ReentrantLock();
 	
 	/*
 	 * Offsets inside the map.
@@ -92,6 +97,10 @@ public class Canvas extends JPanel implements Moveable {
 	@Override
 	public synchronized void paintComponent(Graphics g) {
 		try {
+			if (!lock.tryLock(500,TimeUnit.MILLISECONDS)) {
+				System.err.println("Could not acquire lock on canvas.");
+				return;
+			}
 			if (dirty) {
 				updateInternal();
 				dirty = false;
@@ -121,6 +130,8 @@ public class Canvas extends JPanel implements Moveable {
 			 * Exceptions happening here should not affect the overall gamestate.
 			 */
 			e.printStackTrace();
+		} finally {
+			lock.unlock();
 		}
 	}
 	
@@ -206,6 +217,7 @@ public class Canvas extends JPanel implements Moveable {
 	 * @param dir Which direction to move in. 
 	 */
 	public void move(Direction dir) {
+		lock.lock();
 		int mapHeight = GameState.getMap().getHeight();
 		int mapWidth = GameState.getMap().getWidth();
 		switch (dir) {
@@ -265,6 +277,7 @@ public class Canvas extends JPanel implements Moveable {
 		if (dir != Direction.NONE) {
 			this.dirty = true;
 		}
+		lock.unlock();
 	}
 
 	/**
