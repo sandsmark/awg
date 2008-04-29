@@ -24,7 +24,8 @@ public class AIThread extends Thread {
 			while (running) {
 				if(ai.willDefend()) {
 				offender = ai.getOffender();
-				if (offender != null) ai.defendAgainst(offender);
+//				if (offender != null) 
+					ai.defendAgainst(offender);
 				}
 				ai.build();
 				ai.idleWorkers();

@@ -47,7 +47,7 @@ public class AI {
 //		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
-			if(!(unit.getPlayer().isAI()) && mainb.distance(unit.getPosition())<defParamRad ) {
+			if(!(unit.getPlayer().isAI()) && mainb.distance(unit.getPosition())<=defParamRad ) {
 				System.out.println("Thou shalt defend!");
 				return true;
 			}
@@ -75,9 +75,10 @@ public class AI {
 //			if(unit.getPlayer().isAI()) {
 //				if(unit instanceof Fighter || unit instanceof Healer) {
 //					if (!offender.equals(unit.getTargetUnit())) {
-						unit.setTargetUnit(offender);
 						unit.goTo(offender.getPosition());
-						System.out.println("I R DEFENDOR");
+						unit.setTargetUnit(offender);
+						
+						System.out.println(unit+"I R DEFENDOR");
 //					}
 //				}
 //			}
