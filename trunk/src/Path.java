@@ -1,9 +1,30 @@
+/*
+Copyright (C) 2008 Martin T. Sandsmark
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
-
+/**
+ * This class contains a path, and methods for finding new paths. 
+ * @author Martin T. Sandsmark
+ */
 public class Path implements Comparable<Path> {
 	LinkedList<Point> path = new LinkedList<Point>();
 
@@ -56,41 +77,61 @@ public class Path implements Comparable<Path> {
 		length = 0;
 	}
 
+	/**
+	 * This returns the length of the path.
+	 * @return
+	 */
 	public int getLength() {
 		return length;
 	}
 	
+	/**
+	 * This compares this path to another path.
+	 */
 	public int compareTo(Path other) {
 		if (other.getWeight() > this.getWeight()) return -1;
 		else if (other.getWeight() < this.getWeight()) return 1;
 		else return 0;
 	}
 
+	/**
+	 * Return the weight of this path (length + distance to target)
+	 */
 	public double getWeight() {
 		return left + length; 
 	}
 	
+	/**
+	 * @return returns true if this path is empty.
+	 */
 	public boolean isEmpty() {
 		return path.isEmpty();
 	}
 	
+	/**
+	 * Returns and removes next point in the path.
+	 */
 	public Point getNext() {
 		if (!path.isEmpty()) return path.remove();
 		return null;
 	}
 	
+	/**
+	 * @return returns the last point in the path.
+	 */
 	public Point getLast() {
 		return path.get(path.size() - 1);
 	}
 	
 	/**
 	 * Utilizes A* to find a Path from Point start to Point target.
-	 * @param target
-	 * @param start
-	 * @param canvas
-	 * @return
+	 * @param target is the target point.
+	 * @param start is the point of origin.
+	 * @return returns shortest path from start to target.
 	 */
 	public static Path findPath (Point start, Point target) {
+		long startTime = System.currentTimeMillis();
+		
 		int width = GameState.getMap().getWidth() / factor;
 		int height= GameState.getMap().getHeight() / factor;
 		
@@ -113,6 +154,10 @@ public class Path implements Comparable<Path> {
 		Path path;
 		Point point;
 		while (!queue.isEmpty()) {
+			if (startTime - System.currentTimeMillis() > 1000) {
+				System.err.println("Pathfinding timed out!");
+				return null;
+			}
 			path = queue.first();
 			queue.remove(path);
 			point = path.getLast();
