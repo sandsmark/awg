@@ -1,6 +1,23 @@
+/*
+Copyright (C) 2008 Martin T. Sandsmark
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -13,21 +30,12 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
-/*
- * ConfigDialog.java
- *
- * Created on April 11, 2008, 2:38 PM
- */
-
 /**
- * 
- * @author sandsmark
+ * This implements the configuration dialog. It works closely with the Config
+ * singleton for storage and retrieval of current configuration. 
+ * @author Martin T. Sandsmark
  */
 public class ConfigDialog extends JDialog implements ActionListener {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2348679567504348977L;
 	
 	JButton close, reset, save;
@@ -43,6 +51,10 @@ public class ConfigDialog extends JDialog implements ActionListener {
 	JCheckBox music;
 	JCheckBox intro;
 
+	/**
+	 * This constructor sets up the window, but doesn't show it.
+	 * @param frame this is the parent JFrame.
+	 */
 	public ConfigDialog (JFrame frame) {
 		super(frame);
 		bottom = new JPanel();
@@ -132,6 +144,10 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 	
+	/**
+	 * This gets called when buttons are pushed, and handles them appropriately. 
+	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == save) {
 			this.saveConfig();
@@ -149,15 +165,24 @@ public class ConfigDialog extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * This uses the Config singleton to save the configuration to file.
+	 */
 	private void saveConfig() {
 		Config.saveConfig(width.getValue().toString(), height.getValue().toString(), masksize.getValue(), music.isSelected(), intro.isSelected(), fps.getValue());
 	}
 	
+	/**
+	 * This sets the visibility of this window.
+	 */
 	public void setVisible(boolean visible){
 		if (visible) loadConfig();
 		super.setVisible(visible);
 	}
 	
+	/**
+	 * This loads the configuration from the Config singleton into this GUI.
+	 */
 	private void loadConfig() {
 		this.width.setValue(Config.getWorldWidth());
 		this.height.setValue(Config.getWorldHeight());

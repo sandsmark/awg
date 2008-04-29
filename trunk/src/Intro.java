@@ -1,3 +1,21 @@
+/*
+Copyright (C) 2008 Martin T. Sandsmark
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,26 +32,52 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 
-
+/**
+ * This displays the pretty fading intro.
+ * @author Martin T. Sandsmark
+ */
 public class Intro extends JPanel implements MouseListener{
-	/**
-	 * @author Martin T. Sandsmark
-	 */
 	private static final long serialVersionUID = 1L;
-	private float alpha = 1f; 
-	private int x, y;
-	private BufferedImage img1, img2;
-	private boolean running = true;
 	
+	/*
+	 * The current alpha value of the displayed slide.
+	 */
+	private float alpha = 1f;
+	
+	/*
+	 * Coordinates of the displayed slide.
+	 */
+	private int x, y;
+	
+	/*
+	 * The foreground and background slide.
+	 */
+	private BufferedImage img1, img2;
+	
+	/*
+	 * This decides if this intro should be running.
+	 */
+	private boolean running = true;
+
+	/**
+	 * This sets up the intro window.
+	 * @param f the parent JFrame.
+	 */
 	public Intro(Frame f) {
 		this.addMouseListener(this);
 		this.setBackground(Color.BLACK);
 	}
 
+	/**
+	 * This stops the intro when a mousebutton is pressed.
+	 */
 	public void mouseClicked(MouseEvent e) {
 		this.running = false;
 	}
 
+	/**
+	 * This draws the specified images on screen with proper alpha.
+	 */
 	@Override
 	public synchronized void paintComponent(Graphics g) {
 		if (img1 == null || img2 == null) return;
@@ -55,6 +99,9 @@ public class Intro extends JPanel implements MouseListener{
 	
 	public void mouseReleased(MouseEvent e) {}
 	
+	/**
+	 * This plays of the intro, setting the appropriate slides, and fading.
+	 */
 	public void play() {
 		try {
 			x = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 320;
@@ -65,34 +112,35 @@ public class Intro extends JPanel implements MouseListener{
 			graphics.setColor(Color.BLACK);
 			graphics.fill(new Rectangle(0, 0, 640, 480));
 			
-			for (int i=0; i<3; i++) {
-				img1 = blank;
+			img1 = blank;
+			for (int i=0; i<=3; i++) {
 				img2 = ImageIO.read(getClass().getResource("/intro/" + i + ".png"));
 				fade();
-				Thread.sleep(500);
-				img1 = ImageIO.read(getClass().getResource("/intro/" + i + ".png"));
-				img2 = blank;
-				fade();
+				img1 = img2;
+				sleep(500);
 				if (!this.running) return;
 			}
-			
-			img2 = ImageIO.read(getClass().getResource("/intro/3.png"));
-			img1 = blank;
-			fade();
-			
-			if (!this.running) return;
-			
-			Thread.sleep(2000);
-			img1 = ImageIO.read(getClass().getResource("/intro/3.png"));
+			sleep(2000);
 			img2 = blank;
 			fade();
-			
-			
 		} catch (Exception e) { e.printStackTrace();}
 			
 		
 	}
 	
+	/**
+	 * Sleeps for the specified number of seconds, unless interrupted.
+	 * @param i
+	 * @throws InterruptedException 
+	 */
+	private void sleep(int i) throws InterruptedException {
+		double start = System.currentTimeMillis();
+		while (running&&(System.currentTimeMillis() - start) < i){
+			if (!running) return;
+			Thread.sleep(10);
+		}
+	}
+
 	private void fade() {
 		for (float a = 1f; a>0; a -= .05){
 			if (!this.running) return;
