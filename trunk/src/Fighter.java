@@ -32,7 +32,8 @@ public class Fighter extends Unit {
 	 * and attacks the mainbuilding of the opponent if there are no enemy units nearby
 	 */
 	public void move(){
-		if(targetUnit == null){
+		super.move();
+		if(targetUnit == null) {
 			sprite.setDoing(false);
 			for (Unit unit : GameState.getUnits().getUnits()) {
 				if(unit.getPlayer() != this.getPlayer() && position.distance(unit.position) < 100){
@@ -50,16 +51,14 @@ public class Fighter extends Unit {
 			targetUnit = null;
 			GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 			return;
-		} else if(position.distance(getTargetUnit().position)<=35){
+		} else if(position.distance(getTargetUnit().position) <= 35){
 			sprite.setDoing(true);
 			this.dealDamage();
 			if (targetUnit.getPlayer() != null) targetUnit.getPlayer().attacked();
 			GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
-		} else {
+		} else if (this.path.isEmpty()){
 			sprite.setDoing(false);
 			this.goTo(targetUnit.position);
 		}
-			
-		super.move();
 	}
 }
