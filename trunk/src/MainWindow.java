@@ -233,7 +233,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		buttons.setLayout(new GridLayout(6,1));
 		buttons.setBackground(Color.BLACK);
 		
-		upgradeBuilding = new JButton("Upgrade");
+		upgradeBuilding = new JButton("Upgrade (" + Building.getUpgradeCost() + ")" );
 		worker = new JButton("Worker (" + Worker.cost + ")");
 		fighter = new JButton("Fighter (" + Fighter.cost + ")");
 		healer = new JButton("Healer (" + Healer.cost + ")");
