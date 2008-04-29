@@ -34,7 +34,7 @@ public class AIrules {
 		this.aggro = 36000000; //i ms
 		this.defence = 6;
 		this.fighterPerHealer = 5;
-		this.startGold = 50000;
+		this.startGold = 500;
 		this.upgrade = 600000; //i ms
 		this.totalAttackForce = 50;
 		this.healersInDefence = 1;
