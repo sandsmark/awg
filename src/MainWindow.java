@@ -159,6 +159,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		} else if(e.getSource() == healer && resources >= Healer.cost){
 			GameState.getUnits().addUnit(new Healer(GameState.getHuman()));
 		} else if (e.getSource() == config) {
+			configDialog.setAlwaysOnTop(true);
 			configDialog.setVisible(true);
 		}
 	}
