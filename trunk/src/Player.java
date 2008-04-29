@@ -50,6 +50,11 @@ public class Player {
 		return;
 	}
 
+	public void setResources(int resources) {
+		this.resources = resources;
+	}
+
+
 	public int getDamage() {
 		return damage;
 	}

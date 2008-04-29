@@ -26,6 +26,7 @@ public class AI {
 		HealersInDefence = oppforsel.getHealersInDefence();
 		FightersInDefence = oppforsel.getFightersInDefence();
 		WorkersActive = oppforsel.getWorkers();
+		AI.setResources(oppforsel.getStartGold());
 			
 	}
 
@@ -116,7 +117,7 @@ public class AI {
 //			GameState.getUnits().upgradeUnits(GameState.getComputer());
 			break;
 		}
-		if(this.getWorkers().size()<WorkersActive) { //bygge workers
+		if(this.getWorkers().size()<WorkersActive && AI.getResources()>=200) { //bygge workers
 			GameState.getUnits().addUnit(new Worker(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 			unit.goTo(GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition()).getPosition());
@@ -125,7 +126,7 @@ public class AI {
 			break;
 			
 		}
-		if(this.getFightersdef().size()<FightersInDefence) { //bygge fighters til forsvar
+		if(this.getFightersdef().size()<FightersInDefence && AI.getResources()>=500) { //bygge fighters til forsvar
 			GameState.getUnits().addUnit(new Fighter(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
@@ -134,7 +135,7 @@ public class AI {
 			fightersdef.add(unit);
 			break;
 		}
-		if(this.getHealerssdef().size()<(HealersInDefence)) {
+		if(this.getHealerssdef().size()<(HealersInDefence) && AI.getResources()>=750) {
 			GameState.getUnits().addUnit(new Healer(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
 //			Point newPoint = unit.getPosition();
