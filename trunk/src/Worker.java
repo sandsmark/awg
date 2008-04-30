@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @author Magnus Fjell
+ *
+ */
 public class Worker extends Unit {
 
 	private int carrying; // How much resources the worker is carrying, when

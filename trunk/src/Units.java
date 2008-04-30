@@ -6,7 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * 
+ * @author Magnus Fjell
+ *
+ */
 
 public class Units implements ActionListener {
 	List<Unit> units = Collections.synchronizedList(new ArrayList<Unit>());
@@ -59,6 +63,15 @@ public class Units implements ActionListener {
 		return selectedUnits.size();
 	}
 
+	
+	/**
+	 * Selects the units inside the box given by the input coordinates,
+	 * and puts them inside the arraylist selectedUnits.
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 */
 	public void select(int x1, int y1, int x2, int y2) {
 		selectedUnits.clear();
 		if (x1 > x2)
@@ -80,6 +93,13 @@ public class Units implements ActionListener {
 		return selectedUnits.contains(u);
 	}
 
+	/**
+	 * Selects the unit at the coordinates given as parameters.
+	 * If there is more than one unit, it selects the first found at the given coordinate
+	 * in the units ArrayList and adds it to selectedUnits.
+	 * @param x
+	 * @param y
+	 */
 	public void select(int x, int y) {
 		selectedUnits.clear();
 		Point clicked = new Point(x - Config.getUnitWidth()/2, y - Config.getUnitHeight()/2);
@@ -91,6 +111,12 @@ public class Units implements ActionListener {
 		}
 	}
 
+	/**
+	 * Moves the selected unit(s) to the coordinates given as parameters
+	 * @param tarX
+	 * @param tarY
+	 */
+	
 	public void moveSelectedTo(int tarX, int tarY) {
 		for (Unit unit : this.selectedUnits)
 			unit.goTo(new Point(tarX, tarY));
@@ -115,6 +141,11 @@ public class Units implements ActionListener {
 		for (Unit unit : selectedUnits)	unit.setTargetUnit(target);
 	}
 	
+	
+	/**
+	 * Upgrades the units belonging to the player given as parameter.
+	 * @param player
+	 */
 	public void upgradeUnits(Player player){
 		Unit unit;
 		for (int i = 0; i < GameState.getUnits().count(); i++) {
@@ -141,20 +172,22 @@ public class Units implements ActionListener {
 		}
 	}
 
+	
+	/**
+	 * Sets target to the given x/y coordinates, but only workers.
+	 * If selectedUnits only contains workers, sets a resource as target
+	 * @param x
+	 * @param y
+	 */
 	public synchronized void target(int x, int y) {
-		if (GameState.getUnits().selectedOnlyContains("worker"))
+		if (GameState.getUnits().selectedOnlyContains("worker")){
 			for (Resource resource : GameState.getMap().getResources()){
 				if (resource.position.distance(new Point(x - 10, y - 10)) < 10) {
 					GameState.getUnits().setTargetResource(resource);
 					resource.startHighlight();
 				}
 			}
-		else if (this.selectedOnlyContains("fighter"))
-			for (Unit unit : this.getUnits()){
-				if (unit.position.distance(new Point(x - 10, y - 10)) < 10) {
-					if (unit.getPlayer().equals(GameState.getComputer())) this.setTargetUnit(unit);
-				}
-			}
+		}
 		GameState.getUnits().moveSelectedTo(x, y);
 		
 	}

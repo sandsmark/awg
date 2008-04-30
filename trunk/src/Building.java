@@ -6,7 +6,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
-
+/**
+ * 
+ * @author Magnus Fjell
+ *
+ */
 public class Building {
 	private Point position;
 	public int maxHealth; // How many HP the building has
