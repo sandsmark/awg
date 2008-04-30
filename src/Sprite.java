@@ -74,8 +74,7 @@ public class Sprite {
 								sprite[f][dir][c][1].setRGB(x, y, sprite[f][dir][c][0].getRGB(x, y) & 0xffff00ff);
 						filename = "/" 
 							+ basename + "/" + f + "_" + directionNames[dir] +"w" + c + ".png";
-						//The following is hacked to work only for finished sprites
-						if (f == 0) sprite[f][dir][c][2] = ImageIO.read(getClass().getResource(filename)); 
+						sprite[f][dir][c][2] = ImageIO.read(getClass().getResource(filename)); 
 					}
 				}
 			}
