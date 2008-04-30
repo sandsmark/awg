@@ -31,7 +31,6 @@ public class Worker extends Unit {
 		type = "worker";
 		setMaxHealth(500);
 		setCurrentHealth(getMaxHealth());
-		setDamage(1);
 		setRange(25);
 		setCurrentAction(0);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));

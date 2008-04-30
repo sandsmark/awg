@@ -50,10 +50,6 @@ public class Player {
 		return mainHouse;
 	}
 	
-	public void attacked() {
-		return;
-	}
-
 	public void setResources(int resources) {
 		this.resources = resources;
 	}

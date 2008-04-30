@@ -155,17 +155,14 @@ public class Units implements ActionListener {
 					Worker worker = (Worker)unit;
 					worker.setMaxCarrying(worker.getMaxCarrying() * 2);
 					worker.setMaxHealth(worker.getMaxHealth() * 2);
-					worker.setDamage(worker.getDamage() *2);
 					worker.setHarvestMax(worker.getHarvestMax()*2);
 				} else if(unit instanceof Fighter) {
 					Fighter fighter = (Fighter)unit;
-					fighter.setDamage(fighter.getDamage() * 2);
 					fighter.setMaxHealth(fighter.getMaxHealth() *2);
 				} else if(unit instanceof Healer) {
 					Healer healer = (Healer)unit;
 					healer.setMana(healer.getMana() * 2);
 					healer.setMaxHealth(healer.getMaxHealth() *2);
-					healer.setDamage(healer.getDamage() *2);
 				}
 			}
 			
