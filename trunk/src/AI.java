@@ -16,7 +16,7 @@ public class AI {
 	ArrayList<Unit> healers = new ArrayList<Unit>();
 	ArrayList<Unit> fightersdef = new ArrayList<Unit>();
 	ArrayList<Unit> healersdef = new ArrayList<Unit>();
-	Resource firstClosestResource = GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition());
+	Resource ClosestResource = GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition());
 	int fPrH;
 	long TimePassedSinceLast;
 	
@@ -99,8 +99,8 @@ public class AI {
 		if(this.getWorkers().size()<WorkersActive && AI.getResources()>=Worker.cost) { //bygge workers
 			GameState.getUnits().addUnit(new Worker(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
-			unit.goTo(firstClosestResource.getPosition());
-			unit.setTargetResource(firstClosestResource);
+			unit.goTo(ClosestResource.getPosition());
+			unit.setTargetResource(ClosestResource);
 			workers.add(unit);
 			break;
 			
@@ -164,11 +164,13 @@ public class AI {
 	}
 
 	public void idleWorkers() {
-		Resource wasClosest = firstClosestResource;
-//		System.out.println(wasClosest.getRemaining());
-		if(wasClosest.getRemaining()<1){
-			Resource newClosest = GameState.getMap().getClosestNode(wasClosest.getPosition());
-			firstClosestResource = newClosest;
+		Point node = ClosestResource.getPosition();
+		System.out.println(ClosestResource.getRemaining());
+		if(ClosestResource.getRemaining()<7700){
+			System.out.println(ClosestResource);
+			Resource newClosest = GameState.getMap().getClosestNode(node);
+			ClosestResource = newClosest;
+			System.out.println(ClosestResource);
 			System.out.println("Its empty! :|");
 			for (Unit unit : workers) {
 				unit.goTo(newClosest.getPosition());
