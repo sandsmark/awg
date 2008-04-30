@@ -1,6 +1,10 @@
 import java.awt.Point;
 
-
+/**
+ * 
+ * @author Magnus Fjell
+ *
+ */
 public class Fighter extends Unit {
 	protected static double damageMultiplier = 2;
 	public static int cost = 500;

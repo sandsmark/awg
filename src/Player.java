@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 
-
+/**
+ * 
+ * @author Magnus Fjell
+ *
+ */
 public class Player {
 	ArrayList<Unit> units = new ArrayList<Unit>();
 	Building mainHouse;

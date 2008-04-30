@@ -1,4 +1,10 @@
 import java.awt.Point;
+
+/**
+ * 
+ * @author Magnus Fjell
+ *
+ */
 public class Healer extends Unit {
 
 	private int mana;

@@ -1,5 +1,11 @@
 import java.awt.Point;
 
+
+/**
+ * 
+ * @author Magnus Fjell
+ *
+ */
 public class Unit {
 	protected Point position;
 	protected int maxHealth; // The unit's max health
@@ -78,7 +84,6 @@ public class Unit {
 	}
 
 	public void setTargetUnit(Unit targetUnit) {
-		if (targetUnit == null) return;
 		this.targetUnit = targetUnit;
 	}
 
