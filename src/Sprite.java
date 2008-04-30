@@ -59,6 +59,7 @@ public class Sprite {
 	 * @param faction defines which faction (team/color) the unit is.
 	 */
 	public Sprite (String basename, int faction) {
+		this.faction = faction;
 		try {			
 			for (int f=0; f<2; f++){
 				for (int dir=0; dir<4; dir++) {
