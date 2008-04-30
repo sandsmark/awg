@@ -165,17 +165,12 @@ public class AI {
 
 	public void idleWorkers() {
 		Point node = ClosestResource.getPosition();
-		System.out.println(ClosestResource.getRemaining());
 		if(ClosestResource.getRemaining()<7700){
-			System.out.println(ClosestResource);
 			Resource newClosest = GameState.getMap().getClosestNode(node);
 			ClosestResource = newClosest;
-			System.out.println(ClosestResource);
-			System.out.println("Its empty! :|");
 			for (Unit unit : workers) {
 				unit.goTo(newClosest.getPosition());
 				unit.setTargetResource(newClosest);
-				System.out.println("Work work");
 			}
 		}
 	}
