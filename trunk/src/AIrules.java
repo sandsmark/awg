@@ -6,7 +6,7 @@
  */
 public class AIrules {
 
-	double unitSenseRange; //radius for sansevidde
+	double unitSenseRange; //radius for sansevidde OBSOLETE
 	int attackForce; //hvor mange units før attack
 	int workers; //hvor mange workers han opererer med
 	double baseSenseRange; //hvor nære basen før han forsvarer
@@ -27,14 +27,14 @@ public class AIrules {
 		this.totalAttackForce = totalAttackForce;
 	}
 	public AIrules() {
-		this.unitSenseRange=15;
+		this.unitSenseRange=15; //OBSOLETE
 		this.attackForce = 6;
 		this.workers = 5;
 		this.baseSenseRange = 500;
-		this.aggro = 36000000; //i ms
+		this.aggro = 60000; //i ms
 		this.defence = 6;
 		this.fighterPerHealer = 5;
-		this.startGold = 500;
+		this.startGold = 5000;
 		this.upgrade = 600000; //i ms
 		this.totalAttackForce = 50;
 		this.healersInDefence = 1;

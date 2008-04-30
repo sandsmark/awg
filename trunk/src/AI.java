@@ -17,106 +17,80 @@ public class AI {
 	ArrayList<Unit> fightersdef = new ArrayList<Unit>();
 	ArrayList<Unit> healersdef = new ArrayList<Unit>();
 	Resource firstClosestResource = GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition());
+	int fPrH;
+	long TimePassedSinceLast;
 	
 	public AI() {
 		oppforsel = new AIrules();
 		AI = GameState.getComputer();
 		GameState.getState().setAi(this);
-//		workers = 1; //adde testing unit
-//		fighersdef = 1; //adde testing unit
 		HealersInDefence = oppforsel.getHealersInDefence();
 		FightersInDefence = oppforsel.getFightersInDefence();
 		WorkersActive = oppforsel.getWorkers();
 		AI.setResources(oppforsel.getStartGold());
-			
+		fPrH = oppforsel.getAttackForce()%oppforsel.getfighterPerHealer();	//==antallet healers i attackforce
+		TimePassedSinceLast = 0;
 	}
 
-//	FOREL�PIG IKKE BRUK FOR DENNE METODEN	
-//	public void checkAttackUnits() { //for units som senser andre units
-//		double senseRange = oppforsel.getUnitSenseRange();
-//		for (Unit unit : GameState.getUnits().getUnits()) {
-//			if(unit.getPlayer().isAI()) {
-//				Point center = unit.getPosition();
-//				
-//				
-//			}
-//		}
-//	}
+
 	public boolean willDefend() { //om AI vil forsvare basen sin under angrep/range
 		double defParamRad = oppforsel.getBaseSenseRange();
-//		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(!(unit.getPlayer().isAI()) && mainb.distance(unit.getPosition())<=defParamRad ) {
-				System.out.println("Thou shalt defend!");
 				return true;
 			}
 		}
-//		System.out.println("Harakiri");
 		return false;
 	}
 	
 	public Unit getOffender() {
 		double defParamRad = oppforsel.getBaseSenseRange();
-//		System.out.println("to defend or not to DIEEDIEDIEDIE!");
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
 		for(Unit unit: GameState.getUnits().getUnits()) {
 			if(unit.getPlayer().equals(GameState.getHuman()) && mainb.distance(unit.getPosition())<defParamRad ) {
-				System.out.println("Thou shalt defend! Against"+unit);
 				return unit;
 			}
 		}
-//		System.out.println("Harakiri");
 		return null;
 	}
 	
 	public void defendAgainst(Unit offender) { //forsvarer seg		
 		for (Unit unit : this.getFightersdef()) { //henter AI
-//			if(unit.getPlayer().isAI()) {
-//				if(unit instanceof Fighter || unit instanceof Healer) {
-//					if (!offender.equals(unit.getTargetUnit())) {
 						unit.goTo(offender.getPosition());
 						unit.setTargetUnit(offender);
 						
-						System.out.println(unit+"I R DEFENDOR");
-//					}
-//				}
-//			}
 		}
-//		System.out.println("Muhammed JIHAD");
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
-		long timePassed = GameState.getTime();
-//		TODO: Fix
-//		if(timePassed>oppforsel.getAggro() && ((this.getFighters()+this.getHealers())-oppforsel.getDefence())>oppforsel.getAttackForce() && ((this.getHealers()*oppforsel.getfighterPerHealer())/this.getFighters())>=1)
-		return true;
-//		else return false;
-	}
-	public void attack() { //kj�res n�r willLaunchAttack er true
-		Point target = GameState.getHuman().getMainBuilding().getPosition();
-		int countH = 0; //teller healers
-		int countF = 0; //teller fighters
-		for (Unit unit : GameState.getUnits().getUnits()) {
-			if((countH<(oppforsel.getAttackForce()%oppforsel.getfighterPerHealer())) &&(unit instanceof Healer)) {
-				unit.goTo(target);
-				countH +=1;
-			}
-			if(countF<(oppforsel.getAttackForce()-countH) && (unit instanceof Fighter)) {
-				unit.goTo(target);
-				countF +=1;
-			}
-			if((countH+countF)==oppforsel.getAttackForce())
-				break;
+		TimePassedSinceLast = GameState.getTime()-TimePassedSinceLast;
+//		System.out.println("Healers:"+healers.size()+"  Fighters:"+fighters.size());
+		if(((TimePassedSinceLast) >= oppforsel.getAggro()) && ((this.getFighters().size()+this.getHealers().size())>=(oppforsel.getAttackForce()))) {
+			System.out.println("Attack!");
+			return true;
 		}
+		return false;
+	}
+	
+	
+	public void launchAttack() { //kj�res n�r willLaunchAttack er true
+		Point target = GameState.getHuman().getMainBuilding().getPosition();
+		for (Unit unit : fighters) {
+			unit.goTo(target);
+			System.out.println("I have attacked!");
+		}
+		for (Unit unit : healers) {
+			unit.goTo(target);
+			System.out.println("I have attacked!");
+		}
+		
 		
 	}
 	public void build() { //AI sjekker om han kan bygge en unit, og hvilken unit han skal bygge
-		// må også sjekke om han builder noe/eventuelt oppgraderer noe
-		long tid = GameState.getTime();
 		while(true) {
 		if(willUpgrade()) {
 			GameState.getComputer().getMainBuilding().upgradeBuilding();
-//			GameState.getUnits().upgradeUnits(GameState.getComputer());
+			GameState.getUnits().upgradeUnits(GameState.getComputer());
 			break;
 		}
 		if(this.getWorkers().size()<WorkersActive && AI.getResources()>=Worker.cost) { //bygge workers
@@ -131,19 +105,29 @@ public class AI {
 		if(this.getFightersdef().size()<FightersInDefence && AI.getResources()>=Fighter.cost) { //bygge fighters til forsvar
 			GameState.getUnits().addUnit(new Fighter(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
-//			Point newPoint = unit.getPosition();
-//			newPoint.translate(10, 15);
-			unit.goTo(new Point(unit.getPosition().x-60, unit.getPosition().y-85));
+			unit.goTo(new Point(unit.getPosition().x-(int)((Math.random()+1)*45), unit.getPosition().y-(int)((Math.random()+1)*65)));
 			fightersdef.add(unit);
 			break;
 		}
 		if(this.getHealerssdef().size()<(HealersInDefence) && AI.getResources()>=Healer.cost) {
 			GameState.getUnits().addUnit(new Healer(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
-//			Point newPoint = unit.getPosition();
-//			newPoint.translate(50, 75);
-			unit.goTo(new Point(unit.getPosition().x-60, unit.getPosition().y-85));
+			unit.goTo(new Point(unit.getPosition().x-(int)((Math.random()+1)*45), unit.getPosition().y-(int)((Math.random()+1)*65)));
 			healersdef.add(unit);
+			break;
+		}
+		if(this.getFighters().size()<oppforsel.getAttackForce()-fPrH && AI.getResources() >= Fighter.cost) {
+			GameState.getUnits().addUnit(new Fighter(AI));
+			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
+			unit.goTo(new Point(unit.getPosition().x-(int)((Math.random()+1)*85), unit.getPosition().y-(int)((Math.random()+1)*5)));
+			fighters.add(unit);
+			break;
+		}
+		if(this.getHealers().size()<fPrH && AI.getResources() >= Healer.cost) {
+			GameState.getUnits().addUnit(new Healer(AI));
+			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
+			unit.goTo(new Point(unit.getPosition().x-(int)((Math.random()+1)*85), unit.getPosition().y-(int)((Math.random()+1)*5)));
+			healers.add(unit);
 			break;
 		}
 		
@@ -153,11 +137,10 @@ public class AI {
 	}
 	public boolean willUpgrade() {//sjekker om AI vil upgrade
 		long tid = GameState.getTime();
-//		if(GameState.getComputer().getResources()>GameState.getComputer().getMainBuilding().getUpgradeCost()) settes inn n�r upgradecost kommer
+		if(GameState.getComputer().getResources()> Building.getUpgradeCost()) //settes inn n�r upgradecost kommer
 			if(tid>oppforsel.getUpgrade() && !(GameState.getComputer().getMainBuilding().getBuildingLevel()>1)) {
 				return true;
 			}
-//		}
 		return false; 
 	}
 	
@@ -179,7 +162,7 @@ public class AI {
 
 	public void idleWorkers() {
 		Resource wasClosest = firstClosestResource;
-		System.out.println(wasClosest.getRemaining());
+//		System.out.println(wasClosest.getRemaining());
 		if(wasClosest.getRemaining()<1){
 			Resource newClosest = GameState.getMap().getClosestNode(wasClosest.getPosition());
 			firstClosestResource = newClosest;
