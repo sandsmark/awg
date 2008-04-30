@@ -61,6 +61,9 @@ public class AI {
 						unit.setTargetUnit(offender);
 						
 		}
+		for (Unit unit : this.getHealerssdef()) {
+			unit.goTo(offender.getPosition());
+		}
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
 		TimePassedSinceLast = GameState.getTime()-TimePassedSinceLast;
@@ -171,6 +174,28 @@ public class AI {
 				unit.goTo(newClosest.getPosition());
 				unit.setTargetResource(newClosest);
 				System.out.println("Work work");
+			}
+		}
+	}
+	
+	public void defendWorkers() {
+		boolean isBeingAttacked = false;
+		Point target = null;
+		for (Unit unit : workers) {
+			for(Unit offender: GameState.getUnits().getUnits()) {
+					if(!(offender.getPlayer().isAI()) && unit.getPosition().distance(offender.getPosition())<=35 ) {
+						target = offender.getPosition();
+						isBeingAttacked = true;
+						break;
+					}
+			}
+		}
+		if(isBeingAttacked) {
+			for (Unit unit : this.getFightersdef()) {
+				unit.goTo(target);
+			}
+			for (Unit unit : this.getHealerssdef()) {
+				unit.goTo(target);
 			}
 		}
 	}
