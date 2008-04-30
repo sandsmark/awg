@@ -4,6 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -17,7 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainWindow implements ActionListener, MouseMotionListener,
-		MouseListener {
+		MouseListener, KeyListener {
 	JFrame frame;
 	JPanel outer, menu, buttons;
 	Canvas canvas;
@@ -42,6 +44,8 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 	Map map;
 	
 	Music music;
+	
+	String cheatCode = "";
 
 	MainWindow() throws IOException { 
 		if (!GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().isFullScreenSupported()) { 
@@ -115,9 +119,10 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		aiThread = new AIThread();
 		wThread = new WindowThread();
 		mThread = new MovementThread();
+		
 		canvas.addMouseMotionListener(this);
 		canvas.addMouseListener(this);
-		
+		frame.addKeyListener(this);
 		
 		gThread.start();
 		sThread.start();
@@ -147,7 +152,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			exit();
 			/*
 			 * Upgrades units if the upgradeBuilding-button is pushed
-			 * as well as the unit sprite. Need to add costs for upgrades, but at a later point.
+			 * as well as the unit sprite.
 			 */
 		} else if(e.getSource() == upgradeBuilding){
 			GameState.getHuman().getMainBuilding().upgradeBuilding();
@@ -272,5 +277,26 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		
 		buttons.add(close);
 		buttons.add(config);
+	}
+
+	
+	public void keyPressed(KeyEvent e) {	}
+	public void keyReleased(KeyEvent e) {	}
+
+	
+	/*
+	 * Where we type different cheatcodes.
+	 */
+	public void keyTyped(KeyEvent e) {
+		cheatCode += e.getKeyChar();
+		if(cheatCode.contains("awesome")){
+			GameState.getHuman().increaseResources(10000);
+			cheatCode = "";
+		}else if(cheatCode.contains("lulz")){
+			for (int i = 0; i < 10; i++) {
+				GameState.getUnits().addUnit(new Fighter(GameState.getHuman()));
+			}
+			cheatCode = "";
+		}
 	}
 }
