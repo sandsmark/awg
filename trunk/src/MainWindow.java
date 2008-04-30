@@ -297,6 +297,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 				GameState.getUnits().addUnit(new Fighter(GameState.getHuman()));
 			}
 			cheatCode = "";
+			GameState.getHuman().increaseResources(5000);
 		}
 	}
 }
