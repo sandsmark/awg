@@ -30,11 +30,11 @@ public class AIrules {
 		this.unitSenseRange=15; //OBSOLETE
 		this.attackForce = 6;
 		this.workers = 5;
-		this.baseSenseRange = 500;
+		this.baseSenseRange = 50;
 		this.aggro = 60000; //i ms
 		this.defence = 6;
 		this.fighterPerHealer = 5;
-		this.startGold = 5000;
+		this.startGold = 400;
 		this.upgrade = 600000; //i ms
 		this.totalAttackForce = 50;
 		this.healersInDefence = 1;
