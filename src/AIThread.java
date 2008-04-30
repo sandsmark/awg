@@ -29,6 +29,7 @@ public class AIThread extends Thread {
 				}
 				ai.build();
 				ai.idleWorkers();
+				if(ai.willLaunchAttack()) ai.launchAttack();
 		 		sleep(2000);
 			}
 		} catch (InterruptedException e) {
