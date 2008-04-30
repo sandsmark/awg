@@ -10,7 +10,6 @@ public class Unit {
 	protected Point position;
 	protected int maxHealth; // The unit's max health
 	protected int currentHealth; // The unit's current HP
-	protected int damage; // The damage the unit deals
 	protected int range; // The unit's attack range
 	protected int currentAction; // 0=stand still, 1 = move to target, 2 = attack
 	
@@ -57,10 +56,6 @@ public class Unit {
 
 	public int getDamage() {
 		return (int)(getPlayer().getDamage() * damageMultiplier);
-	}
-
-	public void setDamage(int damage) {
-		this.damage = damage;
 	}
 
 	public int getRange() {
@@ -166,7 +161,7 @@ public class Unit {
 	 */
 
 	public void dealDamage(){
-		targetUnit.hit(damage);
+		targetUnit.hit(this.getDamage());
 		targetUnit.setTargetUnit(this); // Physician, defend thyself.
 		if(targetUnit.currentHealth<=0){
 			GameState.getUnits().removeUnit(targetUnit);
