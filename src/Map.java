@@ -146,7 +146,7 @@ public Resource getClosestNode(Point p) {
 		for (Resource res : GameState.getMap().getResources()) {
 			Point resLoc = res.getPosition();
 			double check = p.distance(resLoc);
-			if(check<shortestDistance) {
+			if(check<shortestDistance && check>=1) {
 				shortestDistance = check;
 				closestResource = res;
 			}
