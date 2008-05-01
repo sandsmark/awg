@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class AIConfig {
 
-	int attackForce = 10; //hvor mange units før attack
+	int attackForce = 12; //hvor mange units før attack
 	int workers = 5; //hvor mange workers han opererer med
 	double baseSenseRange = 400; //hvor nære basen før han forsvarer
 	long aggro = 60000; //hvor ofte han sender wave i ms
