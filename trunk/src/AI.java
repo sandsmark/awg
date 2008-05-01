@@ -19,6 +19,8 @@ public class AI {
 	Resource ClosestResource = GameState.getMap().getClosestNode(GameState.getComputer().getMainBuilding().getPosition());
 	int fPrH;
 	long TimePassedSinceLast;
+	ArrayList<Resource> nodeHandler = new ArrayList<Resource>();
+	int countNode = 0;
 	
 	public AI() {
 		oppforsel = new AIrules();
@@ -30,6 +32,13 @@ public class AI {
 		AI.setResources(oppforsel.getStartGold());
 		fPrH = oppforsel.getAttackForce()%oppforsel.getfighterPerHealer();	//==antallet healers i attackforce
 		TimePassedSinceLast = 0;
+		for (int i = 0; i < GameState.getMap().getResources().length-1; i++) {
+			if(i==0)
+			nodeHandler.add(GameState.getMap().getClosestNode(ClosestResource.getPosition()));
+			else {
+				nodeHandler.add(GameState.getMap().getClosestNode(nodeHandler.get(nodeHandler.size()-1).getPosition()));
+			}
+		} 
 	}
 
 
@@ -67,7 +76,6 @@ public class AI {
 	}
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
 		TimePassedSinceLast = GameState.getTime()-TimePassedSinceLast;
-//		System.out.println("Healers:"+healers.size()+"  Fighters:"+fighters.size());
 		if(((TimePassedSinceLast) >= oppforsel.getAggro()) && ((this.getFighters().size()+this.getHealers().size())>=(oppforsel.getAttackForce()))) {
 			return true;
 		}
@@ -160,16 +168,11 @@ public class AI {
 		return healersdef;
 	}
 
-	public void idleWorkers() {
-		Point node = ClosestResource.getPosition();
+	public boolean idleWorkers() {
 		if(ClosestResource.getRemaining()<7700){
-			Resource newClosest = GameState.getMap().getClosestNode(node);
-			ClosestResource = newClosest;
-			for (Unit unit : workers) {
-				unit.goTo(newClosest.getPosition());
-				unit.setTargetResource(newClosest);
-			}
+			return true;
 		}
+		return false;
 	}
 	
 	public void defendWorkers() {
@@ -192,6 +195,15 @@ public class AI {
 				unit.goTo(target);
 			}
 		}
+	}
+	
+	public void goNext() {
+		Resource newClosest = nodeHandler.get(countNode);
+		for (Unit unit : workers) {
+			unit.goTo(newClosest.getPosition());
+			unit.setTargetResource(newClosest);
+		}
+		countNode +=1;
 	}
 	
 	
