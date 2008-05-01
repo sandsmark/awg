@@ -69,7 +69,6 @@ public class AI {
 		TimePassedSinceLast = GameState.getTime()-TimePassedSinceLast;
 //		System.out.println("Healers:"+healers.size()+"  Fighters:"+fighters.size());
 		if(((TimePassedSinceLast) >= oppforsel.getAggro()) && ((this.getFighters().size()+this.getHealers().size())>=(oppforsel.getAttackForce()))) {
-			System.out.println("Attack!");
 			return true;
 		}
 		return false;
@@ -80,11 +79,9 @@ public class AI {
 		Point target = GameState.getHuman().getMainBuilding().getPosition();
 		for (Unit unit : fighters) {
 			unit.goTo(target);
-			System.out.println("I have attacked!");
 		}
 		for (Unit unit : healers) {
 			unit.goTo(target);
-			System.out.println("I have attacked!");
 		}
 		
 		
