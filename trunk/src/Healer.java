@@ -9,7 +9,7 @@ public class Healer extends Unit {
 
 	private int mana;
 	private int maxMana;
-	final static int healPower = 50; //Sette denne etter hvor mye den skal heale
+	final static int healPower = 20; //Sette denne etter hvor mye den skal heale
 	private double timer = System.currentTimeMillis();
 	protected static double damageMultiplier = 0.5;
 	public static int cost = 750;
@@ -39,11 +39,11 @@ public class Healer extends Unit {
 	/**
 	 * Used when a healer heals
 	 */
-	public void heal() {
+	public void heal(Unit unit) {
 		if (mana >= 10) {
-//			System.out.println("using heal. TargetUnit's health before healing:" + targetUnit.getCurrentHealth());
-			targetUnit.setCurrentHealth(targetUnit.getCurrentHealth() + healPower);
-//			System.out.println("TargetUnit's health after healing:" + targetUnit.getCurrentHealth());
+//			System.out.println("using heal. TargetUnit's health before healing:" + unit.getCurrentHealth());
+			unit.setCurrentHealth(unit.getCurrentHealth() + healPower);
+//			System.out.println("TargetUnit's health after healing:" + unit.getCurrentHealth());
 			this.setMana(getMana() - 10);
 		}
 	}
@@ -79,12 +79,12 @@ public class Healer extends Unit {
 			for (int i = 0; i < GameState.getUnits().count(); i++) {
 				unit = GameState.getUnits().getUnit(i);
 				if(unit.getPlayer() == this.getPlayer() && position.distance(unit.position) < 100 && unit.getCurrentHealth() <= (unit.getMaxHealth()-healPower)){
-					targetUnit = unit;
-					heal();
-					targetUnit = null;
+					heal(unit);
 					sprite.setDoing(true);
 				} else sprite.setDoing(false);
 			}
+		}else if(targetUnit.getCurrentHealth() <= (targetUnit.getMaxHealth()-healPower)){
+			heal(targetUnit);
 		}
 		super.move();
 	}
