@@ -16,14 +16,14 @@ public class AIrules {
 	int healersInDefence; //Hvor mange healers i forsvar
 	int fightersInDefence; //Hvor mange fighters i forsvar
 	
-	
 	public AIrules() {
+		
 		this.attackForce = 6;
-		this.workers = 20;
+		this.workers = 5;
 		this.baseSenseRange = 5;
 		this.aggro = 60000; //i ms
 		this.fighterPerHealer = 5;
-		this.startGold = 40000;
+		this.startGold = 400;
 		this.upgrade = 600000; //i ms
 		this.healersInDefence = 1;
 		this.fightersInDefence = 5;
