@@ -29,7 +29,7 @@ public class AIrules {
 	public AIrules() {
 		this.unitSenseRange=15; //OBSOLETE
 		this.attackForce = 6;
-		this.workers = 5;
+		this.workers = 20;
 		this.baseSenseRange = 5;
 		this.aggro = 60000; //i ms
 		this.defence = 6;

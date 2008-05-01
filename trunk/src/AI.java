@@ -169,8 +169,16 @@ public class AI {
 	}
 
 	public boolean idleWorkers() {
-		if(ClosestResource.getRemaining()<7700){
-			return true;
+		System.out.println(ClosestResource.getRemaining());
+		if(countNode==0) {
+			if(ClosestResource.getRemaining()<5000){
+				return true;
+			}
+		}
+		else {
+			if(nodeHandler.get(countNode).getRemaining()<7700) {
+				return true;
+			}
 		}
 		return false;
 	}
