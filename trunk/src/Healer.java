@@ -38,6 +38,7 @@ public class Healer extends Unit {
 
 	/**
 	 * Used when a healer heals
+	 * @param unit
 	 */
 	public void heal(Unit unit) {
 		if (mana >= 10) {
