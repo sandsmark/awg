@@ -119,7 +119,7 @@ public class UnitPanel extends JPanel{
 		icon.setIcon(new ImageIcon(u.getSprite().get()));
 		hp.setText(""+u.getCurrentHealth()+" / "+u.getMaxHealth());
 		atk.setText(""+u.getDamage());
-		armor.setText(""+u.getDamage());
+		armor.setText(""+u.getArmor());
 		stats.setVisible(true);
 		iconField.setVisible(true);
 		icon.setVisible(true);

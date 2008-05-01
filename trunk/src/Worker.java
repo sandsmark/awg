@@ -127,4 +127,8 @@ public class Worker extends Unit {
 	public void setHarvestMax(int harvestMax) {
 		this.harvestMax = harvestMax;
 	}
+
+	public int getDamage() {
+		return 0;
+	}
 }

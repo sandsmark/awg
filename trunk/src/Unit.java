@@ -211,5 +211,9 @@ public class Unit {
 	public double getCurrentHealthPercent() {
 		return currentHealth/maxHealth;
 	}
+	
+	public int getArmor() {
+		return 0;
+	}
 }
 
