@@ -169,7 +169,7 @@ public class AI {
 	}
 
 	public boolean idleWorkers() {
-		System.out.println(ClosestResource.getRemaining());
+//		System.out.println(ClosestResource.getRemaining());
 		if(countNode==0) {
 			if(ClosestResource.getRemaining()<5000){
 				return true;
