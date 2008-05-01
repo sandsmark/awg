@@ -96,7 +96,7 @@ public class AIConfig {
 		private final static AIConfig aiconfig = new AIConfig();
 	}
 	
-	public void reset() {
+	public static void reset() {
 		try {
 		String output = "";
 		output += "#!IMPORTANT! !NOT FOR PEOPLE WHO ARE NOT GOOD WITH COMPUTERS!\n#\n#\n#\n#Lines starting with '#' are comments and are not read\n#These lines will be used to explain the different values\n#When editing this file make sure you only edit the lines without '#' signs\n#If you should corrupt this file i suggest you reinstal the game\n#You can reset this config to its initial values by clicking 'Reset AIConfig' ingame\n#Use common sense when experimenting with theese values\n#\n#Attack Force\n#Attack Force determines how many units the AI will send each wave\n";
@@ -106,7 +106,7 @@ public class AIConfig {
 		output += "#\n#Base Sense Range\n#Base Sense Range determines how close to the AI base you can go before he senses you and attacks\n#in pixels\n";
 		output += "400\n";
 		output += "#\n#Aggro\n#Aggro determines how often the AI will launch an attack\n#Remember that the AI will only be able to build units at intervals and when he can afford it\n#setting this value to low wont make the AI attack instantly but a low value will mean that the AI\n#wont stop attacking after the first wave has been sendt\n#in milliseconds\n";
-		output += "60000+\n";
+		output += "60000\n";
 		output += "#\n#Fighter Per Healer\n#FIghter Per Healer determines what the fighter:healer ratio should be\n";
 		output += "5\n";
 		output += "#\n#Start Gold\n#Start Gold determines how much gold the AI will have at the start of the game\n";
@@ -125,4 +125,40 @@ public class AIConfig {
 			System.err.println("Error writing config file!");
 		}
 		}
+
+	public static int getAttackForce() {
+		return AIConfigHolder.aiconfig.attackForce;
+	}
+
+	public static int getWorkers() {
+		return AIConfigHolder.aiconfig.workers;
+	}
+
+	public static double getBaseSenseRange() {
+		return AIConfigHolder.aiconfig.baseSenseRange;
+	}
+
+	public static long getAggro() {
+		return AIConfigHolder.aiconfig.aggro;
+	}
+
+	public static int getFighterPerHealer() {
+		return AIConfigHolder.aiconfig.fighterPerHealer;
+	}
+
+	public static int getStartGold() {
+		return AIConfigHolder.aiconfig.startGold;
+	}
+
+	public static long getUpgrade() {
+		return AIConfigHolder.aiconfig.upgrade;
+	}
+
+	public static int getHealersInDefence() {
+		return AIConfigHolder.aiconfig.healersInDefence;
+	}
+
+	public static int getFightersInDefence() {
+		return AIConfigHolder.aiconfig.fightersInDefence;
+	}
 }

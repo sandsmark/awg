@@ -18,15 +18,15 @@ public class AIrules {
 	
 	public AIrules() {
 		
-		this.attackForce = 6;
-		this.workers = 5;
-		this.baseSenseRange = 5;
-		this.aggro = 60000; //i ms
-		this.fighterPerHealer = 5;
-		this.startGold = 400;
-		this.upgrade = 600000; //i ms
-		this.healersInDefence = 1;
-		this.fightersInDefence = 5;
+		this.attackForce = AIConfig.getAttackForce();
+		this.workers = AIConfig.getWorkers();
+		this.baseSenseRange = AIConfig.getBaseSenseRange();
+		this.aggro = AIConfig.getAggro();
+		this.fighterPerHealer = AIConfig.getFighterPerHealer();
+		this.startGold = AIConfig.getStartGold();
+		this.upgrade = AIConfig.getUpgrade();
+		this.healersInDefence = AIConfig.getHealersInDefence();
+		this.fightersInDefence = AIConfig.getFightersInDefence();
 	}
 	public void setAttackForce(int af) {
 		this.attackForce = af;
