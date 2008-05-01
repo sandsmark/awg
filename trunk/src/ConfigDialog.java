@@ -38,7 +38,7 @@ import javax.swing.WindowConstants;
 public class ConfigDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -2348679567504348977L;
 	
-	JButton close, reset, save;
+	JButton close, reset, save, resetAI;
 	JSpinner height, width;
 	
 	JSlider masksize, fps;
@@ -71,6 +71,10 @@ public class ConfigDialog extends JDialog implements ActionListener {
 		reset = new JButton("Reset");
 		reset.addActionListener(this);
 		bottom.add(reset);
+		
+		resetAI = new JButton("Reset AI settings");
+		resetAI.addActionListener(this);
+		bottom.add(resetAI);
 		
 		save = new JButton("Save");
 		save.addActionListener(this);
@@ -160,6 +164,8 @@ public class ConfigDialog extends JDialog implements ActionListener {
 			if (GameState.getMainWindow().music != null && !music.isSelected()) 
 				GameState.getMainWindow().music.stop_sound();
 			if (music.isSelected()) GameState.getMainWindow().music = new Music("/music.ogg");
+		} else if (e.getSource() == resetAI) {
+			AIConfig.reset();
 		}
 		
 
