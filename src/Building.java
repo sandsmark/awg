@@ -116,7 +116,10 @@ public class Building {
 		this.currentHealth -= damage;
 		if(currentHealth <= 0 && getSprite() != null){
 			setSprite(null);
-			JOptionPane.showMessageDialog(null, "You win.");
+			if(!player.isAI())
+				JOptionPane.showMessageDialog(null, "You loose.");
+			if(player.isAI())
+				JOptionPane.showMessageDialog(null, "You win.");
 			GameState.getMainWindow().exit();
 		}
 	}

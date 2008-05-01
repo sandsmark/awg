@@ -27,7 +27,7 @@ public class AIThread extends Thread {
 					ai.defendAgainst(offender);
 				}
 				ai.build();
-				ai.idleWorkers();
+				if(ai.idleWorkers()) ai.goNext();
 				ai.defendWorkers();
 				if(ai.willLaunchAttack()) ai.launchAttack();
 		 		sleep(2000);
