@@ -41,7 +41,10 @@ public class AI {
 		} 
 	}
 
-
+/**
+ * Checks if the AI is in a state where it will defend itself
+ * 
+ */
 	public boolean willDefend() { //om AI vil forsvare basen sin under angrep/range
 		double defParamRad = oppforsel.getBaseSenseRange();
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
@@ -52,7 +55,10 @@ public class AI {
 		}
 		return false;
 	}
-	
+	/**
+	 * The AI gets the unit that it wants to defend itself against
+	 * 
+	 */
 	public Unit getOffender() {
 		double defParamRad = oppforsel.getBaseSenseRange();
 		Point mainb = GameState.getComputer().getMainBuilding().getPosition();
@@ -63,7 +69,10 @@ public class AI {
 		}
 		return null;
 	}
-	
+	/**
+	 * The AI defends itself against the offender
+	 * @param offender
+	 */
 	public void defendAgainst(Unit offender) { //forsvarer seg		
 		for (Unit unit : this.getFightersdef()) { //henter AI
 						unit.goTo(offender.getPosition());
@@ -74,6 +83,10 @@ public class AI {
 			unit.goTo(offender.getPosition());
 		}
 	}
+	/**
+	 * The AI checks if it is in a state where it wants to launch an attack against the human player
+	 * @return
+	 */
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
 		TimePassedSinceLast = GameState.getTime()-TimePassedSinceLast;
 		if(((TimePassedSinceLast) >= oppforsel.getAggro()) && ((this.getFighters().size()+this.getHealers().size())>=(oppforsel.getAttackForce()))) {
@@ -82,7 +95,9 @@ public class AI {
 		return false;
 	}
 	
-	
+	/**
+	 * The AI Launches the attack, only if it wants to launch an attack
+	 */
 	public void launchAttack() { //kj�res n�r willLaunchAttack er true
 		Point target = GameState.getHuman().getMainBuilding().getPosition();
 		for (Unit unit : fighters) {
@@ -94,6 +109,10 @@ public class AI {
 		
 		
 	}
+	/**
+	 * This is the build method of the AI. Its based on a priority list and it makes one unit (or not) each time it is run
+	 */
+	
 	public void build() { //AI sjekker om han kan bygge en unit, og hvilken unit han skal bygge
 		while(true) {
 		if(willUpgrade()) {
@@ -143,6 +162,10 @@ public class AI {
 		}
 		
 	}
+	/**
+	 * Check if the AI is in a state where it wants to upgrade its mainbuilding
+	 * @return
+	 */
 	public boolean willUpgrade() {//sjekker om AI vil upgrade
 		long tid = GameState.getTime();
 		if(GameState.getComputer().getResources()> Building.getUpgradeCost()) //settes inn n�r upgradecost kommer
@@ -167,9 +190,11 @@ public class AI {
 	public ArrayList<Unit> getHealerssdef() {
 		return healersdef;
 	}
-
+/**
+ * The AI checks if the workers are idle or not
+ * @return
+ */
 	public boolean idleWorkers() {
-//		System.out.println(ClosestResource.getRemaining());
 		if(countNode==0) {
 			if(ClosestResource.getRemaining()<5000){
 				return true;
@@ -182,7 +207,9 @@ public class AI {
 		}
 		return false;
 	}
-	
+	/**
+	 * The AI defends its workers if they are under attack
+	 */
 	public void defendWorkers() {
 		boolean isBeingAttacked = false;
 		Point target = null;
@@ -204,7 +231,9 @@ public class AI {
 			}
 		}
 	}
-	
+	/**
+	 * The AI sends the idle workers to the next node
+	 */
 	public void goNext() {
 		Resource newClosest = nodeHandler.get(countNode);
 		for (Unit unit : workers) {

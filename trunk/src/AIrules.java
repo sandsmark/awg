@@ -15,6 +15,9 @@ public class AIrules {
 	long upgrade; // når han skal oppgradere hovedbygg i ms
 	int healersInDefence; //Hvor mange healers i forsvar
 	int fightersInDefence; //Hvor mange fighters i forsvar
+	/**
+	 * AIRules fetches data from the singelton AIConfig
+	 */
 	
 	public AIrules() {
 		
