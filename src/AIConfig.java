@@ -4,7 +4,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * 
+ * @author Stian Veum Møllersen
+ * makur of awsoem AI
+ *
+ */
 public class AIConfig {
 
 	int attackForce = 10; //hvor mange units fÃ¸r attack
