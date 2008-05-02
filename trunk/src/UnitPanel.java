@@ -1,7 +1,5 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,15 +7,17 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Jan Berge Ommedal
+ *
+ */
 
 public class UnitPanel extends JPanel{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JPanel group = new JPanel();
 	
@@ -34,9 +34,6 @@ public class UnitPanel extends JPanel{
 	
 	private List<Unit> currentlyDisplayed = Collections.synchronizedList(new ArrayList<Unit>());;
 		
-	
-	
-	
 	public UnitPanel(){
 		this.setLayout(null);
 		group.setBounds(10, 10, 180, 230);
@@ -70,9 +67,11 @@ public class UnitPanel extends JPanel{
 		this.add(iconField);
 		this.add(stats);
 		this.add(group);
-		
-		
 	}
+	/**
+	 * This method readies the panel for new configuration by setting all elements invisible and removing
+	 * all units from the list of currently displayed units. 
+	 */
 	
 	public void deselect(){
 		stats.setVisible(false);
@@ -81,6 +80,13 @@ public class UnitPanel extends JPanel{
 		iconField.setVisible(false);
 		currentlyDisplayed.removeAll(currentlyDisplayed);
 	}
+	
+	/**
+	 * When this method receives a list of units as parameters, it determines if it is different from
+	 * the currently shown units. If so, it determines if the received list contains only a single unit
+	 * or is a group of units, and configures the panel accordingly. 
+	 * @param selectedUnits
+	 */
 	
 	public synchronized void select(List<Unit> selectedUnits){
 		if(!selectedUnits.equals(currentlyDisplayed)){
@@ -100,6 +106,11 @@ public class UnitPanel extends JPanel{
 		
 	}
 	
+	/**
+	 * This method configures the UnitPanel to view a group of units received as parameter, in the panel. 
+	 * @param selectedUnits
+	 */
+	
 	private void groupSetup(List<Unit> selectedUnits) {
 		group.removeAll();
 		if (selectedUnits.size()<16){
@@ -114,6 +125,11 @@ public class UnitPanel extends JPanel{
 		}	
 		group.setVisible(true);
 	}
+	
+	/**
+	 * This method configures the UnitPanel to view a single unit received as parameter, in the panel. 
+	 * @param u
+	 */
 
 	public void singleunitSetup(Unit u){
 		icon.setIcon(new ImageIcon(u.getSprite().get()));
@@ -123,8 +139,6 @@ public class UnitPanel extends JPanel{
 		stats.setVisible(true);
 		iconField.setVisible(true);
 		icon.setVisible(true);
-		
-		
 	}
 	
 }
