@@ -122,7 +122,6 @@ public class Unit {
 	
 	/**
 	 * This moves the unit along it's path.
-	 * @return
 	 */
 	public void move() {
 		if (speed < 2) sprite.setMoving(false);

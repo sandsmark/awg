@@ -171,8 +171,6 @@ public class Canvas extends JPanel implements Moveable {
 					if (!this.isInView(unit.getPosition().x, unit.getPosition().y)) continue;
 					ig2.drawImage(unit.getSprite().pop(), null, unit.getPosition().x - offsetX, unit.getPosition().y - offsetY);
 					ig2.setColor(Color.BLUE);
-					if (units.isSelected(unit))
-						ig2.drawRect(unit.getPosition().x - offsetX, unit.getPosition().y - offsetY, (int)(unit.getCurrentHealthPercent() * 25), 2);
 				}
 			}
 		} catch (Exception e) {
