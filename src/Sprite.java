@@ -16,6 +16,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -37,6 +39,7 @@ public class Sprite {
 	private long isHit = -1;
 	private boolean isDoing = false;
 	private double last;
+	private Unit u;
 	
 	/**
 	 * Faction this sprite belongs to, either 0 or 1.
@@ -58,7 +61,8 @@ public class Sprite {
 	 * @param basename contains either "fighter", "healer" or "worker".
 	 * @param faction defines which faction (team/color) the unit is.
 	 */
-	public Sprite (String basename, int faction) {
+	public Sprite (String basename, int faction, Unit u) {
+		this.u=u;
 		this.faction = faction;
 		try {			
 			for (int f=0; f<2; f++){
@@ -114,7 +118,14 @@ public class Sprite {
 	 * This just returns the current sprite. 
 	 */
 	public BufferedImage get() {
-		return sprite[faction][direction.ordinal()][cycle][0];
+		BufferedImage image = new BufferedImage(getWidth(),getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics g = image.createGraphics();
+		g.setColor(Color.RED);
+		g.fillRect(0, 0, 50, 2);
+		g.setColor(Color.GREEN);
+		g.fillRect(0, 0, 50*u.getCurrentHealth()/u.getMaxHealth(), 2);
+		g.drawImage(sprite[faction][direction.ordinal()][cycle][0],0,0,null);
+		return image;
 	}
 	
 	/**

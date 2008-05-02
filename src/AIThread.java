@@ -22,6 +22,7 @@ public class AIThread extends Thread {
 		Unit offender;
 		try {
 			while (running) {
+				/*
 				if(ai.willDefend()) {
 				offender = ai.getOffender();
 					ai.defendAgainst(offender);
@@ -30,7 +31,9 @@ public class AIThread extends Thread {
 				if(ai.idleWorkers()) ai.goNext();
 				ai.defendWorkers();
 				if(ai.willLaunchAttack()) ai.launchAttack();
+				*/
 		 		sleep(2000);
+		 		
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
