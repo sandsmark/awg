@@ -154,13 +154,17 @@ public class Canvas extends JPanel implements Moveable {
 			Building humanHouse = GameState.getHuman().mainHouse;
 
 			if (this.isInView(humanHouse.getPosition().x, humanHouse.getPosition().y)||
-					this.isInView(humanHouse.getPosition().x + humanHouse.getSprite().getWidth(), humanHouse.getPosition().y + humanHouse.getSprite().getHeight())) 
+					this.isInView(humanHouse.getPosition().x + humanHouse.getSprite().getWidth(), humanHouse.getPosition().y + humanHouse.getSprite().getHeight())){ 
 				ig2.drawImage(humanHouse.getSprite(), null, humanHouse.getPosition().x - offsetX, humanHouse.getPosition().y - offsetY);
+				ig2.drawString("HP:"+humanHouse.getCurrentHealth(), humanHouse.getPosition().x, humanHouse.getPosition().y);
+			}
 			
 			Building computerHouse = GameState.getComputer().mainHouse;
 			if (this.isInView(computerHouse.getPosition().x, computerHouse.getPosition().y) ||
-					this.isInView(computerHouse.getPosition().x + computerHouse.getSprite().getWidth(), computerHouse.getPosition().y + computerHouse.getSprite().getHeight())) 
+					this.isInView(computerHouse.getPosition().x + computerHouse.getSprite().getWidth(), computerHouse.getPosition().y + computerHouse.getSprite().getHeight())){ 
 				ig2.drawImage(computerHouse.getSprite(), null, computerHouse.getPosition().x - offsetX, computerHouse.getPosition().y - offsetY);
+				ig2.drawRect(computerHouse.getPosition().x, computerHouse.getPosition().y, (int)((float)computerHouse.getCurrentHealth()/(float)computerHouse.getMaxHealth()*25), 3);
+			}
 			
 			if (units.getUnitNum() > 0) { 
 				for (Unit unit : units.getUnits()) {

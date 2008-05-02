@@ -62,7 +62,7 @@ public class Config {
 	/*
 	 * Frames per seconds that should be tried to be forced (through the MovementThread).
 	 */
-	private int fps = 15;
+	private int fps = 10;
 	
 	/**
 	 * This constructor tries to load in configured values from a file.
@@ -251,6 +251,7 @@ public class Config {
 	 * @return this returns the frames per second that should be tried for.
 	 */
 	public static int getFPS() {
-		return ConfigHolder.config.fps;
+//		return ConfigHolder.config.fps;
+		return 10;
 	}
 }

@@ -59,6 +59,7 @@ public class Building {
 
 	public void setMaxHealth(int health) {
 		this.maxHealth = health;
+		this.currentHealth = health;
 	}
 
 	public BufferedImage getSprite() {
