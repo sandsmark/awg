@@ -64,7 +64,7 @@ public class Map {
 			for (y=0; y<height / 30; y++) {
 				if (Math.random() > 0.01) bg2.drawImage(grass, null, x*30, y*30);
 				else bg2.drawImage(tree, null, x*30, y*30);
-				if (water.contains(new Point(x*30,y*30))) bg2.drawImage(waterImg, null, x*30, y*30);
+				if (water.contains(new Point(x*30 + 15,y*30+15))) bg2.drawImage(waterImg, null, x*30, y*30);
 			}
 		}
 		bg2.setColor(Color.blue);
