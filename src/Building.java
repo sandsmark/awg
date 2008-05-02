@@ -117,9 +117,9 @@ public class Building {
 		if(currentHealth <= 0 && getSprite() != null){
 			setSprite(null);
 			if(!player.isAI())
-				JOptionPane.showMessageDialog(null, "You loose.");
+				JOptionPane.showMessageDialog(null, "Epic Fail.");
 			if(player.isAI())
-				JOptionPane.showMessageDialog(null, "You win.");
+				JOptionPane.showMessageDialog(null, "Epic Win.");
 			GameState.getMainWindow().exit();
 		}
 	}
