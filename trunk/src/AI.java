@@ -2,7 +2,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 /**
  * 
- * @author Stian Veum M�llersen
+ * @author Stian Veum Møllersen
  * makur of awsoem AI
  *
  */
