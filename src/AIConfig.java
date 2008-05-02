@@ -105,7 +105,7 @@ public class AIConfig {
 		try {
 		String output = "";
 		output += "#!IMPORTANT! !NOT FOR PEOPLE WHO ARE NOT GOOD WITH COMPUTERS!\n#\n#\n#\n#Lines starting with '#' are comments and are not read\n#These lines will be used to explain the different values\n#When editing this file make sure you only edit the lines without '#' signs\n#If you should corrupt this file i suggest you reinstal the game\n#You can reset this config to its initial values by clicking 'Reset AIConfig' ingame\n#Use common sense when experimenting with theese values\n#\n#Attack Force\n#Attack Force determines how many units the AI will send each wave\n";
-		output += "10\n";
+		output += "12\n";
 		output += "#\n#Workers\n#Workers determines how many workers the AI will use at all times\n";
 		output += "5\n";
 		output += "#\n#Base Sense Range\n#Base Sense Range determines how close to the AI base you can go before he senses you and attacks\n#in pixels\n";
