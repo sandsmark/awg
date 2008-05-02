@@ -115,12 +115,10 @@ public class Building {
 	public void takeDamage(int damage){
 		this.currentHealth -= damage;
 		if(currentHealth <= 0 && getSprite() != null){
+			GameState.getMainWindow().canvas.setDirty(this.position.x, this.position.y, this.position.x + this.sprite.getWidth(), this.position.y + this.sprite.getHeight());
 			setSprite(null);
-			if(!player.isAI())
-				JOptionPane.showMessageDialog(null, "Epic Fail.");
-			if(player.isAI())
-				JOptionPane.showMessageDialog(null, "Epic Win.");
-			GameState.getMainWindow().exit();
+			GameState.getMainWindow().victory(this.getPlayer().isAI());
+			
 		}
 	}
 

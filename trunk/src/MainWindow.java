@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainWindow implements ActionListener, MouseMotionListener,
@@ -49,7 +50,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	MainWindow() throws IOException { 
 		if (!GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().isFullScreenSupported()) { 
-			System.err.println("CANNOT ACQUIER FULLSKREIN11111");
+			System.err.println("Could not acquire full screen mode.\nIf you are on linux, this is due to a known bug regarding Java 6 and Xinerama.");
 			this.exit();
 		}
 		
@@ -299,5 +300,14 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 			cheatCode = "";
 			GameState.getHuman().increaseResources(5000);
 		}
+	}
+
+	public void victory(boolean victorious) {
+		frame.setVisible(false);
+		if(victorious)
+			JOptionPane.showMessageDialog(null, "Epic WIN!");
+		else JOptionPane.showMessageDialog(null, "Epic FLAIL!");
+		GameState.getMainWindow().exit();
+		
 	}
 }

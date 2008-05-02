@@ -11,7 +11,7 @@ public class GraphicsThread extends Thread {
 	protected boolean running;
 	protected ReentrantLock lock = new ReentrantLock();
 	protected Condition updated = lock.newCondition();
-	protected long sleeptime = 0;
+	protected long sleeptime = 100;
 
 	/**
 	 * This creates a new thread, and makes it start running.
