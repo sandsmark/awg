@@ -35,8 +35,8 @@ public class Worker extends Unit {
 		setCurrentAction(0);
 		setPosition(new Point(player.mainHouse.getPosition().x +5, player.mainHouse.getPosition().y+5));
 		setPlayer(player);
-		if (player.isAI()) sprite = new Sprite(type, 1);
-		else sprite = new Sprite(type, 0);
+		if (player.isAI()) sprite = new Sprite(type, 1,this);
+		else sprite = new Sprite(type, 0,this);
 		GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
 	}
 

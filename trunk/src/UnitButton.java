@@ -18,7 +18,7 @@ public class UnitButton extends JButton{
 	
 	public UnitButton(Unit u) {
 		this.u=u;
-		updateIcon();
+		this.setIcon(new ImageIcon(u.getSprite().get()));
 		this.addActionListener(GameState.getUnits());
 		this.setBackground(Color.WHITE);
 	}
@@ -29,16 +29,6 @@ public class UnitButton extends JButton{
 	
 	public Unit getUnit(){
 		return u;
-	}
-	
-	public void updateIcon(){
-		BufferedImage image = u.getSprite().get();
-		Graphics g = image.createGraphics();
-		g.setColor(Color.RED);
-		g.drawRect(0, this.HEIGHT-10, this.WIDTH, 10);
-		g.setColor(Color.GREEN);
-		g.drawRect(0, this.HEIGHT-10, this.WIDTH*u.getCurrentHealth()/u.getMaxHealth(), 10);
-		this.setIcon(new ImageIcon(image));
 	}
 	
 	
