@@ -62,7 +62,7 @@ public class Config {
 	/*
 	 * Frames per seconds that should be tried to be forced (through the MovementThread).
 	 */
-	private int fps = 10;
+	private int fps = 25;
 	
 	/**
 	 * This constructor tries to load in configured values from a file.

@@ -156,21 +156,24 @@ public class Canvas extends JPanel implements Moveable {
 			if (this.isInView(humanHouse.getPosition().x, humanHouse.getPosition().y)||
 					this.isInView(humanHouse.getPosition().x + humanHouse.getSprite().getWidth(), humanHouse.getPosition().y + humanHouse.getSprite().getHeight())){ 
 				ig2.drawImage(humanHouse.getSprite(), null, humanHouse.getPosition().x - offsetX, humanHouse.getPosition().y - offsetY);
-				ig2.drawString("HP:"+humanHouse.getCurrentHealth(), humanHouse.getPosition().x, humanHouse.getPosition().y);
+				ig2.drawString("HP:"+humanHouse.getCurrentHealth(), humanHouse.getPosition().x - offsetX, humanHouse.getPosition().y - offsetX);
 			}
 			
 			Building computerHouse = GameState.getComputer().mainHouse;
 			if (this.isInView(computerHouse.getPosition().x, computerHouse.getPosition().y) ||
 					this.isInView(computerHouse.getPosition().x + computerHouse.getSprite().getWidth(), computerHouse.getPosition().y + computerHouse.getSprite().getHeight())){ 
 				ig2.drawImage(computerHouse.getSprite(), null, computerHouse.getPosition().x - offsetX, computerHouse.getPosition().y - offsetY);
-				ig2.drawRect(computerHouse.getPosition().x, computerHouse.getPosition().y, (int)((float)computerHouse.getCurrentHealth()/(float)computerHouse.getMaxHealth()*25), 3);
+				ig2.drawString("HP:"+computerHouse.getCurrentHealth(), computerHouse.getPosition().x - offsetX,computerHouse.getPosition().y - offsetY);
 			}
 			
 			if (units.getUnitNum() > 0) { 
 				for (Unit unit : units.getUnits()) {
 					if (!this.isInView(unit.getPosition().x, unit.getPosition().y)) continue;
 					ig2.drawImage(unit.getSprite().pop(), null, unit.getPosition().x - offsetX, unit.getPosition().y - offsetY);
-					ig2.setColor(Color.BLUE);
+					if (units.isSelected(unit)) {
+						ig2.setColor(Color.BLUE);
+						ig2.drawRoundRect(unit.getPosition().x - offsetX + 2, unit.getPosition().y - offsetY + 2, unit.sprite.getWidth() - 2, unit.sprite.getHeight() - 2, 15, 15);
+					}
 				}
 			}
 		} catch (Exception e) {
