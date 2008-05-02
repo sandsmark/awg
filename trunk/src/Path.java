@@ -130,6 +130,7 @@ public class Path implements Comparable<Path> {
 	 * @return returns shortest path from start to target.
 	 */
 	public static Path findPath (Point start, Point target) {
+		if (!GameState.getMap().canMove(target.x, target.y)) return null;
 		long startTime = System.currentTimeMillis();
 		
 		int width = GameState.getMap().getWidth() / factor;

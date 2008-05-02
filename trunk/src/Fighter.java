@@ -42,6 +42,7 @@ public class Fighter extends Unit {
 			for (Unit unit : GameState.getUnits().getUnits()) {
 				if(unit.getPlayer() != this.getPlayer() && position.distance(unit.position) < 100){
 					setTargetUnit(unit);
+					return;
 				}
 			}
 			if(targetUnit == null && position.distance(GameState.getComputer().getMainBuilding().getPosition())<75 && getPlayer() != GameState.getComputer()){
@@ -49,7 +50,6 @@ public class Fighter extends Unit {
 			}else if(targetUnit == null && position.distance(GameState.getHuman().getMainBuilding().getPosition())<75 && getPlayer() != GameState.getHuman()){
 				GameState.getHuman().getMainBuilding().takeDamage(this.getDamage());
 			}
-
 		} else if (targetUnit.getCurrentHealth() <= 0){
 			sprite.setDoing(false);
 			targetUnit = null;

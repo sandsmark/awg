@@ -41,11 +41,8 @@ public class Healer extends Unit {
 	 * @param unit
 	 */
 	public void heal(Unit unit) {
-//		System.out.println(mana);
 		if (mana >= 10) {
-//			System.out.println("using heal. TargetUnit's health before healing:" + unit.getCurrentHealth());
 			unit.setCurrentHealth(unit.getCurrentHealth() + healPower);
-//			System.out.println("TargetUnit's health after healing:" + unit.getCurrentHealth());
 			this.setMana(getMana() - 10);
 		}
 	}
