@@ -53,20 +53,24 @@ public class MiniMap extends JPanel implements MouseListener{
 		this.dirty=false;
 		cache = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = cache.createGraphics();
-		g2d.setColor(Color.RED);
+		
 		
 		g2d.drawImage(GameState.getMap().getBaseMap(), 0, 0, width, height, 0, 0, GameState.getMap().getBaseMap().getWidth(), GameState.getMap().getBaseMap().getWidth(), null);
 		
 		//BUILDINGS
 		Point p1 = GameState.getHuman().getMainBuilding().getPosition();
 		Point p2 = GameState.getComputer().getMainBuilding().getPosition();
+		g2d.setColor(Color.WHITE);
 		g2d.fillRect(p1.x*200/Config.getWorldHeight(), p1.y*200/Config.getWorldWidth(), 5, 5);
+		g2d.setColor(Color.RED);
 		g2d.fillRect(p2.x*200/Config.getWorldHeight(), p2.y*200/Config.getWorldWidth(), 5, 5);
 		
 		//UNITS
 		for(Unit u : GameState.getUnits().getUnits()){
 			int posY = u.getPosition().y*200/Config.getWorldHeight();
 			int posX = u.getPosition().x*200/Config.getWorldWidth();
+			if (u.getPlayer().isAI()) g2d.setColor(Color.RED);
+			else g2d.setColor(Color.WHITE);
 			g2d.draw(new Ellipse2D.Double(posX, posY, 2,2));
 		}
 		

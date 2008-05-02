@@ -17,11 +17,10 @@ public class Map {
 	public int[][] pathMap;
 	public int width;
 	public int height;
-	private BufferedImage tree;
-	private BufferedImage grass;
+	private BufferedImage tree,grass,waterImg;
 	public BufferedImage baseMap;
 	Resource[] resources;
-	private ArrayList<Shape> waters = new ArrayList<Shape>();
+	private Shape water;
 
 	public Map() {
 		height = Config.getWorldHeight();
@@ -30,12 +29,15 @@ public class Map {
 		try {
 			grass = ImageIO.read(getClass().getResource("/grass.png"));
 			tree = ImageIO.read(getClass().getResource("/tree.png"));
+			waterImg = ImageIO.read(getClass().getResource("/water.png"));
 		} catch (IOException e) {
 			System.err.println("Could not load sprite!");
 			System.exit(1);
 		}
 
-		loadWater("/water.map");
+
+		water = new Ellipse2D.Float(Config.getWorldWidth()/2 - Config.getWorldWidth()/6,Config.getWorldHeight()/2 - Config.getWorldHeight()/6,
+				Config.getWorldWidth()/3,Config.getWorldHeight()/3);
 
 		// Add resources to the map
 		resources = new Resource[(int) Math.random() * 5 + 5];
@@ -62,13 +64,12 @@ public class Map {
 			for (y=0; y<height / 30; y++) {
 				if (Math.random() > 0.01) bg2.drawImage(grass, null, x*30, y*30);
 				else bg2.drawImage(tree, null, x*30, y*30);
+				if (water.contains(new Point(x*30,y*30))) bg2.drawImage(waterImg, null, x*30, y*30);
 			}
 		}
 		bg2.setColor(Color.blue);
-		for (Shape water : waters) {
-			bg2.draw(water);
-			bg2.fill(water);
-		}
+//		bg2.draw(water);
+//		bg2.fill(water);
 	}
 
 	public int getHeight() {
@@ -83,8 +84,8 @@ public class Map {
 		return pathMap;
 	}
 
-	public ArrayList<Shape> getWater() {
-		return waters;
+	public Shape getWater() {
+		return water;
 	}
 
 	public Resource getResource(int i) {
@@ -103,12 +104,10 @@ public class Map {
 		 * TODO: Clean up.
 		 */
 		if (x < 0 || x > getWidth() || y < 0 || y > getHeight()) return false;
-		for (Shape water : waters) {
-			if (water.contains(x, y)) return false;
-			if (water.contains(x+35, y)) return false;
-			if (water.contains(x, y+35)) return false;
-			if (water.contains(x+35, y+35)) return false;
-		}
+		if (water.contains(x, y)) return false;
+		if (water.contains(x+35, y)) return false;
+		if (water.contains(x, y+35)) return false;
+		if (water.contains(x+35, y+35)) return false;
 		return true;
 	}
 
@@ -116,29 +115,6 @@ public class Map {
 		return baseMap;
 	}
 	
-	public void loadWater(String filename) {
-		try {
-			BufferedReader file = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filename)));
-			String line;
-			String [] coords; 
-			Polygon poly;
-
-			waters.add(new Ellipse2D.Float(Config.getWorldWidth()/2 - Config.getWorldWidth()/6,Config.getWorldHeight()/2 - Config.getWorldHeight()/6,
-					Config.getWorldWidth()/3,Config.getWorldHeight()/3));
-			while ((line = file.readLine()) != null) {
-				coords = line.split(" ");
-				poly = new Polygon();
-				for (String coordinate : coords) {
-					poly.addPoint(Integer.parseInt(coordinate.split(",")[0]), Integer.parseInt(coordinate.split(",")[1]));
-				}
-				waters.add(poly);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			waters.add(new Ellipse2D.Float(Config.getWorldWidth()/2,Config.getWorldHeight()/2,
-					Config.getWorldWidth()/2,Config.getWorldHeight()/2));
-		}
-	}
 	
 public Resource getClosestNode(Point p) {
 		double shortestDistance = 1000;
