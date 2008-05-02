@@ -1,8 +1,4 @@
-package com.googlecode.awg.state;
 import java.util.ArrayList;
-
-import com.googlecode.awg.units.Building;
-import com.googlecode.awg.units.Unit;
 
 /**
  * 
@@ -11,7 +7,7 @@ import com.googlecode.awg.units.Unit;
  */
 public class Player {
 	ArrayList<Unit> units = new ArrayList<Unit>();
-	public Building mainHouse;
+	Building mainHouse;
 	private boolean isAI;
 	private int resources;
 	private int damage = 5;

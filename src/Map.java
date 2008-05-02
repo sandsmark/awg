@@ -1,4 +1,3 @@
-package com.googlecode.awg.state;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -13,8 +12,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
-import com.googlecode.awg.Resource;
 
 public class Map {
 	public int[][] pathMap;

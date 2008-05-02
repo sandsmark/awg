@@ -1,4 +1,3 @@
-package com.googlecode.awg.state;
 /*
 Copyright (C) 2008 Martin T. Sandsmark
 

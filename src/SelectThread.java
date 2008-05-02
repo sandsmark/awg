@@ -1,11 +1,6 @@
-package com.googlecode.awg;
 import java.awt.event.MouseEvent;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-
-import com.googlecode.awg.gui.Canvas;
-import com.googlecode.awg.state.GameState;
-import com.googlecode.awg.units.Units;
 
 public class SelectThread extends Thread {
 	/*
