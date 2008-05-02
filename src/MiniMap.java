@@ -8,7 +8,12 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
-
+/**
+ * This panel display a minimap containing a small version of the map, red markers representing
+ * buildings and units and a yellow rectangle representing the point of view relative to the map.
+ * @author Jan Berge Ommedal
+ *
+ */
 
 public class MiniMap extends JPanel implements MouseListener{
 	/**
@@ -28,6 +33,22 @@ public class MiniMap extends JPanel implements MouseListener{
 		this.updateCache();
 	}
 	
+	/**
+	 *	This method paints the cache to the component. If the cache needs update(is dirty), 
+	 *	the updateCache method is executed in advance. 	 
+	 */
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		if (dirty) this.updateCache();
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.drawImage(cache, null, 0, 0);
+	}
+	
+	
+	/**
+	 * This method updates the internal cache.
+	 */
 	private void updateCache() {
 		this.dirty=false;
 		cache = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -57,13 +78,7 @@ public class MiniMap extends JPanel implements MouseListener{
 		int height = GameState.getMainWindow().getCanvas().getHeight()*200/Config.getWorldHeight();
 		g2d.drawRect(x,y , width , height);
 	}
-
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		if (dirty) this.updateCache();
-		Graphics2D g2d = (Graphics2D)g;
-		g2d.drawImage(cache, null, 0, 0);
-	}
+	
 	
 	@Override
 	public void mousePressed(MouseEvent me) {
@@ -81,13 +96,7 @@ public class MiniMap extends JPanel implements MouseListener{
 
 
 	public void mouseClicked(MouseEvent arg0) {}
-
-
 	public void mouseEntered(MouseEvent arg0) {}
-
-
 	public void mouseExited(MouseEvent arg0) {}
-
-
 	public void mouseReleased(MouseEvent arg0) {}
 }

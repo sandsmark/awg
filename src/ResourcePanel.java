@@ -8,6 +8,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * This panel display the player's current amount of gold.
+ * @author Jan Berge Ommedal
+ *
+ */
+
 public class ResourcePanel extends JPanel{
 	/**
 	 * 
@@ -25,15 +31,16 @@ public class ResourcePanel extends JPanel{
 			System.err.println("Could not load gold icon.");
 		}
 		add(gold);
-		//this.setBackground(Color.RED);
 		this.setMaximumSize(new Dimension(250,30));
 	}
 	
+	/**
+	 * This method updates the amount of gold.
+	 */
 	
 	public void update(){
 		gold.setText(""+GameState.getHuman().getResources());
 		repaint();
-		
 	}
 	
 	
