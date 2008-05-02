@@ -50,8 +50,9 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 
 	MainWindow() throws IOException { 
 		if (!GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().isFullScreenSupported()) { 
-			System.err.println("Could not acquire full screen mode.\nIf you are on linux, this is due to a known bug regarding Java 6 and Xinerama.");
+			JOptionPane.showMessageDialog(null, "Could not acquire full screen mode.\nIf you are on linux, this is probably due to a known bug regarding Java Swing and Xinerama.\nSee bug #6532373 at http://bugs.sun.com/.");
 			this.exit();
+			return;
 		}
 		
 		frame = new JFrame();
