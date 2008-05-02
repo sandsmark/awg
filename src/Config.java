@@ -251,7 +251,6 @@ public class Config {
 	 * @return this returns the frames per second that should be tried for.
 	 */
 	public static int getFPS() {
-//		return ConfigHolder.config.fps;
-		return 10;
+		return ConfigHolder.config.fps;
 	}
 }

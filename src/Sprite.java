@@ -100,10 +100,18 @@ public class Sprite {
 			else cycle = (cycle+1) % 2;
 			last = System.currentTimeMillis();
 		}
-		
-		if (isDoing) return sprite[faction][direction.ordinal()][cycle][2];
-		else if (System.currentTimeMillis() - isHit > 1500) return sprite[faction][direction.ordinal()][cycle][0];
-		else return sprite[faction][direction.ordinal()][cycle][1];
+		int doing;
+		if (isDoing) doing = 2;
+		else if (System.currentTimeMillis() - isHit > 1500) doing = 0;
+		else doing = 1;
+		BufferedImage image = new BufferedImage(getWidth(),getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics g = image.createGraphics();
+		g.setColor(Color.RED);
+		g.fillRect(0, 0, this.getWidth(), 2);
+		g.setColor(Color.GREEN);
+		g.fillRect(0, 0, Math.round(this.getWidth()*((float)u.getCurrentHealth())/((float)u.getMaxHealth())), 2);
+		g.drawImage(sprite[faction][direction.ordinal()][cycle][doing],0,0,null);
+		return image;
 	}
 
 	/**
@@ -115,15 +123,15 @@ public class Sprite {
 	}
 
 	/**
-	 * This just returns the current sprite. 
+	 * This just returns the current sprite.
 	 */
 	public BufferedImage get() {
 		BufferedImage image = new BufferedImage(getWidth(),getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = image.createGraphics();
 		g.setColor(Color.RED);
-		g.fillRect(0, 0, 50, 2);
+		g.fillRect(0, 0, this.getWidth(), 2);
 		g.setColor(Color.GREEN);
-		g.fillRect(0, 0, 50*u.getCurrentHealth()/u.getMaxHealth(), 2);
+		g.fillRect(0, 0, Math.round(this.getWidth()*((float)u.getCurrentHealth())/((float)u.getMaxHealth())), 2);
 		g.drawImage(sprite[faction][direction.ordinal()][cycle][0],0,0,null);
 		return image;
 	}
@@ -160,7 +168,6 @@ public class Sprite {
 	
 	/**
 	 * This returns the height of the sprite.
-	 * @return
 	 */
 	public int getHeight() {
 		return sprite[0][0][0][0].getHeight();
