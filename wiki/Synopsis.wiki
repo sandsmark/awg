@@ -20,5 +20,3 @@ Det er tre typer units, Fightere, Workere og Healere. Fighterene er hovedsaklig 
   * Sprites, figurer: http://blogoscoped.com/archive/2006-08-08-n51.html
   * Musikk: http://gilles.costard.free.fr/
 (Ingenting enda:  * http://www.molotov.nu/?page=graphics )
-= TODO =
-Bestemme units og hvilke sprites.
