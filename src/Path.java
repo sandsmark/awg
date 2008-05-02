@@ -172,8 +172,8 @@ public class Path implements Comparable<Path> {
 				for (int dy = -1; dy <= 1; dy ++)
 					if (!(dx == 0 && dy == 0)) 
 						if (m.canMove(((point.x + dx) * factor) + factor, ((point.y + dy) * factor) + factor))
-							if (path.getLength() < Config.getWorldHeight() + Config.getWorldWidth())
-								queue.add(new Path(path, map[point.x + dx][point.y + dy], target));	
+							if (point.x + dx >= 0 && point.y + dy >= 0)
+								queue.add(new Path(path, map[point.x + dx][point.y + dy], target));
 		}
 		return null;
 	}
