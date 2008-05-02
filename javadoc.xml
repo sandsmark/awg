@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="." destdir="doc" doctitle="Awesome WarGame" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.jcraft.jorbis,com.jcraft.jogg" source="1.6" sourcefiles="src/UnitButton.java,src/Config.java,src/Intro.java,src/SplashScreen.java,src/SelectThread.java,src/Sprite.java,src/Building.java,src/GraphicsThread.java,src/Path.java,src/AIConfig.java,src/Unit.java,src/Resource.java,src/AIrules.java,src/Map.java,src/MovementThread.java,src/MiniMap.java,src/Units.java,src/Moveable.java,src/Canvas.java,src/UnitPanel.java,src/MainWindow.java,src/Player.java,src/Worker.java,src/Effect.java,src/AIThread.java,src/ResourcePanel.java,src/Fighter.java,src/AI.java,src/Healer.java,src/Music.java,src/WindowThread.java,src/GameState.java,src/ConfigDialog.java" sourcepath="resources:src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

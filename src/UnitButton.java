@@ -1,6 +1,4 @@
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,6 +12,7 @@ import javax.swing.JButton;
  *
  */
 public class UnitButton extends JButton{
+	private static final long serialVersionUID = 1L;
 	private Unit u;	
 	
 	public UnitButton(Unit u) {
