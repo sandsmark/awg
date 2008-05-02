@@ -59,6 +59,9 @@ public class Fighter extends Unit {
 			sprite.setDoing(true);
 			this.dealDamage();
 			GameState.getMainWindow().canvas.setDirty(position.x, position.y, position.x + sprite.getWidth(), position.y + sprite.getHeight());
+		} else if (this.path == null) {
+			sprite.setDoing(false);
+			this.goTo(targetUnit.position);
 		} else if (this.path.isEmpty()){
 			sprite.setDoing(false);
 			this.goTo(targetUnit.position);
