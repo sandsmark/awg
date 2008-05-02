@@ -122,8 +122,15 @@ public class AI {
 		if(this.getWorkers().size()<WorkersActive && AI.getResources()>=Worker.cost) { //bygge workers
 			GameState.getUnits().addUnit(new Worker(AI));
 			Unit unit = GameState.getUnits().getUnit(GameState.getUnits().getUnits().size()-1);
-			unit.goTo(ClosestResource.getPosition());
-			unit.setTargetResource(ClosestResource);
+			if(countNode==0){
+				unit.goTo(ClosestResource.getPosition());
+				unit.setTargetResource(ClosestResource);
+			}
+			else {
+				unit.goTo(nodeHandler.get(countNode).getPosition());
+				unit.setTargetResource(nodeHandler.get(countNode));
+			}
+			
 			workers.add(unit);
 			break;
 			
@@ -195,12 +202,12 @@ public class AI {
  */
 	public boolean idleWorkers() {
 		if(countNode==0) {
-			if(ClosestResource.getRemaining()<5000){
+			if(ClosestResource.getRemaining()<10000){
 				return true;
 			}
 		}
 		else {
-			if(nodeHandler.get(countNode).getRemaining()<7700) {
+			if(nodeHandler.get(countNode).getRemaining()<1000) {
 				return true;
 			}
 		}
