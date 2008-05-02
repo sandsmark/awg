@@ -102,6 +102,7 @@ public class Unit {
 	public void goTo(Point target) { 
 		this.path = new Path(this.position, target);
 		this.target = path.getNext();
+		this.sprite.setDoing(false);
 	}
 	
 	/**
