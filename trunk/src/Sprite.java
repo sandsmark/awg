@@ -92,7 +92,7 @@ public class Sprite {
 	
 	/**
 	 * This returns and removes the next sprite in the walk cycle.
-	 * @return
+	 * @return next image.
 	 */
 	public BufferedImage pop() {
 		if (System.currentTimeMillis() - last > 1000/fps) {
