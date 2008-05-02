@@ -156,7 +156,7 @@ public class Canvas extends JPanel implements Moveable {
 			if (this.isInView(humanHouse.getPosition().x, humanHouse.getPosition().y)||
 					this.isInView(humanHouse.getPosition().x + humanHouse.getSprite().getWidth(), humanHouse.getPosition().y + humanHouse.getSprite().getHeight())){ 
 				ig2.drawImage(humanHouse.getSprite(), null, humanHouse.getPosition().x - offsetX, humanHouse.getPosition().y - offsetY);
-				ig2.drawString("HP:"+humanHouse.getCurrentHealth(), humanHouse.getPosition().x - offsetX, humanHouse.getPosition().y - offsetX);
+				ig2.drawString("HP:"+humanHouse.getCurrentHealth(), humanHouse.getPosition().x - offsetX, humanHouse.getPosition().y - offsetY);
 			}
 			
 			Building computerHouse = GameState.getComputer().mainHouse;
