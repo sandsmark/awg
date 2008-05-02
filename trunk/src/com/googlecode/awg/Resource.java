@@ -1,3 +1,4 @@
+package com.googlecode.awg;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -7,7 +8,7 @@ import javax.imageio.ImageIO;
 public class Resource {
 	protected int resourcesLeft;
 	protected BufferedImage sprite;
-	protected Point position;
+	public Point position;
 	protected BufferedImage selectedSprite;
 	protected long highlightTime;
 	

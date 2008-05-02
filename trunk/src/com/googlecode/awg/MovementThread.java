@@ -1,5 +1,11 @@
+package com.googlecode.awg;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import com.googlecode.awg.gui.Canvas;
+import com.googlecode.awg.state.Config;
+import com.googlecode.awg.state.GameState;
+import com.googlecode.awg.units.Units;
 
 public class MovementThread extends Thread {
 	protected ReentrantLock lock = new ReentrantLock(); // This lock makes sure

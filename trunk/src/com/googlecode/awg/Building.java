@@ -1,9 +1,14 @@
+package com.googlecode.awg;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import com.googlecode.awg.state.Config;
+import com.googlecode.awg.state.GameState;
+import com.googlecode.awg.state.Player;
 
 /**
  * 

@@ -1,3 +1,8 @@
+package com.googlecode.awg.state;
+
+import com.googlecode.awg.ai.AI;
+import com.googlecode.awg.gui.MainWindow;
+import com.googlecode.awg.units.Units;
 /*
 Copyright (C) 2008 Martin T. Sandsmark
 
