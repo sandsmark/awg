@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class AI {
 	//her skal oppførselen til AI legges til
-	//TOUILL
 	AIrules oppforsel;
 	int HealersInDefence, FightersInDefence, WorkersActive;
 	Player AI;

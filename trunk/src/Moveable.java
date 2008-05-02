@@ -1,4 +1,3 @@
-package com.googlecode.awg;
 public interface Moveable {
 	public enum Direction {
 		NONE, UP, DOWN, LEFT, RIGHT,
