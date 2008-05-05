@@ -16,10 +16,10 @@ public class AIConfig {
 	int attackForce = 12; //hvor mange units før attack
 	int workers = 5; //hvor mange workers han opererer med
 	double baseSenseRange = 400; //hvor nære basen før han forsvarer
-	long aggro = 60000; //hvor ofte han sender wave i ms
+	long aggro = 15; //hvor ofte han sender wave i sek/4
 	int fighterPerHealer = 5; //healer/fighter ratio
 	int startGold = 400; //start gull
-	long upgrade = 600000; // når han skal oppgradere hovedbygg i ms
+	long upgrade = 150; // når han skal oppgradere hovedbygg i sek/4
 	int healersInDefence = 2; //Hvor mange healers i forsvar
 	int fightersInDefence = 10; //Hvor mange fighters i forsvar
 	
@@ -111,14 +111,14 @@ public class AIConfig {
 		output += "5\n";
 		output += "#\n#Base Sense Range\n#Base Sense Range determines how close to the AI base you can go before he senses you and attacks\n#in pixels\n";
 		output += "400\n";
-		output += "#\n#Aggro\n#Aggro determines how often the AI will launch an attack\n#Remember that the AI will only be able to build units at intervals and when he can afford it\n#setting this value to low wont make the AI attack instantly but a low value will mean that the AI\n#wont stop attacking after the first wave has been sendt\n#in milliseconds\n";
-		output += "60000\n";
+		output += "#\n#Aggro\n#Aggro determines how often the AI will launch an attack\n#Remember that the AI will only be able to build units at intervals and when he can afford it\n#setting this value to low wont make the AI attack instantly but a low value will mean that the AI\n#wont stop attacking after the first wave has been sendt\n#in sec/4\n";
+		output += "15\n";
 		output += "#\n#Fighter Per Healer\n#FIghter Per Healer determines what the fighter:healer ratio should be\n";
 		output += "5\n";
 		output += "#\n#Start Gold\n#Start Gold determines how much gold the AI will have at the start of the game\n";
 		output += "400\n";
-		output += "#\n#Upgrade\n#Upgrade determines the threshold for when the AI will begin to consider upgrading his mainbuilding\n#in milliseconds\n";
-		output += "600000\n";
+		output += "#\n#Upgrade\n#Upgrade determines the threshold for when the AI will begin to consider upgrading his mainbuilding\n#in sec/4\n";
+		output += "150\n";
 		output += "#\n#Healers in Defence\n#Healers in defence determines how many healers the AI will have in defence\n";
 		output += "2\n";
 		output += "#\n#Fighters in defence\n#Fighters in defence determines how many fighters the AI will have in defence\n";

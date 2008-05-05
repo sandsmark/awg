@@ -30,6 +30,8 @@ public class AI {
 	long TimePassedSinceLast;
 	ArrayList<Resource> nodeHandler = new ArrayList<Resource>();
 	int countNode = 0;
+	long time;
+	long attackertime;
 	
 	public AI() {
 		oppforsel = new AIrules();
@@ -97,8 +99,7 @@ public class AI {
 	 * @return
 	 */
 	public boolean willLaunchAttack() { //om han skal angripe/sjekke om antallet units er riktig for attack
-		TimePassedSinceLast = GameState.getTime()-TimePassedSinceLast;
-		if(((TimePassedSinceLast) >= oppforsel.getAggro()) && ((this.getFighters().size()+this.getHealers().size())>=(oppforsel.getAttackForce()))) {
+		if(((attackertime) >= oppforsel.getAggro()) && ((this.getFighters().size()+this.getHealers().size())>=(oppforsel.getAttackForce()))) {
 			return true;
 		}
 		return false;
@@ -183,9 +184,9 @@ public class AI {
 	 * @return
 	 */
 	public boolean willUpgrade() {//sjekker om AI vil upgrade
-		long tid = GameState.getTime();
+//		long tid = GameState.getTime();
 		if(GameState.getComputer().getResources()> Building.getUpgradeCost()) //settes inn n�r upgradecost kommer
-			if(tid>oppforsel.getUpgrade() && !(GameState.getComputer().getMainBuilding().getBuildingLevel()>1)) {
+			if(time>oppforsel.getUpgrade() && !(GameState.getComputer().getMainBuilding().getBuildingLevel()>1)) {
 				return true;
 			}
 		return false; 
@@ -259,7 +260,11 @@ public class AI {
 		countNode +=1;
 	}
 	
-	
+	public void updateTime() {
+		time+=1;
+		attackertime +=1;
+		if(attackertime>oppforsel.getAggro()+1 && this.willLaunchAttack()) attackertime=0;
+	}
 	
 	
 }

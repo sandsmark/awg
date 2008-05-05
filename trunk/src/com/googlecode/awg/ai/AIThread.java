@@ -10,6 +10,9 @@ public class AIThread extends Thread {
 	protected boolean running = false;
 	protected Unit[] units; // units that this AI owns
 	AI ai = new AI();
+	protected int sleeptime = 4000; // Sleeptime in milliseconds
+	protected long lastSlept = System.currentTimeMillis();
+
 	
 	public AIThread() {
 		running = true;
@@ -25,6 +28,7 @@ public class AIThread extends Thread {
 		Unit offender;
 		try {
 			while (running) {
+				ai.updateTime();
 				if(ai.willDefend()) {
 				offender = ai.getOffender();
 					ai.defendAgainst(offender);
@@ -33,7 +37,8 @@ public class AIThread extends Thread {
 				if(ai.idleWorkers()) ai.goNext();
 				ai.defendWorkers();
 				if(ai.willLaunchAttack()) ai.launchAttack();
-		 		sleep(2000);
+				if (sleeptime - (System.currentTimeMillis() - lastSlept) > 0) sleep(sleeptime - (System.currentTimeMillis() - lastSlept));
+				this.lastSlept = System.currentTimeMillis();
 		 		
 			}
 		} catch (InterruptedException e) {
