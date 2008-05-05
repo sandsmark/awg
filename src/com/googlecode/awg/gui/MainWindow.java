@@ -261,7 +261,7 @@ public class MainWindow implements ActionListener, MouseMotionListener,
 		buttons.add(worker);
 		buttons.add(fighter);
 		buttons.add(healer);
-		
+		buttons.addKeyListener(this);
 		Dimension d = new Dimension(300,50);
 		upgradeBuilding.setMaximumSize(d);
 		worker.setMaximumSize(d);
