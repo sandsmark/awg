@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.googlecode.awg.gui.UnitButton;
@@ -28,14 +29,26 @@ public class Units implements ActionListener {
 	}
 	
 	public void addUnit(Unit unit) {
-		if (units.contains(unit)) return;
-		units.add(unit);
+		try {
+			if (!lock.tryLock(5, TimeUnit.SECONDS)) throw new Exception("Failed to acquire lock on units.");
+			if (units.contains(unit)) return;
+			units.add(unit);
+			lock.unlock();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void removeUnit(Unit unit) {
-		if (!units.contains(unit))	return;
-		units.remove(unit);
-		this.deselectUnit(unit);
+		try {
+			if (!lock.tryLock(5, TimeUnit.SECONDS)) throw new Exception("Failed to acquire lock on units.");
+			if (!units.contains(unit))	return;
+			units.remove(unit);
+			this.deselectUnit(unit);
+			lock.unlock();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Unit getUnit(int i) {

@@ -28,7 +28,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JPanel;
 
-import com.googlecode.awg.gui.Moveable.Direction;
 import com.googlecode.awg.state.GameState;
 import com.googlecode.awg.state.Map;
 import com.googlecode.awg.units.Building;
@@ -151,6 +150,7 @@ public class Canvas extends JPanel implements Moveable {
 		Units units = GameState.getUnits();
 		Map map = GameState.getMap();
 		try {
+			if (!units.lock.tryLock()) return;
 			Graphics2D ig2 = mapCache.createGraphics();
 			ig2.drawImage(GameState.getMap().getBaseMap(), 0, 0, width, height, offsetX, offsetY,
 					offsetX + width, offsetY + height, null);
@@ -185,6 +185,7 @@ public class Canvas extends JPanel implements Moveable {
 					}
 				}
 			}
+			units.lock.unlock();
 		} catch (Exception e) {
 			/*
 			 * Exceptions happening here are not fatal.
