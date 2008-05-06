@@ -2,7 +2,6 @@ package com.googlecode.awg.gui;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.googlecode.awg.gui.Moveable.Direction;
 import com.googlecode.awg.state.Config;
 import com.googlecode.awg.state.GameState;
 
