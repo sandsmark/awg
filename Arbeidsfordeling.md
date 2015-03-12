@@ -1,0 +1,12 @@
+# Arbeidsfordeling #
+
+Vi har fordelt arbeidet internt i gruppen etter Argus-Kreysig-metoden.
+
+
+# Fordeling #
+
+Her er den endelige fordelingen:
+  * **Martin Sandsmark** har hovedansvaret for _grafikken_.
+  * **Magnus Fjell** har hovedansvaret for _spillogikken_.
+  * **Jan Ommedal** har hovedansvaret for _det grafiske brukergrenesnittet_.
+  * **Stian Møllersen** har hovedansvaret for _den kunstige intelligensen_.
