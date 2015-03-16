@@ -1,7 +1,7 @@
 # awg
 Awesome WarGame - first year project at NTNU
 
-(screenshot)[https://iskrembilen.com/mts/screenshot.png]
+[screenshot](https://iskrembilen.com/mts/screenshot.png)
 
 ## Created by
 * [@sandsmark](https://github.com/sandsmark)
